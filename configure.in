@@ -1,0 +1,46 @@
+# Boilerplate
+AC_INIT(FBX, 0.0.1, xiphux@gmail.com)
+AC_CONFIG_AUX_DIR(config)
+AM_CONFIG_HEADER([config.h])
+AM_INIT_AUTOMAKE(FBX, 0.0.1)
+AM_MAINTAINER_MODE
+
+# Arguments
+AM_OPTIONS_WXCONFIG
+AC_ARG_ENABLE(debug, [  --enable-debug		enables debugging], enable_debug=$enableval, enable_debug=yes)
+if test "x$enable_debug" = "xyes"; then
+	AC_DEFINE(DEBUG,,[Debugging])
+fi
+
+# Programs
+AC_PROG_CXX
+AC_PROG_CC
+AC_PROG_CPP
+AC_PROG_INSTALL
+AM_PATH_WXCONFIG(2.8.0, wxWin=1)
+if test "$wxWin" != 1; then
+	AC_MSG_ERROR([
+		wxWindows must be installed on your system
+		but wx-config script couldn't be found.
+
+		Please check that wx-config is in path, the directory
+		where wxWindows libraries are installed (returned by
+		'wx-config --libs' command) is in LD_LIBRARY_PATH or
+		equivalent variable and wxWindows version is 2.8.0 or above.
+	])
+fi
+
+# Libraries
+
+# Headers
+
+# Types
+AC_HEADER_STDBOOL
+AC_C_CONST
+
+# Output
+AC_CONFIG_FILES([
+	Makefile
+	src/Makefile
+])
+AC_OUTPUT
