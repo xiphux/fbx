@@ -4,4 +4,4 @@ AM_CXXFLAGS = @WX_CXXFLAGS_ONLY@
 
 bin_PROGRAMS = fbx
 fbx_SOURCES = fbx.cpp
-
+fbx_LDADD = @WX_LIBS@
