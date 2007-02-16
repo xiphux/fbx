@@ -6,9 +6,17 @@
 #ifndef FBX_AUDIOBASE_H
 #define FBX_AUDIOBASE_H
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #define FBX_AUDIO_NONE 0
+#ifdef HAVE_AO
 #define FBX_AUDIO_AO 1
+#endif
+#ifdef HAVE_ALSA
 #define FBX_AUDIO_ALSA 2
+#endif
 
 namespace fbx
 {

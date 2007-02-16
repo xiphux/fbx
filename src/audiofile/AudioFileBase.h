@@ -6,10 +6,17 @@
 #ifndef FBX_AUDIOFILEBASE_H
 #define FBX_AUDIOFILEBASE_H
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <string>
 
 #define FBX_AUDIOFILE_NONE 0
+
+#ifdef HAVE_VORBIS
 #define FBX_AUDIOFILE_VORBIS 1
+#endif
 
 namespace fbx
 {
