@@ -31,7 +31,7 @@ fbx::AudioFileVorbis::~AudioFileVorbis()
 		std::cerr << "[AudioFileVorbis] Failed to close file" << std::endl;
 }
 
-bool fbx::AudioFileVorbis::Opened() const
+bool fbx::AudioFileVorbis::Opened()
 {
 	return opened;
 }

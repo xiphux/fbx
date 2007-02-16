@@ -4,6 +4,7 @@
  * Copyright (C) 2006 Christopher Han
  */
 #include "AudioFileFactory.h"
+#include "AudioFileVorbis.h"
 
 bool fbx::AudioFileFactory::IsAudioFile(const std::string& filename)
 {

@@ -17,7 +17,7 @@ namespace fbx
 	public:
 		AudioFileVorbis(const std::string& fname);
 		virtual ~AudioFileVorbis();
-		virtual bool Opened() const;
+		virtual bool Opened();
 		virtual int Seek(double pos);
 		virtual long Read(char *buf, long len);
 		virtual double Size();
