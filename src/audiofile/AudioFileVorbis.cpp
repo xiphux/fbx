@@ -27,8 +27,8 @@ fbx::AudioFileVorbis::~AudioFileVorbis()
 {
 	if (opened && ov_clear(&file))
 		std::cerr << "[AudioFileVorbis] Failed to clear vorbis" << std::endl;
-	if (fp && fclose(fp))
-		std::cerr << "[AudioFileVorbis] Failed to close file" << std::endl;
+//	if (fp && fclose(fp))
+//		std::cerr << "[AudioFileVorbis] Failed to close file" << std::endl;
 }
 
 bool fbx::AudioFileVorbis::Opened()
