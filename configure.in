@@ -31,6 +31,9 @@ if test "$wxWin" != 1; then
 fi
 
 # Libraries
+PKG_CHECK_MODULES(VORBISFILE, vorbisfile >= 1.1.2)
+AC_SUBST(VORBISFILE_CFLAGS)
+AC_SUBST(VORBISFILE_LIBS)
 
 # Headers
 
@@ -42,5 +45,6 @@ AC_C_CONST
 AC_CONFIG_FILES([
 	Makefile
 	src/Makefile
+	src/audiofile/Makefile
 ])
 AC_OUTPUT
