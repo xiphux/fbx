@@ -9,13 +9,25 @@
 #include "AudioFileVorbis.h"
 #endif
 
+#ifdef HAVE_MAGIC
+#include <magic.h>
+#endif
+
+#ifdef DEBUG
+#include <iostream>
+#endif
+
 bool fbx::AudioFileFactory::IsAudioFile(const std::string& filename)
 {
+	return (AudioFileType(filename) > FBX_AUDIOFILE_NONE);
 }
 
 unsigned int fbx::AudioFileFactory::AudioFileType(const std::string& filename)
 {
-	unsigned int type = AudioFileTypeByMagic(filename);
+	unsigned int type = FBX_AUDIOFILE_NONE;
+#ifdef HAVE_MAGIC
+	type = AudioFileTypeByMagic(filename);
+#endif
 	if (type > FBX_AUDIOFILE_NONE)
 		return type;
 	return AudioFileTypeByExtension(filename);
@@ -45,8 +57,26 @@ unsigned int fbx::AudioFileFactory::AudioFileTypeByExtension(const std::string& 
 	return FBX_AUDIOFILE_NONE;
 }
 
+#ifdef HAVE_MAGIC
 unsigned int fbx::AudioFileFactory::AudioFileTypeByMagic(const std::string& filename)
 {
-	/* Until libmagic is used */
-	return FBX_AUDIOFILE_NONE;
+	unsigned int type = FBX_AUDIOFILE_NONE;
+	magic_t cookie = magic_open(MAGIC_MIME|MAGIC_SYMLINK);
+	if (!cookie)
+		return type;
+	if (!magic_load(cookie, NULL)) {
+		const char *tmp = magic_file(cookie, filename.c_str());
+		if (tmp) {
+			std::string mime = tmp;
+#ifdef DEBUG
+			std::cout << "Mimetype: " << mime << std::endl;
+#endif
+			if (mime == "application/ogg")
+				type = FBX_AUDIOFILE_VORBIS;
+		}
+	}
+	magic_close(cookie);
+	return type;
 }
+#endif
+

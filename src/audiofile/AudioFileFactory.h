@@ -7,6 +7,11 @@
 #define FBX_AUDIOFILEFACTORY_H
 
 #include <string>
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include "AudioFileBase.h"
 
 namespace fbx
@@ -20,7 +25,9 @@ namespace fbx
 		static AudioFileBase *OpenAudioFile(const std::string& filename);
 	protected:
 		static unsigned int AudioFileTypeByExtension(const std::string& filename);
+#ifdef HAVE_MAGIC
 		static unsigned int AudioFileTypeByMagic(const std::string& filename);
+#endif
 	};
 
 }
