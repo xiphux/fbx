@@ -7,7 +7,8 @@
 #define FBX_AUDIOBASE_H
 
 #define FBX_AUDIO_NONE 0
-#define FBX_AUDIO_ALSA 1
+#define FBX_AUDIO_AO 1
+#define FBX_AUDIO_ALSA 2
 
 namespace fbx
 {
@@ -17,8 +18,7 @@ namespace fbx
 	public:
 		virtual ~AudioBase() {};
 		virtual bool Opened() = 0;
-		virtual long WriteInt(int *buf, long len) = 0;
-		virtual long WriteFloat(float *buf, long len) = 0;
+		virtual long Write(char *buf, long len) = 0;
 	};
 
 }

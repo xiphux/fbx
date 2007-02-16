@@ -62,16 +62,10 @@ bool fbx::AudioAlsa::Opened()
 	return opened;
 }
 
-long fbx::AudioAlsa::WriteInt(int *buf, long len)
+long fbx::AudioAlsa::Write(char *buf, long len)
 {
 	if (!opened)
 		return -1;
 	return snd_pcm_writei(handle, buf, len);
 }
 
-long fbx::AudioAlsa::WriteFloat(float *buf, long len)
-{
-	if (!opened)
-		return -1;
-	return -1;
-}

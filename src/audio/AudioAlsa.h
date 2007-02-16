@@ -18,8 +18,7 @@ namespace fbx
 		AudioAlsa();
 		virtual ~AudioAlsa();
 		virtual bool Opened();
-		virtual long WriteInt(int *buf, long len);
-		virtual long WriteFloat(float *buf, long len);
+		virtual long Write(char *buf, long len);
 	protected:
 		snd_pcm_t *handle;
 		bool opened;
