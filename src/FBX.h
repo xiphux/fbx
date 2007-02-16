@@ -7,16 +7,18 @@
 #define FBX_FBX_H
 
 class wxApp;
-class wxLocale;
 
 namespace fbx
 {
 
+	class FBXFrame;
 	class FBX: public wxApp
 	{
 	public:
 		virtual bool OnInit();
 		virtual int OnExit();
+	protected:
+		FBXFrame *frame;
 	};
 
 }
