@@ -62,6 +62,6 @@ bool fbx::AudioFileVorbis::Eof()
 {
 	if (!opened)
 		return true;
-	return (ov_time_tell(&file) == ov_time_total(&file, -1));
+	return (ov_time_tell(&file) >= ov_time_total(&file, -1));
 }
 
