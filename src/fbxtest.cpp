@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 		std::cout << "Requires an argument" << std::endl;
 		return 1;
 	}
-	fbx::AudioBase *audio = fbx::AudioFactory::CreateAudio(FBX_AUDIO_AO);
+	fbx::AudioBase *audio = fbx::AudioFactory::CreateAudio();
 	if (!audio) {
 		std::cout << "Could not create audio output" << std::endl;
 		return 2;
@@ -41,8 +41,8 @@ int main(int argc, char **argv)
 			break;
 		} else {
 			std::cout << "Read: " << len << std::endl;
-			len = audio->Write(buf, len);
-			std::cout << "Wrote: " << len << std::endl;
+			if (!audio->Write(buf, len))
+				std::cout << "Error writing " << len << std::endl;
 		}
 	}
 	delete audiofile;

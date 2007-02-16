@@ -15,8 +15,10 @@
 #include "AudioAo.h"
 #endif
 
-fbx::AudioBase* fbx::AudioFactory::CreateAudio(const unsigned int type)
+fbx::AudioBase* fbx::AudioFactory::CreateAudio(unsigned int type)
 {
+	if (type == FBX_AUDIO_NONE)
+		type = DefaultAudio();
 	switch (type) {
 #ifdef HAVE_AO
 		case FBX_AUDIO_AO:
@@ -28,4 +30,15 @@ fbx::AudioBase* fbx::AudioFactory::CreateAudio(const unsigned int type)
 #endif
 	}
 	return 0;
+}
+
+unsigned int fbx::AudioFactory::DefaultAudio()
+{
+#ifdef HAVE_AO
+	return FBX_AUDIO_AO;
+#elif defined(HAVE_ALSA)
+	return FBX_AUDIO_ALSA;
+#else
+	return FBX_AUDIO_NONE;
+#endif
 }

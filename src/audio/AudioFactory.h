@@ -14,7 +14,8 @@ namespace fbx
 	class AudioFactory
 	{
 	public:
-		static AudioBase *CreateAudio(const unsigned int type);
+		static AudioBase *CreateAudio(unsigned int type = FBX_AUDIO_NONE);
+		static unsigned int DefaultAudio();
 	};
 
 }
