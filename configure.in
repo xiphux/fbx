@@ -34,6 +34,10 @@ if test "$wxWin" != 1; then
 fi
 
 # Libraries
+PKG_CHECK_MODULES(ALSA, alsa >= 1.0.13)
+AC_SUBST(ALSA_CFLAGS)
+AC_SUBST(ALSA_LIBS)
+
 PKG_CHECK_MODULES(VORBISFILE, vorbisfile >= 1.1.2)
 AC_SUBST(VORBISFILE_CFLAGS)
 AC_SUBST(VORBISFILE_LIBS)
@@ -49,5 +53,6 @@ AC_CONFIG_FILES([
 	Makefile
 	src/Makefile
 	src/audiofile/Makefile
+	src/audio/Makefile
 ])
 AC_OUTPUT
