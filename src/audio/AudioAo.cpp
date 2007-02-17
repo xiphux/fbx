@@ -7,9 +7,9 @@
 #include <iostream>
 #include "AudioAo.h"
 
-fbx::AudioAo::AudioAo():
-	opened(false)
+fbx::AudioAo::AudioAo()
 {
+	opened = false;
 	ao_sample_format format;
 	ao_initialize();
 	int driver = ao_default_driver_id();
@@ -30,11 +30,6 @@ fbx::AudioAo::~AudioAo()
 	if (device)
 		ao_close(device);
 	ao_shutdown();
-}
-
-bool fbx::AudioAo::Opened()
-{
-	return opened;
 }
 
 long fbx::AudioAo::Write(char *buf, long len)

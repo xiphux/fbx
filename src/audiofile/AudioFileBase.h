@@ -26,7 +26,7 @@ namespace fbx
 	public:
 		AudioFileBase(const std::string& fname);
 		virtual ~AudioFileBase();
-		virtual bool Opened() = 0;
+		virtual bool Opened() const;
 		virtual int Seek(double pos) = 0;
 		virtual long Read(char *buf, long len) = 0;
 		virtual double Size() = 0;
@@ -34,6 +34,7 @@ namespace fbx
 		std::string Filename() const;
 	protected:
 		std::string filename;
+		bool opened;
 	};
 
 }

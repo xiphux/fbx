@@ -18,3 +18,8 @@ std::string fbx::AudioFileBase::Filename() const
 {
 	return filename;
 }
+
+bool fbx::AudioFileBase::Opened() const
+{
+	return opened;
+}

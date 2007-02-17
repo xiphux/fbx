@@ -114,5 +114,6 @@ AC_CONFIG_FILES([
 	src/audiofile/Makefile
 	src/audio/Makefile
 	src/config/Makefile
+	src/playlist/Makefile
 ])
 AC_OUTPUT

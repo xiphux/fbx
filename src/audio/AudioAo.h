@@ -17,11 +17,9 @@ namespace fbx
 	public:
 		AudioAo();
 		virtual ~AudioAo();
-		virtual bool Opened();
 		virtual long Write(char *buf, long len);
 	protected:
 		ao_device *device;
-		bool opened;
 	};
 
 }

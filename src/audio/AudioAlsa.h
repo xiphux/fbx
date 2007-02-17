@@ -17,11 +17,9 @@ namespace fbx
 	public:
 		AudioAlsa();
 		virtual ~AudioAlsa();
-		virtual bool Opened();
 		virtual long Write(char *buf, long len);
 	protected:
 		snd_pcm_t *handle;
-		bool opened;
 	};
 
 }

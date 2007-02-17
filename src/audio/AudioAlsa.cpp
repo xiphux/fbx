@@ -7,8 +7,8 @@
 #include "AudioAlsa.h"
 
 fbx::AudioAlsa::AudioAlsa():
-	opened(false)
 {
+	opened = false;
 	snd_pcm_hw_params_t *params;
 	int err;
 	if ((err = snd_pcm_open(&handle, "default", SND_PCM_STREAM_PLAYBACK, 0)) < 0) {
@@ -55,11 +55,6 @@ fbx::AudioAlsa::AudioAlsa():
 fbx::AudioAlsa::~AudioAlsa()
 {
 	snd_pcm_close(handle);
-}
-
-bool fbx::AudioAlsa::Opened()
-{
-	return opened;
 }
 
 long fbx::AudioAlsa::Write(char *buf, long len)

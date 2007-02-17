@@ -25,8 +25,10 @@ namespace fbx
 	{
 	public:
 		virtual ~AudioBase() {};
-		virtual bool Opened() = 0;
+		virtual bool Opened() const {return opened;};
 		virtual long Write(char *buf, long len) = 0;
+	protected:
+		bool opened;
 	};
 
 }

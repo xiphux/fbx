@@ -8,9 +8,9 @@
 #include "AudioFileVorbis.h"
 
 fbx::AudioFileVorbis::AudioFileVorbis(const std::string& fname):
-	AudioFileBase(fname),
-	opened(false)
+	AudioFileBase(fname)
 {
+	opened = false;
 	fp = fopen(fname.c_str(), "rb");
 	if (!fp) {
 		std::cerr << "[AudioFileVorbis] Error opening file: " << fname << std::endl;
@@ -29,11 +29,6 @@ fbx::AudioFileVorbis::~AudioFileVorbis()
 		std::cerr << "[AudioFileVorbis] Failed to clear vorbis" << std::endl;
 //	if (fp && fclose(fp))
 //		std::cerr << "[AudioFileVorbis] Failed to close file" << std::endl;
-}
-
-bool fbx::AudioFileVorbis::Opened()
-{
-	return opened;
 }
 
 int fbx::AudioFileVorbis::Seek(double pos)
