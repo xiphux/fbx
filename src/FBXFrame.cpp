@@ -12,6 +12,8 @@
 #include <wx/frame.h>
 #include <wx/menu.h>
 #include <wx/msgdlg.h>
+#include <wx/statusbr.h>
+#include <wx/aui/aui.h>
 #endif
 
 #include "FBXFrame.h"
@@ -35,6 +37,15 @@ fbx::FBXFrame::FBXFrame():
 	helpmenu->Append(FBX_frame_about, wxT("&About"));
 	menubar->Append(helpmenu, wxT("&Help"));
 	SetMenuBar(menubar);
+
+	manager = new wxAuiManager(this, wxAUI_MGR_DEFAULT);
+
+	statusbar = new wxStatusBar(this);
+}
+
+fbx::FBXFrame::~FBXFrame()
+{
+	manager->UnInit();
 }
 
 void fbx::FBXFrame::OnQuit(wxCommandEvent& WXUNUSED(event))

@@ -6,6 +6,9 @@
 #ifndef FBX_FBXFRAME_H
 #define FBX_FBXFRAME_H
 
+class wxAuiManager;
+class wxStatusBar;
+
 namespace fbx
 {
 
@@ -13,10 +16,13 @@ namespace fbx
 	{
 	public:
 		FBXFrame();
+		virtual ~FBXFrame();
 		void OnQuit(wxCommandEvent &event);
 		void OnAbout(wxCommandEvent &event);
 	private:
 		DECLARE_EVENT_TABLE()
+		wxAuiManager *manager;
+		wxStatusBar *statusbar;
 	};
 
 	enum {
