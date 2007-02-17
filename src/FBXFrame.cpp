@@ -94,6 +94,6 @@ void fbx::FBXFrame::OpenPlaylists(std::string pls)
 
 void fbx::FBXFrame::AddPlaylistPage(std::string name, std::string file)
 {
-	wxString n(name.c_str(), wxConvCurrent);
+	wxString n(name.c_str(), *wxConvCurrent);
 	notebook->AddPage((wxWindow*)(new wxListBox(this, -1)), n);
 }
