@@ -76,7 +76,7 @@ fbx::FBXFrame::FBXFrame():
 	playbacktoolbar->AddTool(FBX_frame_prev, wxT("Previous"), prevbitmap, wxT("Previous"));
 	wxBitmap nextbitmap(next_xpm);
 	playbacktoolbar->AddTool(FBX_frame_next, wxT("Next"), nextbitmap, wxT("Next"));
-
+	playbacktoolbar->Realize();
 
 	notebook = new wxAuiNotebook(this);
 	topsizer->Add(notebook, 1, wxEXPAND|wxALL);
