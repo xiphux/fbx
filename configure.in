@@ -113,5 +113,6 @@ AC_CONFIG_FILES([
 	src/Makefile
 	src/audiofile/Makefile
 	src/audio/Makefile
+	src/config/Makefile
 ])
 AC_OUTPUT

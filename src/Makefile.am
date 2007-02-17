@@ -1,4 +1,4 @@
-SUBDIRS = audio audiofile
+SUBDIRS = audio audiofile config
 
 AM_CFLAGS = @WX_CFLAGS_ONLY@
 AM_CPPFLAGS = @WX_CPPFLAGS@
@@ -6,7 +6,7 @@ AM_CXXFLAGS = @WX_CXXFLAGS_ONLY@
 
 bin_PROGRAMS = fbx
 fbx_SOURCES = FBX.cpp FBXFrame.cpp
-fbx_LDADD = audio/libfbxaudio.la audiofile/libfbxaudiofile.la @WX_LIBS@
+fbx_LDADD = audio/libfbxaudio.la audiofile/libfbxaudiofile.la config/libfbxconfig.la @WX_LIBS@
 
 noinst_PROGRAMS = fbxtest
 fbxtest_SOURCES = fbxtest.cpp

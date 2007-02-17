@@ -16,6 +16,7 @@
 
 #include "FBX.h"
 #include "FBXFrame.h"
+#include "config/ConfigFactory.h"
 
 IMPLEMENT_APP(fbx::FBX)
 
@@ -30,6 +31,7 @@ bool fbx::FBX::OnInit()
 
 int fbx::FBX::OnExit()
 {
+	ConfigFactory::Deallocate();
 	return 0;
 }
 
