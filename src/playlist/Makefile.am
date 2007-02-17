@@ -1,2 +1,2 @@
 noinst_LTLIBRARIES = libfbxplaylist.la
-libfbxplaylist_la_SOURCES = PlaylistFactory.cpp
+libfbxplaylist_la_SOURCES = PlaylistBase.cpp PlaylistFactory.cpp PlaylistM3U.cpp

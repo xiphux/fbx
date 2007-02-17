@@ -16,6 +16,8 @@ namespace fbx
 	public:
 		static bool IsPlaylist(const std::string& filename);
 		static unsigned int PlaylistType(const std::string& filename);
+		static PlaylistBase* OpenPlaylist(const std::string& filename);
+		static PlaylistBase* ChangePlaylistType(PlaylistBase* orig, std::string fname);
 	};
 
 }
