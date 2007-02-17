@@ -23,6 +23,11 @@
 BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_MENU(FBX_frame_quit, fbx::FBXFrame::OnQuit)
 	EVT_MENU(FBX_frame_about, fbx::FBXFrame::OnAbout)
+	EVT_MENU(FBX_frame_stop, fbx::FBXFrame::OnStop)
+	EVT_MENU(FBX_frame_pause, fbx::FBXFrame::OnPause)
+	EVT_MENU(FBX_frame_play, fbx::FBXFrame::OnPlay)
+	EVT_MENU(FBX_frame_prev, fbx::FBXFrame::OnPrev)
+	EVT_MENU(FBX_frame_next, fbx::FBXFrame::OnNext)
 END_EVENT_TABLE()
 
 fbx::FBXFrame::FBXFrame():
@@ -35,6 +40,13 @@ fbx::FBXFrame::FBXFrame():
 	wxMenu *filemenu = new wxMenu;
 	filemenu->Append(FBX_frame_quit, wxT("E&xit"));
 	menubar->Append(filemenu, wxT("&File"));
+	wxMenu *playmenu = new wxMenu;
+	playmenu->Append(FBX_frame_stop, wxT("&Stop"));
+	playmenu->Append(FBX_frame_pause, wxT("P&ause"));
+	playmenu->Append(FBX_frame_play, wxT("P&lay"));
+	playmenu->Append(FBX_frame_prev, wxT("P&rev"));
+	playmenu->Append(FBX_frame_next, wxT("&Next"));
+	menubar->Append(playmenu, wxT("&Playback"));
 	wxMenu *helpmenu = new wxMenu;
 	helpmenu->Append(FBX_frame_about, wxT("&About"));
 	menubar->Append(helpmenu, wxT("&Help"));
@@ -96,4 +108,24 @@ void fbx::FBXFrame::AddPlaylistPage(std::string name, std::string file)
 {
 	wxString n(name.c_str(), *wxConvCurrent);
 	notebook->AddPage((wxWindow*)(new wxListBox(this, -1)), n);
+}
+
+void fbx::FBXFrame::OnStop(wxCommandEvent& WXUNUSED(event))
+{
+}
+
+void fbx::FBXFrame::OnPause(wxCommandEvent& WXUNUSED(event))
+{
+}
+
+void fbx::FBXFrame::OnPlay(wxCommandEvent& WXUNUSED(event))
+{
+}
+
+void fbx::FBXFrame::OnPrev(wxCommandEvent& WXUNUSED(event))
+{
+}
+
+void fbx::FBXFrame::OnNext(wxCommandEvent& WXUNUSED(event))
+{
 }
