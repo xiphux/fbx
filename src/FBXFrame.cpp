@@ -14,11 +14,22 @@
 #include <wx/msgdlg.h>
 #include <wx/listbox.h>
 #include <wx/statusbr.h>
-#include <wx/aui/aui.h>
+#include <wx/toolbar.h>
+#include <wx/bitmap.h>
+#include <wx/panel.h>
+#include <wx/aui/auibook.h>
 #endif
+
+#include <iostream>
 
 #include "FBXFrame.h"
 #include "playlist/PlaylistFactory.h"
+
+#include "icons/stop.xpm"
+#include "icons/pause.xpm"
+#include "icons/play.xpm"
+#include "icons/prev.xpm"
+#include "icons/next.xpm"
 
 BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_MENU(FBX_frame_quit, fbx::FBXFrame::OnQuit)
@@ -52,22 +63,27 @@ fbx::FBXFrame::FBXFrame():
 	menubar->Append(helpmenu, wxT("&Help"));
 	SetMenuBar(menubar);
 
-	manager = new wxAuiManager(this, wxAUI_MGR_DEFAULT);
-
 	wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+
+	playbacktoolbar = CreateToolBar();
+	wxBitmap stopbitmap(stop_xpm);
+	playbacktoolbar->AddTool(FBX_frame_stop, wxT("Stop"), stopbitmap, wxT("Stop"));
+	wxBitmap pausebitmap(pause_xpm);
+	playbacktoolbar->AddTool(FBX_frame_pause, wxT("Pause"), pausebitmap, wxT("Pause"));
+	wxBitmap playbitmap(play_xpm);
+	playbacktoolbar->AddTool(FBX_frame_play, wxT("Play"), playbitmap, wxT("Play"));
+	wxBitmap prevbitmap(prev_xpm);
+	playbacktoolbar->AddTool(FBX_frame_prev, wxT("Previous"), prevbitmap, wxT("Previous"));
+	wxBitmap nextbitmap(next_xpm);
+	playbacktoolbar->AddTool(FBX_frame_next, wxT("Next"), nextbitmap, wxT("Next"));
+
 
 	notebook = new wxAuiNotebook(this);
 	topsizer->Add(notebook, 1, wxEXPAND|wxALL);
 
-	statusbar = new wxStatusBar(this);
-	topsizer->Add(statusbar,0,wxEXPAND|wxALL);
+	statusbar = CreateStatusBar();
 
 	SetSizer(topsizer);
-}
-
-fbx::FBXFrame::~FBXFrame()
-{
-	manager->UnInit();
 }
 
 void fbx::FBXFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
@@ -107,25 +123,30 @@ void fbx::FBXFrame::OpenPlaylists(std::string pls)
 void fbx::FBXFrame::AddPlaylistPage(std::string name, std::string file)
 {
 	wxString n(name.c_str(), *wxConvCurrent);
-	notebook->AddPage((wxWindow*)(new wxListBox(this, -1)), n);
+	notebook->AddPage((wxWindow*)(new wxPanel(notebook)), n);
 }
 
 void fbx::FBXFrame::OnStop(wxCommandEvent& WXUNUSED(event))
 {
+	std::cout << "FBXFrame::OnStop" << std::endl;
 }
 
 void fbx::FBXFrame::OnPause(wxCommandEvent& WXUNUSED(event))
 {
+	std::cout << "FBXFrame::OnPause" << std::endl;
 }
 
 void fbx::FBXFrame::OnPlay(wxCommandEvent& WXUNUSED(event))
 {
+	std::cout << "FBXFrame::OnPlay" << std::endl;
 }
 
 void fbx::FBXFrame::OnPrev(wxCommandEvent& WXUNUSED(event))
 {
+	std::cout << "FBXFrame::OnPrev" << std::endl;
 }
 
 void fbx::FBXFrame::OnNext(wxCommandEvent& WXUNUSED(event))
 {
+	std::cout << "FBXFrame::OnNext" << std::endl;
 }

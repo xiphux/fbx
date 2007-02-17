@@ -8,9 +8,9 @@
 
 #include <map>
 
-class wxAuiManager;
 class wxAuiNotebook;
 class wxStatusBar;
+class wxToolBar;
 
 namespace fbx
 {
@@ -19,7 +19,6 @@ namespace fbx
 	{
 	public:
 		FBXFrame();
-		virtual ~FBXFrame();
 		void OnQuit(wxCommandEvent &event);
 		void OnAbout(wxCommandEvent &event);
 		void OnStop(wxCommandEvent &event);
@@ -31,10 +30,13 @@ namespace fbx
 		void AddPlaylistPage(std::string name, std::string file);
 	private:
 		DECLARE_EVENT_TABLE()
-		wxAuiManager *manager;
 		wxStatusBar *statusbar;
 		std::map<std::string, std::string> playlists;
 		wxAuiNotebook *notebook;
+		wxToolBar *playbacktoolbar;
+		wxToolBar *ordertoolbar;
+		wxToolBar *progresstoolbar;
+		wxToolBar *vistoolbar;
 	};
 
 	enum {
