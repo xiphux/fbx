@@ -17,7 +17,11 @@ namespace fbx
 	public:
 		virtual bool OnInit();
 		virtual int OnExit();
+		bool GetVerbose() const;
 	protected:
+		bool ParseCmdLine();
+
+		bool verbose;
 		FBXFrame *frame;
 	};
 
