@@ -42,7 +42,7 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 END_EVENT_TABLE()
 
 fbx::FBXFrame::FBXFrame():
-	wxFrame((wxFrame*)NULL, -1, wxEmptyString, wxDefaultPosition, wxSize(400,300))
+	wxFrame((wxFrame*)NULL, -1, wxEmptyString, wxDefaultPosition, wxSize(640,480))
 {
 	wxString ttl = wxT(PACKAGE_STRING);
 	SetTitle(ttl);
