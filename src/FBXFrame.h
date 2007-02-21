@@ -15,6 +15,7 @@ class wxToolBar;
 namespace fbx
 {
 
+	class FBXEngine;
 	class FBXFrame: public wxFrame
 	{
 	public:
@@ -28,6 +29,9 @@ namespace fbx
 		void OnNext(wxCommandEvent &event);
 		void OpenPlaylists(std::string pls);
 		void AddPlaylistPage(std::string name, std::string file);
+	protected:
+		FBXEngine *engine;
+		friend class FBX;
 	private:
 		DECLARE_EVENT_TABLE()
 		wxStatusBar *statusbar;

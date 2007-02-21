@@ -23,6 +23,7 @@
 #include <iostream>
 
 #include "FBXFrame.h"
+#include "FBXEngine.h"
 #include "playlist/PlaylistFactory.h"
 
 #include "icons/stop.xpm"
@@ -88,6 +89,8 @@ fbx::FBXFrame::FBXFrame():
 
 void fbx::FBXFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 {
+	if (engine)
+		engine->Stop();
 	Close(true);
 }
 
@@ -128,17 +131,20 @@ void fbx::FBXFrame::AddPlaylistPage(std::string name, std::string file)
 
 void fbx::FBXFrame::OnStop(wxCommandEvent& WXUNUSED(event))
 {
-	std::cout << "FBXFrame::OnStop" << std::endl;
+	std::cout << "FBXFrame::OnStop:";
+	std::cout << (engine->Stop() ? "true" : "false") << std::endl;
 }
 
 void fbx::FBXFrame::OnPause(wxCommandEvent& WXUNUSED(event))
 {
-	std::cout << "FBXFrame::OnPause" << std::endl;
+	std::cout << "FBXFrame::OnPause:";
+	std::cout << (engine->Pause() ? "true" : "false") << std::endl;
 }
 
 void fbx::FBXFrame::OnPlay(wxCommandEvent& WXUNUSED(event))
 {
-	std::cout << "FBXFrame::OnPlay" << std::endl;
+	std::cout << "FBXFrame::OnPlay:";
+	std::cout << (engine->Play("/home/xiphux/reason demo.ogg") ? "true" : "false") << std::endl;
 }
 
 void fbx::FBXFrame::OnPrev(wxCommandEvent& WXUNUSED(event))

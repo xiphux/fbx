@@ -19,6 +19,7 @@
 
 #include "FBX.h"
 #include "FBXFrame.h"
+#include "FBXEngine.h"
 #include "config/ConfigFactory.h"
 
 const wxCmdLineEntryDesc cmdLineDesc[] =
@@ -35,7 +36,9 @@ bool fbx::FBX::OnInit()
 {
 	if (!ParseCmdLine())
 		return false;
+	engine = new FBXEngine();
 	frame = new FBXFrame();
+	frame->engine = engine;
 	frame->Show(true);
 	frame->OpenPlaylists(ConfigFactory::GetConfig().GetString("playlists",""));
 	SetTopWindow(frame);
@@ -45,6 +48,10 @@ bool fbx::FBX::OnInit()
 
 int fbx::FBX::OnExit()
 {
+	if (engine) {
+		engine->Stop();
+		delete engine;
+	}
 	ConfigFactory::Deallocate();
 	return 0;
 }

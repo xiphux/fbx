@@ -5,7 +5,7 @@ AM_CPPFLAGS = @WX_CPPFLAGS@
 AM_CXXFLAGS = @WX_CXXFLAGS_ONLY@
 
 bin_PROGRAMS = fbx
-fbx_SOURCES = FBXFrame.cpp FBX.cpp
+fbx_SOURCES = FBXEngine.cpp FBXAudioThread.cpp FBXFrame.cpp FBX.cpp
 fbx_LDADD = audio/libfbxaudio.la audiofile/libfbxaudiofile.la config/libfbxconfig.la playlist/libfbxplaylist.la @WX_LIBS@
 
 noinst_PROGRAMS = fbxtest

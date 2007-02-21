@@ -12,6 +12,7 @@ namespace fbx
 {
 
 	class FBXFrame;
+	class FBXEngine;
 	class FBX: public wxApp
 	{
 	public:
@@ -23,6 +24,7 @@ namespace fbx
 
 		bool verbose;
 		FBXFrame *frame;
+		FBXEngine *engine;
 	};
 
 }
