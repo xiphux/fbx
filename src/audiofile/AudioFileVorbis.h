@@ -20,6 +20,7 @@ namespace fbx
 		virtual int Seek(double pos);
 		virtual long Read(char *buf, long len);
 		virtual double Size();
+		virtual double Current();
 		virtual bool Eof();
 	protected:
 		FILE *fp;

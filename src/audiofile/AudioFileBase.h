@@ -30,6 +30,7 @@ namespace fbx
 		virtual int Seek(double pos) = 0;
 		virtual long Read(char *buf, long len) = 0;
 		virtual double Size() = 0;
+		virtual double Current() = 0;
 		virtual bool Eof() = 0;
 		std::string Filename() const;
 	protected:

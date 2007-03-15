@@ -53,6 +53,13 @@ double fbx::AudioFileVorbis::Size()
 	return ov_time_total(&file, -1);
 }
 
+double fbx::AudioFileVorbis::Current()
+{
+	if (!opened)
+		return -1;
+	return ov_time_tell(&file);
+}
+
 bool fbx::AudioFileVorbis::Eof()
 {
 	if (!opened)
