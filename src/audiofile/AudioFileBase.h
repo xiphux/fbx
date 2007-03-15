@@ -32,6 +32,7 @@ namespace fbx
 		virtual double Size() = 0;
 		virtual double Current() = 0;
 		virtual bool Eof() = 0;
+		virtual std::string InfoString() = 0;
 		std::string Filename() const;
 	protected:
 		std::string filename;

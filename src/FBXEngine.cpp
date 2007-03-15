@@ -90,6 +90,8 @@ std::string fbx::FBXEngine::StatusString()
 {
 	std::string tmp;
 	if (audiofile) {
+		tmp += audiofile->InfoString();
+		tmp += " | ";
 		tmp += ReadableTime(audiofile->Current());
 		tmp += " / ";
 		tmp += ReadableTime(audiofile->Size());

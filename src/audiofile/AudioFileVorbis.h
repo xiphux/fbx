@@ -22,6 +22,7 @@ namespace fbx
 		virtual double Size();
 		virtual double Current();
 		virtual bool Eof();
+		virtual std::string InfoString();
 	protected:
 		FILE *fp;
 		bool opened;

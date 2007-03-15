@@ -5,6 +5,7 @@
  */
 
 #include <iostream>
+#include <sstream>
 #include "AudioFileVorbis.h"
 
 fbx::AudioFileVorbis::AudioFileVorbis(const std::string& fname):
@@ -67,3 +68,26 @@ bool fbx::AudioFileVorbis::Eof()
 	return (ov_time_tell(&file) >= ov_time_total(&file, -1));
 }
 
+std::string fbx::AudioFileVorbis::InfoString()
+{
+	std::stringstream str;
+	str << "Vorbis";
+	if (opened) {
+		str << " ";
+		//str << (int)(ov_bitrate_instant(&file) / 1024);
+		str << (int)(ov_bitrate(&file,-1) / 1024);
+		str << "kbps";
+		vorbis_info *tmp = ov_info(&file,-1);
+		if (tmp) {
+			str << " ";
+			str << tmp->rate;
+			str << "Hz";
+			str << " ";
+			if (tmp->channels == 1)
+				str << "mono";
+			else
+				str << "stereo";
+		}
+	}
+	return str.str();
+}
