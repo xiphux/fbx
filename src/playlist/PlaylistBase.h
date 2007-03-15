@@ -25,6 +25,7 @@ namespace fbx
 		std::string Current();
 		bool Prev();
 		bool Next();
+		bool Set(const unsigned int i);
 		unsigned int Size();
 		std::string GetPath();
 		std::string GetFilename() const;

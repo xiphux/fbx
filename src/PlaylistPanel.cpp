@@ -12,6 +12,7 @@
 
 #include <iostream>
 
+#include "audiofile/AudioFileFactory.h"
 #include "playlist/PlaylistFactory.h"
 #include "PlaylistPanel.h"
 
@@ -43,9 +44,52 @@ bool fbx::PlaylistPanel::PopulatePlaylist()
 {
 	std::cout << "PlaylistPanel::PopulatePlaylist" << std::endl;
 	listbox->Clear();
-	for (std::vector<std::string>::iterator it = playlist->playlist.begin(); it != playlist->playlist.end(); it++) {
-		std::cout << *it << std::endl;
-		wxString t(it->c_str(), *wxConvCurrent);
-		listbox->Append(t);
+	int idx = 0;
+	while (idx < playlist->Size()) {
+		std::string file = playlist->Current();
+		std::string meta;
+		AudioFileBase *tmp = AudioFileFactory::OpenAudioFile(file);
+		if (tmp)
+			meta = Metadata(tmp);
+		if (meta.length() > 3) {
+			wxString m(meta.c_str(), *wxConvCurrent);
+			listbox->Append(m,(void*)(file.c_str()));
+		} else {
+			wxString i(file.c_str(), *wxConvCurrent);
+			listbox->Append(i,(void*)(file.c_str()));
+		}
+		playlist->Next();
+		idx++;
 	}
+	playlist->Set(0);
+}
+
+std::string fbx::PlaylistPanel::Metadata(AudioFileBase *audiofile)
+{
+	if (!audiofile)
+		return "";
+	std::string tmp;
+	tmp += audiofile->Metadata(FBX_METADATA_ARTIST);
+	tmp += " - ";
+
+	std::string tmp2;
+	tmp2 += "[";
+	std::string album = audiofile->Metadata(FBX_METADATA_ALBUM);
+	std::string trackno = audiofile->Metadata(FBX_METADATA_TRACK);
+	if (album.length() > 0) {
+		tmp2 += album;
+		if (trackno.length() > 0)
+			tmp2 += " ";
+	}
+	if (trackno.length() > 0) {
+		tmp2 += "#";
+		tmp2 += trackno;
+	}
+	tmp2 += "]";
+	if (tmp2.length() > 2) {
+		tmp += tmp2;
+		tmp += " ";
+	}
+	tmp += audiofile->Metadata(FBX_METADATA_TITLE);
+	return tmp;
 }

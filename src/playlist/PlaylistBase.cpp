@@ -23,7 +23,10 @@ bool fbx::PlaylistBase::Write()
 
 std::string fbx::PlaylistBase::Current()
 {
-	return playlist.at(idx);
+	std::string item = playlist.at(idx);
+	if (item.at(0) != '/')
+		item = GetPath() + "/" + item;
+	return item;
 }
 
 bool fbx::PlaylistBase::Prev()
@@ -68,4 +71,12 @@ std::string fbx::PlaylistBase::GetPath()
 	if ((idx >= 0) && (idx != std::string::npos))
 		return filename.substr(0,idx);
 	return "";
+}
+
+bool fbx::PlaylistBase::Set(const unsigned int i)
+{
+	if (i >= Size())
+		return false;
+	idx = i;
+	return true;
 }
