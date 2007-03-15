@@ -95,7 +95,8 @@ std::string fbx::FBXEngine::StatusString()
 		tmp += ReadableTime(audiofile->Current());
 		tmp += " / ";
 		tmp += ReadableTime(audiofile->Size());
-	}
+	} else
+		tmp = "Stopped";
 	return tmp;
 }
 
