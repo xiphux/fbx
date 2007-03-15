@@ -40,6 +40,7 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_MENU(FBX_frame_play, fbx::FBXFrame::OnPlay)
 	EVT_MENU(FBX_frame_prev, fbx::FBXFrame::OnPrev)
 	EVT_MENU(FBX_frame_next, fbx::FBXFrame::OnNext)
+	EVT_IDLE(fbx::FBXFrame::OnIdle)
 END_EVENT_TABLE()
 
 fbx::FBXFrame::FBXFrame():
@@ -85,6 +86,9 @@ fbx::FBXFrame::FBXFrame():
 	statusbar = CreateStatusBar();
 
 	SetSizer(topsizer);
+
+	SetExtraStyle(wxWS_EX_PROCESS_IDLE);
+	wxIdleEvent::SetMode(wxIDLE_PROCESS_SPECIFIED);
 }
 
 void fbx::FBXFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
@@ -155,4 +159,12 @@ void fbx::FBXFrame::OnPrev(wxCommandEvent& WXUNUSED(event))
 void fbx::FBXFrame::OnNext(wxCommandEvent& WXUNUSED(event))
 {
 	std::cout << "FBXFrame::OnNext" << std::endl;
+}
+
+void fbx::FBXFrame::OnIdle(wxIdleEvent& event)
+{
+	std::string st = engine->StatusString();
+	wxString s(st.c_str(), *wxConvCurrent);
+	statusbar->SetStatusText(s);
+	event.RequestMore();
 }

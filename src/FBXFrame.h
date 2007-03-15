@@ -29,6 +29,7 @@ namespace fbx
 		void OnNext(wxCommandEvent &event);
 		void OpenPlaylists(std::string pls);
 		void AddPlaylistPage(std::string name, std::string file);
+		void OnIdle(wxIdleEvent &event);
 	protected:
 		FBXEngine *engine;
 		friend class FBX;

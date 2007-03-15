@@ -22,7 +22,9 @@ namespace fbx
 		bool Play(const std::string& filename);
 		bool Pause();
 		bool Stop();
+		std::string StatusString();
 	protected:
+		std::string ReadableTime(double t);
 		FBXAudioThread *thread;
 		AudioBase *audio;
 		AudioFileBase *audiofile;
