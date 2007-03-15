@@ -42,12 +42,14 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_MENU(FBX_frame_play, fbx::FBXFrame::OnPlay)
 	EVT_MENU(FBX_frame_prev, fbx::FBXFrame::OnPrev)
 	EVT_MENU(FBX_frame_next, fbx::FBXFrame::OnNext)
+	EVT_LISTBOX_DCLICK(FBX_frame_playlist, fbx::FBXFrame::OnPlaylistChoice)
 	EVT_COMMAND_SCROLL(FBX_frame_progress, fbx::FBXFrame::OnSeek)
 	EVT_IDLE(fbx::FBXFrame::OnIdle)
 END_EVENT_TABLE()
 
 fbx::FBXFrame::FBXFrame():
-	wxFrame((wxFrame*)NULL, -1, wxEmptyString, wxDefaultPosition, wxSize(640,480))
+	wxFrame((wxFrame*)NULL, -1, wxEmptyString, wxDefaultPosition, wxSize(640,480)),
+	plidx(0)
 {
 	wxString ttl = wxT(PACKAGE_STRING);
 	SetTitle(ttl);
@@ -129,7 +131,7 @@ void fbx::FBXFrame::OpenPlaylists(std::string pls)
 		pos = pls.find_first_of(",",lastpos);
 	}
 	if (playlists.size() < 1)
-		playlists["Default"] = "/home/xiphux/fbxtest.m3u";
+		playlists["Default"] = "";
 	for (std::map<std::string,std::string>::iterator iter = playlists.begin(); iter != playlists.end(); iter++)
 		AddPlaylistPage(iter->first, iter->second);
 }
@@ -137,7 +139,7 @@ void fbx::FBXFrame::OpenPlaylists(std::string pls)
 void fbx::FBXFrame::AddPlaylistPage(std::string name, std::string file)
 {
 	wxString n(name.c_str(), *wxConvCurrent);
-	notebook->AddPage(new PlaylistPanel(notebook,-1,file), n);
+	notebook->AddPage(new PlaylistPanel(notebook,FBX_frame_playlist,file), n);
 }
 
 void fbx::FBXFrame::OnStop(wxCommandEvent& WXUNUSED(event))
@@ -159,7 +161,8 @@ void fbx::FBXFrame::OnPause(wxCommandEvent& WXUNUSED(event))
 
 void fbx::FBXFrame::OnPlay(wxCommandEvent& WXUNUSED(event))
 {
-	bool ret = Play("/home/xiphux/reason demo.ogg");
+	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
+	bool ret = Play(page->Current());
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnPlay:" << (ret ? "true" : "false") << std::endl;
 #endif
@@ -167,6 +170,10 @@ void fbx::FBXFrame::OnPlay(wxCommandEvent& WXUNUSED(event))
 
 void fbx::FBXFrame::OnPrev(wxCommandEvent& WXUNUSED(event))
 {
+	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
+	bool ret = page->Prev();
+	if (ret)
+		Play(page->Current());
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnPrev" << std::endl;
 #endif
@@ -174,6 +181,10 @@ void fbx::FBXFrame::OnPrev(wxCommandEvent& WXUNUSED(event))
 
 void fbx::FBXFrame::OnNext(wxCommandEvent& WXUNUSED(event))
 {
+	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
+	bool ret = page->Next();
+	if (ret)
+		Play(page->Current());
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnNext" << std::endl;
 #endif
@@ -185,8 +196,12 @@ void fbx::FBXFrame::OnIdle(wxIdleEvent& event)
 	wxString s(st.c_str(), *wxConvCurrent);
 	statusbar->SetStatusText(s);
 	progress->SetValue(engine->Current());
-	if (engine->Stopped() && progress->IsEnabled())
-		ResetSlider();
+	if ((engine->Eof() || engine->Stopped()) && progress->IsEnabled()) {
+		if (!TryAdvance()) {
+			engine->Stop();
+			ResetSlider();
+		}
+	}
 	event.RequestMore();
 }
 
@@ -195,13 +210,14 @@ void fbx::FBXFrame::ResetSlider()
 #ifdef DEBUG
 	std::cout << "FBXFrame::ResetSlider" << std::endl;
 #endif
-	progress->Enable(false);
 	progress->SetValue(0);
 	progress->SetRange(0,1);
+	progress->Enable(false);
 }
 
 bool fbx::FBXFrame::Play(const std::string& file)
 {
+	engine->Stop();
 	bool ret = engine->Play(file);
 	progress->Enable(true);
 	progress->SetRange(0,engine->Size());
@@ -218,4 +234,22 @@ void fbx::FBXFrame::OnSeek(wxScrollEvent& event)
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnSeek(" << event.GetPosition() << "): " << (ret ? "true" : "false") << std::endl;
 #endif
+}
+
+void fbx::FBXFrame::OnPlaylistChoice(wxCommandEvent& event)
+{
+	int idx = event.GetSelection();
+	char *str = (char*)event.GetClientData();
+	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
+	page->SetActive(idx);
+	Play(std::string(str));
+}
+
+bool fbx::FBXFrame::TryAdvance()
+{
+	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
+	bool ret = page->Next();
+	if (ret)
+		return Play(page->Current());
+	return false;
 }

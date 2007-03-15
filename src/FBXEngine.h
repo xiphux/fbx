@@ -27,6 +27,7 @@ namespace fbx
 		std::string Metadata();
 		unsigned int Size();
 		unsigned int Current();
+		bool Eof();
 		bool Stopped();
 	protected:
 		std::string ReadableTime(double t);

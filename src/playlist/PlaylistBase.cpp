@@ -29,6 +29,11 @@ std::string fbx::PlaylistBase::Current()
 	return item;
 }
 
+unsigned int fbx::PlaylistBase::CurrentIdx() const
+{
+	return idx;
+}
+
 bool fbx::PlaylistBase::Prev()
 {
 	if (idx == 0)

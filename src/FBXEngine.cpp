@@ -89,7 +89,7 @@ bool fbx::FBXEngine::Stop()
 std::string fbx::FBXEngine::StatusString()
 {
 	std::string tmp;
-	if (audiofile) {
+	if (thread && audiofile) {
 		tmp += audiofile->InfoString();
 		tmp += " | ";
 		tmp += ReadableTime(audiofile->Current());
@@ -133,7 +133,7 @@ unsigned int fbx::FBXEngine::Current()
 
 bool fbx::FBXEngine::Stopped()
 {
-	return !(thread && audiofile);
+	return !(thread || audiofile);
 }
 
 bool fbx::FBXEngine::Seek(double t)
@@ -171,4 +171,11 @@ std::string fbx::FBXEngine::Metadata()
 	}
 	tmp += audiofile->Metadata(FBX_METADATA_TITLE);
 	return tmp;
+}
+
+bool fbx::FBXEngine::Eof()
+{
+	if (!audiofile)
+		return true;
+	return audiofile->Eof();
 }

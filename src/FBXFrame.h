@@ -32,8 +32,10 @@ namespace fbx
 		void OpenPlaylists(std::string pls);
 		void AddPlaylistPage(std::string name, std::string file);
 		void OnIdle(wxIdleEvent &event);
+		void OnPlaylistChoice(wxCommandEvent &event);
 		void ResetSlider();
 		bool Play(const std::string& file);
+		bool TryAdvance();
 	protected:
 		FBXEngine *engine;
 		friend class FBX;
@@ -47,6 +49,7 @@ namespace fbx
 		wxToolBar *progresstoolbar;
 		wxToolBar *vistoolbar;
 		wxSlider *progress;
+		unsigned int plidx;
 	};
 
 	enum {
@@ -58,6 +61,7 @@ namespace fbx
 		FBX_frame_prev,
 		FBX_frame_next,
 		FBX_frame_progress,
+		FBX_frame_playlist,
 	};
 
 }

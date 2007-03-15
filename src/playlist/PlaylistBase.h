@@ -23,6 +23,7 @@ namespace fbx
 		virtual ~PlaylistBase();
 		virtual bool Write();
 		std::string Current();
+		unsigned int CurrentIdx() const;
 		bool Prev();
 		bool Next();
 		bool Set(const unsigned int i);

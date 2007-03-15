@@ -20,7 +20,7 @@ fbx::PlaylistPanel::PlaylistPanel(wxWindow *parent, wxWindowID id, const std::st
 	wxPanel(parent,id)
 {
 	wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
-	listbox = new wxListBox(this,-1);
+	listbox = new wxListBox(this,id);
 	topsizer->Add(listbox,1,wxEXPAND|wxALL);
 
 	SetSizer(topsizer);
@@ -92,4 +92,24 @@ std::string fbx::PlaylistPanel::Metadata(AudioFileBase *audiofile)
 	}
 	tmp += audiofile->Metadata(FBX_METADATA_TITLE);
 	return tmp;
+}
+
+bool fbx::PlaylistPanel::SetActive(int idx)
+{
+	playlist->Set(idx);
+}
+
+bool fbx::PlaylistPanel::Next()
+{
+	return playlist->Next();
+}
+
+bool fbx::PlaylistPanel::Prev()
+{
+	return playlist->Prev();
+}
+
+std::string fbx::PlaylistPanel::Current()
+{
+	return playlist->Current();
 }
