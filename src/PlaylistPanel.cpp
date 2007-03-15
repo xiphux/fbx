@@ -97,19 +97,27 @@ std::string fbx::PlaylistPanel::Metadata(AudioFileBase *audiofile)
 bool fbx::PlaylistPanel::SetActive(int idx)
 {
 	playlist->Set(idx);
+	listbox->SetSelection(idx);
 }
 
 bool fbx::PlaylistPanel::Next()
 {
-	return playlist->Next();
+	bool ret = playlist->Next();
+	if (ret)
+		listbox->SetSelection(playlist->CurrentIdx());
+	return ret;
 }
 
 bool fbx::PlaylistPanel::Prev()
 {
-	return playlist->Prev();
+	bool ret = playlist->Prev();
+	if (ret)
+		listbox->SetSelection(playlist->CurrentIdx());
+	return ret;
 }
 
 std::string fbx::PlaylistPanel::Current()
 {
+	listbox->SetSelection(playlist->CurrentIdx());
 	return playlist->Current();
 }
