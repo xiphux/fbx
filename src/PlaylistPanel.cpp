@@ -50,7 +50,7 @@ bool fbx::PlaylistPanel::PopulatePlaylist()
 		std::string meta;
 		AudioFileBase *tmp = AudioFileFactory::OpenAudioFile(file);
 		if (tmp)
-			meta = Metadata(tmp);
+			meta = tmp->MetadataString();
 		if (meta.length() > 3) {
 			wxString m(meta.c_str(), *wxConvCurrent);
 			listbox->Append(m,(void*)(file.c_str()));
@@ -62,36 +62,6 @@ bool fbx::PlaylistPanel::PopulatePlaylist()
 		idx++;
 	}
 	playlist->Set(0);
-}
-
-std::string fbx::PlaylistPanel::Metadata(AudioFileBase *audiofile)
-{
-	if (!audiofile)
-		return "";
-	std::string tmp;
-	tmp += audiofile->Metadata(FBX_METADATA_ARTIST);
-	tmp += " - ";
-
-	std::string tmp2;
-	tmp2 += "[";
-	std::string album = audiofile->Metadata(FBX_METADATA_ALBUM);
-	std::string trackno = audiofile->Metadata(FBX_METADATA_TRACK);
-	if (album.length() > 0) {
-		tmp2 += album;
-		if (trackno.length() > 0)
-			tmp2 += " ";
-	}
-	if (trackno.length() > 0) {
-		tmp2 += "#";
-		tmp2 += trackno;
-	}
-	tmp2 += "]";
-	if (tmp2.length() > 2) {
-		tmp += tmp2;
-		tmp += " ";
-	}
-	tmp += audiofile->Metadata(FBX_METADATA_TITLE);
-	return tmp;
 }
 
 bool fbx::PlaylistPanel::SetActive(int idx)

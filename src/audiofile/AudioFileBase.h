@@ -40,6 +40,7 @@ namespace fbx
 		virtual bool Eof() = 0;
 		virtual std::string InfoString() = 0;
 		virtual std::string Metadata(const unsigned int field) = 0;
+		virtual std::string MetadataString();
 		std::string Filename() const;
 	protected:
 		std::string filename;

@@ -147,30 +147,7 @@ std::string fbx::FBXEngine::Metadata()
 {
 	if (!audiofile)
 		return "";
-	std::string tmp;
-	tmp += audiofile->Metadata(FBX_METADATA_ARTIST);
-	tmp += " - ";
-
-	std::string tmp2;
-	tmp2 += "[";
-	std::string album = audiofile->Metadata(FBX_METADATA_ALBUM);
-	std::string trackno = audiofile->Metadata(FBX_METADATA_TRACK);
-	if (album.length() > 0) {
-		tmp2 += album;
-		if (trackno.length() > 0)
-			tmp2 += " ";
-	}
-	if (trackno.length() > 0) {
-		tmp2 += "#";
-		tmp2 += trackno;
-	}
-	tmp2 += "]";
-	if (tmp2.length() > 2) {
-		tmp += tmp2;
-		tmp += " ";
-	}
-	tmp += audiofile->Metadata(FBX_METADATA_TITLE);
-	return tmp;
+	return audiofile->MetadataString();
 }
 
 bool fbx::FBXEngine::Eof()
