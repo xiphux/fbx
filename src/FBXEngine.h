@@ -30,7 +30,6 @@ namespace fbx
 		bool Eof();
 		bool Stopped();
 	protected:
-		std::string ReadableTime(double t);
 		FBXAudioThread *thread;
 		AudioBase *audio;
 		AudioFileBase *audiofile;

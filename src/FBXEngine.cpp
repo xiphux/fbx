@@ -14,6 +14,7 @@
 #include <iostream>
 #include <sstream>
 
+#include "FBXUtil.h"
 #include "audiofile/AudioFileFactory.h"
 #include "audio/AudioFactory.h"
 #include "FBXAudioThread.h"
@@ -92,29 +93,12 @@ std::string fbx::FBXEngine::StatusString()
 	if (thread && audiofile) {
 		tmp += audiofile->InfoString();
 		tmp += " | ";
-		tmp += ReadableTime(audiofile->Current());
+		tmp += FBXUtil::ReadableTime(audiofile->Current());
 		tmp += " / ";
-		tmp += ReadableTime(audiofile->Size());
+		tmp += FBXUtil::ReadableTime(audiofile->Size());
 	} else
 		tmp = "Stopped";
 	return tmp;
-}
-
-std::string fbx::FBXEngine::ReadableTime(double d)
-{
-	int s = (int)d;
-	int m = 0;
-	while (s >= 60) {
-		m++;
-		s -= 60;
-	}
-	std::stringstream str;
-	str << m;
-	str << ":";
-	if (s < 10)
-		str << 0;
-	str << s;
-	return str.str();
 }
 
 unsigned int fbx::FBXEngine::Size()
