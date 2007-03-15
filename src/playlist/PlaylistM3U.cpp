@@ -18,9 +18,6 @@ fbx::PlaylistM3U::PlaylistM3U(const std::string& fname):
 		}
 		reader.close();
 	}
-	file.open(fname.c_str());
-	if (!file)
-		std::cerr << "[PlaylistM3U] Could not open M3U file: " << fname << std::endl;
 }
 
 fbx::PlaylistM3U::~PlaylistM3U()
@@ -30,10 +27,11 @@ fbx::PlaylistM3U::~PlaylistM3U()
 
 bool fbx::PlaylistM3U::Write()
 {
-	if (!file)
-		return false;
-	file.close();
 	file.open(filename.c_str(),std::ios::out|std::ios::trunc);
+	if (!file) {
+		std::cerr << "[PlaylistM3U] Could not open M3U file: " << filename << std::endl;
+		return false;
+	}
 	for (std::vector<std::string>::iterator iter = playlist.begin(); iter != playlist.end(); iter++)
 		file << (*iter) << std::endl;
 	file.flush();

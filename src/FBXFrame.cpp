@@ -26,6 +26,7 @@
 #include "FBXFrame.h"
 #include "FBXEngine.h"
 #include "playlist/PlaylistFactory.h"
+#include "PlaylistPanel.h"
 
 #include "icons/stop.xpm"
 #include "icons/pause.xpm"
@@ -128,7 +129,7 @@ void fbx::FBXFrame::OpenPlaylists(std::string pls)
 		pos = pls.find_first_of(",",lastpos);
 	}
 	if (playlists.size() < 1)
-		playlists["Default"] = "";
+		playlists["Default"] = "/home/xiphux/fbxtest.m3u";
 	for (std::map<std::string,std::string>::iterator iter = playlists.begin(); iter != playlists.end(); iter++)
 		AddPlaylistPage(iter->first, iter->second);
 }
@@ -136,7 +137,7 @@ void fbx::FBXFrame::OpenPlaylists(std::string pls)
 void fbx::FBXFrame::AddPlaylistPage(std::string name, std::string file)
 {
 	wxString n(name.c_str(), *wxConvCurrent);
-	notebook->AddPage((wxWindow*)(new wxPanel(notebook)), n);
+	notebook->AddPage(new PlaylistPanel(notebook,-1,file), n);
 }
 
 void fbx::FBXFrame::OnStop(wxCommandEvent& WXUNUSED(event))

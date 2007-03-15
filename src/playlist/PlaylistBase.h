@@ -35,6 +35,7 @@ namespace fbx
 		unsigned int idx;
 		std::vector<std::string> playlist;
 		friend class PlaylistFactory;
+		friend class PlaylistPanel;
 	};
 
 }
