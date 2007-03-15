@@ -93,8 +93,9 @@ fbx::FBXFrame::FBXFrame():
 	playbacktoolbar->AddControl(new wxStaticText(playbacktoolbar,-1,wxT("Order")));
 	wxArrayString tmp;
 	tmp.Add(wxT("Default"));
-	tmp.Add(wxT("Repeat"));
 	tmp.Add(wxT("Random"));
+	tmp.Add(wxT("Repeat (playlist)"));
+	tmp.Add(wxT("Repeat (track)"));
 	order = new wxChoice(playbacktoolbar,FBX_frame_order,wxDefaultPosition,wxDefaultSize,tmp);
 	playbacktoolbar->AddControl(order);
 	playbacktoolbar->Realize();
@@ -189,7 +190,7 @@ void fbx::FBXFrame::OnPlay(wxCommandEvent& WXUNUSED(event))
 void fbx::FBXFrame::OnPrev(wxCommandEvent& WXUNUSED(event))
 {
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
-	bool ret = page->Prev((order->GetCurrentSelection() == 2));
+	bool ret = page->Prev((order->GetCurrentSelection() == 1));
 	if (ret)
 		Play(page->Current());
 #ifdef DEBUG
@@ -200,7 +201,7 @@ void fbx::FBXFrame::OnPrev(wxCommandEvent& WXUNUSED(event))
 void fbx::FBXFrame::OnNext(wxCommandEvent& WXUNUSED(event))
 {
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
-	bool ret = page->Next((order->GetCurrentSelection() == 2));
+	bool ret = page->Next((order->GetCurrentSelection() == 1));
 	if (ret)
 		Play(page->Current());
 #ifdef DEBUG
@@ -256,7 +257,9 @@ void fbx::FBXFrame::OnPlaylistChoice(wxCommandEvent& event)
 bool fbx::FBXFrame::TryAdvance()
 {
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
-	bool ret = page->Next((order->GetCurrentSelection() == 2));
+	bool ret = true;
+	if (order->GetCurrentSelection() != 3)
+		page->Next((order->GetCurrentSelection() == 1));
 	if (ret)
 		return Play(page->Current());
 	return false;
