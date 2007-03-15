@@ -3,6 +3,10 @@
  * Playlist panel implementation
  * Copyright (C) 2007 Christopher Han
  */
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <wx/wxprec.h>
 #ifndef WX_PRECOMP
 #include <wx/panel.h>
@@ -34,7 +38,9 @@ fbx::PlaylistPanel::PlaylistPanel(wxWindow *parent, wxWindowID id, const std::st
 
 bool fbx::PlaylistPanel::LoadPlaylist(const std::string& pls)
 {
+#ifdef DEBUG
 	std::cout << "PlaylistPanel::LoadPlaylist:" << pls << std::endl;
+#endif
 	PlaylistBase *tmp = PlaylistFactory::OpenPlaylist(pls);
 	if (tmp)
 		playlist = tmp;
@@ -43,7 +49,9 @@ bool fbx::PlaylistPanel::LoadPlaylist(const std::string& pls)
 
 bool fbx::PlaylistPanel::PopulatePlaylist()
 {
+#ifdef DEBUG
 	std::cout << "PlaylistPanel::PopulatePlaylist" << std::endl;
+#endif
 	listbox->Clear();
 	int idx = 0;
 	while (idx < playlist->Size()) {
