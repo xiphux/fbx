@@ -23,6 +23,7 @@ namespace fbx
 		virtual double Current();
 		virtual bool Eof();
 		virtual std::string InfoString();
+		virtual std::string Metadata(const unsigned int field);
 	protected:
 		FILE *fp;
 		bool opened;

@@ -24,6 +24,7 @@ namespace fbx
 		bool Stop();
 		bool Seek(double t);
 		std::string StatusString();
+		std::string Metadata();
 		unsigned int Size();
 		unsigned int Current();
 		bool Stopped();

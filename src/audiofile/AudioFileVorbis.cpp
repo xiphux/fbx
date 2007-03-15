@@ -91,3 +91,35 @@ std::string fbx::AudioFileVorbis::InfoString()
 	}
 	return str.str();
 }
+
+std::string fbx::AudioFileVorbis::Metadata(const unsigned int field)
+{
+	if (opened) {
+		vorbis_comment *com = ov_comment(&file,-1);
+		if (com) {
+			std::string idx;
+			switch (field) {
+				case FBX_METADATA_TITLE:
+					idx = "TITLE=";
+					break;
+				case FBX_METADATA_TRACK:
+					idx = "TRACKNUMBER=";
+					break;
+				case FBX_METADATA_ALBUM:
+					idx = "ALBUM=";
+					break;
+				case FBX_METADATA_ARTIST:
+					idx = "ARTIST=";
+					break;
+				default:
+					return "";
+			}
+			for (int i = 0; i < com->comments; i++) {
+				std::string uc = com->user_comments[i];
+				if (idx == uc.substr(0,idx.length()))
+					return uc.substr(idx.length());
+			}
+		}
+	}
+	return "";
+}

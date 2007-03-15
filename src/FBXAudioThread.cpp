@@ -33,7 +33,7 @@ void *fbx::FBXAudioThread::Entry()
 		if (len < 0)
 			std::cerr << "[FBXAudioThread] Error reading audiofile" << std::endl;
 		else if (!engine->audio->Write(buf, len))
-			std::cout << "[FBXAudioThread] Error writing " << len << std::endl;
+			std::cerr << "[FBXAudioThread] Error writing " << len << std::endl;
 	}
 	engine->Stop();
 	return 0;

@@ -141,31 +141,41 @@ void fbx::FBXFrame::AddPlaylistPage(std::string name, std::string file)
 
 void fbx::FBXFrame::OnStop(wxCommandEvent& WXUNUSED(event))
 {
-	std::cout << "FBXFrame::OnStop:";
-	std::cout << (engine->Stop() ? "true" : "false") << std::endl;
+	bool ret = engine->Stop();
+#ifdef DEBUG
+	std::cout << "FBXFrame::OnStop:" << (ret ? "true" : "false") << std::endl;
+#endif
 	ResetSlider();
 }
 
 void fbx::FBXFrame::OnPause(wxCommandEvent& WXUNUSED(event))
 {
-	std::cout << "FBXFrame::OnPause:";
-	std::cout << (engine->Pause() ? "true" : "false") << std::endl;
+	bool ret = engine->Pause();
+#ifdef DEBUG
+	std::cout << "FBXFrame::OnPause:" << (ret ? "true" : "false") << std::endl;
+#endif
 }
 
 void fbx::FBXFrame::OnPlay(wxCommandEvent& WXUNUSED(event))
 {
-	std::cout << "FBXFrame::OnPlay:";
-	std::cout << (Play("/home/xiphux/reason demo.ogg") ? "true" : "false") << std::endl;
+	bool ret = Play("/home/xiphux/reason demo.ogg");
+#ifdef DEBUG
+	std::cout << "FBXFrame::OnPlay:" << (ret ? "true" : "false") << std::endl;
+#endif
 }
 
 void fbx::FBXFrame::OnPrev(wxCommandEvent& WXUNUSED(event))
 {
+#ifdef DEBUG
 	std::cout << "FBXFrame::OnPrev" << std::endl;
+#endif
 }
 
 void fbx::FBXFrame::OnNext(wxCommandEvent& WXUNUSED(event))
 {
+#ifdef DEBUG
 	std::cout << "FBXFrame::OnNext" << std::endl;
+#endif
 }
 
 void fbx::FBXFrame::OnIdle(wxIdleEvent& event)
@@ -181,7 +191,9 @@ void fbx::FBXFrame::OnIdle(wxIdleEvent& event)
 
 void fbx::FBXFrame::ResetSlider()
 {
+#ifdef DEBUG
 	std::cout << "FBXFrame::ResetSlider" << std::endl;
+#endif
 	progress->Enable(false);
 	progress->SetValue(0);
 	progress->SetRange(0,1);
@@ -192,12 +204,17 @@ bool fbx::FBXFrame::Play(const std::string& file)
 	bool ret = engine->Play(file);
 	progress->Enable(true);
 	progress->SetRange(0,engine->Size());
+#ifdef DEBUG
 	std::cout << "Range [0:" << engine->Size() << "]" << std::endl;
+	std::cout << "Now Playing: " << engine->Metadata() << std::endl;
+#endif
 	return ret;
 }
 
 void fbx::FBXFrame::OnSeek(wxScrollEvent& event)
 {
-	std::cout << "FBXFrame::OnSeek(" << event.GetPosition() << "): ";
-	std::cout << (engine->Seek((double)event.GetPosition()) ? "true" : "false") << std::endl;
+	bool ret = engine->Seek((double)event.GetPosition());
+#ifdef DEBUG
+	std::cout << "FBXFrame::OnSeek(" << event.GetPosition() << "): " << (ret ? "true" : "false") << std::endl;
+#endif
 }
