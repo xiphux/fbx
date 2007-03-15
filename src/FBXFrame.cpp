@@ -19,6 +19,8 @@
 #include <wx/panel.h>
 #include <wx/slider.h>
 #include <wx/aui/auibook.h>
+#include <wx/app.h>
+#include <wx/timer.h>
 #endif
 
 #include <iostream>
@@ -45,10 +47,12 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_LISTBOX_DCLICK(FBX_frame_playlist, fbx::FBXFrame::OnPlaylistChoice)
 	EVT_COMMAND_SCROLL(FBX_frame_progress, fbx::FBXFrame::OnSeek)
 	EVT_IDLE(fbx::FBXFrame::OnIdle)
+	EVT_TIMER(FBX_frame_timer, fbx::FBXFrame::OnTimer)
 END_EVENT_TABLE()
 
 fbx::FBXFrame::FBXFrame():
 	wxFrame((wxFrame*)NULL, -1, wxEmptyString, wxDefaultPosition, wxSize(640,480)),
+	timer(this,FBX_frame_timer),
 	plidx(0)
 {
 	wxString ttl = wxT(PACKAGE_STRING);
@@ -98,6 +102,7 @@ fbx::FBXFrame::FBXFrame():
 
 	SetExtraStyle(wxWS_EX_PROCESS_IDLE);
 	wxIdleEvent::SetMode(wxIDLE_PROCESS_SPECIFIED);
+	timer.Start(500);
 }
 
 void fbx::FBXFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
@@ -192,17 +197,7 @@ void fbx::FBXFrame::OnNext(wxCommandEvent& WXUNUSED(event))
 
 void fbx::FBXFrame::OnIdle(wxIdleEvent& event)
 {
-	std::string st = engine->StatusString();
-	wxString s(st.c_str(), *wxConvCurrent);
-	statusbar->SetStatusText(s);
-	progress->SetValue(engine->Current());
-	if ((engine->Eof() || engine->Stopped()) && progress->IsEnabled()) {
-		if (!TryAdvance()) {
-			engine->Stop();
-			ResetSlider();
-		}
-	}
-	event.RequestMore();
+	//event.RequestMore();
 }
 
 void fbx::FBXFrame::ResetSlider()
@@ -252,4 +247,24 @@ bool fbx::FBXFrame::TryAdvance()
 	if (ret)
 		return Play(page->Current());
 	return false;
+}
+
+void fbx::FBXFrame::OnTimer(wxTimerEvent& WXUNUSED(event))
+{
+	//wxWakeUpIdle();
+	UpdateStatus();
+	if ((engine->Eof() || engine->Stopped()) && progress->IsEnabled()) {
+		if (!TryAdvance()) {
+			engine->Stop();
+			ResetSlider();
+		}
+	}
+}
+
+void fbx::FBXFrame::UpdateStatus()
+{
+	std::string st = engine->StatusString();
+	wxString s(st.c_str(), *wxConvCurrent);
+	statusbar->SetStatusText(s);
+	progress->SetValue(engine->Current());
 }

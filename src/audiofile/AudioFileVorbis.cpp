@@ -74,8 +74,8 @@ std::string fbx::AudioFileVorbis::InfoString()
 	str << "Vorbis";
 	if (opened) {
 		str << " ";
-		//str << (int)(ov_bitrate_instant(&file) / 1024);
-		str << (int)(ov_bitrate(&file,-1) / 1024);
+		str << (int)(ov_bitrate_instant(&file) / 1024);
+		//str << (int)(ov_bitrate(&file,-1) / 1024);
 		str << "kbps";
 		vorbis_info *tmp = ov_info(&file,-1);
 		if (tmp) {

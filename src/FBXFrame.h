@@ -12,6 +12,8 @@ class wxAuiNotebook;
 class wxStatusBar;
 class wxToolBar;
 class wxSlider;
+class wxTimer;
+class wxTimerEvent;
 
 namespace fbx
 {
@@ -33,6 +35,8 @@ namespace fbx
 		void AddPlaylistPage(std::string name, std::string file);
 		void OnIdle(wxIdleEvent &event);
 		void OnPlaylistChoice(wxCommandEvent &event);
+		void OnTimer(wxTimerEvent &event);
+		void UpdateStatus();
 		void ResetSlider();
 		bool Play(const std::string& file);
 		bool TryAdvance();
@@ -49,6 +53,7 @@ namespace fbx
 		wxToolBar *progresstoolbar;
 		wxToolBar *vistoolbar;
 		wxSlider *progress;
+		wxTimer timer;
 		unsigned int plidx;
 	};
 
@@ -61,6 +66,7 @@ namespace fbx
 		FBX_frame_prev,
 		FBX_frame_next,
 		FBX_frame_progress,
+		FBX_frame_timer,
 		FBX_frame_playlist,
 	};
 
