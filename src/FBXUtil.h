@@ -16,6 +16,8 @@ namespace fbx
 	public:
 		static std::string ReadableTime(const double d);
 		static std::string ReadableTime(const int i);
+		static void SeedRand();
+		static int Rand(const int lower, const int upper);
 	};
 
 }

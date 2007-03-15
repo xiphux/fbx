@@ -6,6 +6,8 @@
 #include "FBXUtil.h"
 
 #include <sstream>
+#include <cstdlib>
+#include <time.h>
 
 std::string fbx::FBXUtil::ReadableTime(const double d)
 {
@@ -27,4 +29,16 @@ std::string fbx::FBXUtil::ReadableTime(const int i)
 		str << 0;
 	str << s;
 	return str.str();
+}
+
+void fbx::FBXUtil::SeedRand()
+{
+	time_t seconds;
+	time(&seconds);
+	srand((unsigned int)seconds);
+}
+
+int fbx::FBXUtil::Rand(const int lower, const int upper)
+{
+	return (int)(rand() % (upper - lower + 1) + lower);
 }

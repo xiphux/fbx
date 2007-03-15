@@ -14,6 +14,7 @@ class wxToolBar;
 class wxSlider;
 class wxTimer;
 class wxTimerEvent;
+class wxChoice;
 
 namespace fbx
 {
@@ -53,6 +54,7 @@ namespace fbx
 		wxToolBar *progresstoolbar;
 		wxToolBar *vistoolbar;
 		wxSlider *progress;
+		wxChoice *order;
 		wxTimer timer;
 		unsigned int plidx;
 	};
@@ -66,6 +68,7 @@ namespace fbx
 		FBX_frame_prev,
 		FBX_frame_next,
 		FBX_frame_progress,
+		FBX_frame_order,
 		FBX_frame_timer,
 		FBX_frame_playlist,
 	};

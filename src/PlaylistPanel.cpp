@@ -78,7 +78,7 @@ bool fbx::PlaylistPanel::PopulatePlaylist()
 			wxString i(fname.c_str(), *wxConvCurrent);
 			listbox->Append(i,(void*)(file.c_str()));
 		}
-		playlist->Next();
+		playlist->Next(false);
 		idx++;
 	}
 	playlist->Set(0);
@@ -90,17 +90,17 @@ bool fbx::PlaylistPanel::SetActive(int idx)
 	listbox->SetSelection(idx);
 }
 
-bool fbx::PlaylistPanel::Next()
+bool fbx::PlaylistPanel::Next(bool random)
 {
-	bool ret = playlist->Next();
+	bool ret = playlist->Next(random);
 	if (ret)
 		listbox->SetSelection(playlist->CurrentIdx());
 	return ret;
 }
 
-bool fbx::PlaylistPanel::Prev()
+bool fbx::PlaylistPanel::Prev(bool random)
 {
-	bool ret = playlist->Prev();
+	bool ret = playlist->Prev(random);
 	if (ret)
 		listbox->SetSelection(playlist->CurrentIdx());
 	return ret;

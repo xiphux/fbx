@@ -21,6 +21,7 @@
 #include "FBX.h"
 #include "FBXFrame.h"
 #include "FBXEngine.h"
+#include "FBXUtil.h"
 #include "config/ConfigFactory.h"
 
 const wxCmdLineEntryDesc cmdLineDesc[] =
@@ -37,6 +38,7 @@ bool fbx::FBX::OnInit()
 {
 	if (!ParseCmdLine())
 		return false;
+	FBXUtil::SeedRand();
 	engine = new FBXEngine();
 	frame = new FBXFrame();
 	frame->engine = engine;

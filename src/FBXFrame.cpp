@@ -21,6 +21,8 @@
 #include <wx/aui/auibook.h>
 #include <wx/app.h>
 #include <wx/timer.h>
+#include <wx/stattext.h>
+#include <wx/choice.h>
 #endif
 
 #include <iostream>
@@ -87,11 +89,22 @@ fbx::FBXFrame::FBXFrame():
 	playbacktoolbar->AddTool(FBX_frame_prev, wxT("Previous"), prevbitmap, wxT("Previous"));
 	wxBitmap nextbitmap(next_xpm);
 	playbacktoolbar->AddTool(FBX_frame_next, wxT("Next"), nextbitmap, wxT("Next"));
+	playbacktoolbar->AddSeparator();
+	playbacktoolbar->AddControl(new wxStaticText(playbacktoolbar,-1,wxT("Order")));
+	wxArrayString tmp;
+	tmp.Add(wxT("Default"));
+	tmp.Add(wxT("Repeat"));
+	tmp.Add(wxT("Random"));
+	order = new wxChoice(playbacktoolbar,FBX_frame_order,wxDefaultPosition,wxDefaultSize,tmp);
+	playbacktoolbar->AddControl(order);
 	playbacktoolbar->Realize();
 
+	//progresstoolbar = CreateToolBar(wxTB_DOCKABLE);
 	progress = new wxSlider(this,FBX_frame_progress,0,0,1);
 	progress->Enable(false);
 	topsizer->Add(progress, 0, wxEXPAND|wxALL);
+	//progresstoolbar->AddControl(progress);
+	//progresstoolbar->Realize();
 
 	notebook = new wxAuiNotebook(this);
 	topsizer->Add(notebook, 1, wxEXPAND|wxALL);
@@ -176,7 +189,7 @@ void fbx::FBXFrame::OnPlay(wxCommandEvent& WXUNUSED(event))
 void fbx::FBXFrame::OnPrev(wxCommandEvent& WXUNUSED(event))
 {
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
-	bool ret = page->Prev();
+	bool ret = page->Prev((order->GetCurrentSelection() == 2));
 	if (ret)
 		Play(page->Current());
 #ifdef DEBUG
@@ -187,7 +200,7 @@ void fbx::FBXFrame::OnPrev(wxCommandEvent& WXUNUSED(event))
 void fbx::FBXFrame::OnNext(wxCommandEvent& WXUNUSED(event))
 {
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
-	bool ret = page->Next();
+	bool ret = page->Next((order->GetCurrentSelection() == 2));
 	if (ret)
 		Play(page->Current());
 #ifdef DEBUG
@@ -243,7 +256,7 @@ void fbx::FBXFrame::OnPlaylistChoice(wxCommandEvent& event)
 bool fbx::FBXFrame::TryAdvance()
 {
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
-	bool ret = page->Next();
+	bool ret = page->Next((order->GetCurrentSelection() == 2));
 	if (ret)
 		return Play(page->Current());
 	return false;

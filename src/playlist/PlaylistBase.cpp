@@ -5,6 +5,7 @@
  */
 
 #include "PlaylistBase.h"
+#include "../FBXUtil.h"
 
 fbx::PlaylistBase::PlaylistBase(const std::string &fname):
 	idx(0)
@@ -34,19 +35,27 @@ unsigned int fbx::PlaylistBase::CurrentIdx() const
 	return idx;
 }
 
-bool fbx::PlaylistBase::Prev()
+bool fbx::PlaylistBase::Prev(bool random)
 {
-	if (idx == 0)
-		return false;
-	idx--;
+	if (random) {
+		idx = FBXUtil::Rand(0, playlist.size() - 1);
+	} else {
+		if (idx == 0)
+			return false;
+		idx--;
+	}
 	return true;
 }
 
-bool fbx::PlaylistBase::Next()
+bool fbx::PlaylistBase::Next(bool random)
 {
-	if (idx >= (playlist.size() - 1))
-		return false;
-	idx++;
+	if (random) {
+		idx = FBXUtil::Rand(0, playlist.size() - 1);
+	} else {
+		if (idx >= (playlist.size() - 1))
+			return false;
+		idx++;
+	}
 	return true;
 }
 

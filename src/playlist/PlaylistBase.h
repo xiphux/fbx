@@ -24,8 +24,8 @@ namespace fbx
 		virtual bool Write();
 		std::string Current();
 		unsigned int CurrentIdx() const;
-		bool Prev();
-		bool Next();
+		bool Prev(bool random = false);
+		bool Next(bool random = false);
 		bool Set(const unsigned int i);
 		unsigned int Size();
 		std::string GetPath();
