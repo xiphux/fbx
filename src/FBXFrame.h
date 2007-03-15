@@ -36,6 +36,7 @@ namespace fbx
 		void AddPlaylistPage(std::string name, std::string file);
 		void OnIdle(wxIdleEvent &event);
 		void OnPlaylistChoice(wxCommandEvent &event);
+		void OnOrder(wxCommandEvent &event);
 		void OnTimer(wxTimerEvent &event);
 		void UpdateStatus();
 		void ResetSlider();

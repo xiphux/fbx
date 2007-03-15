@@ -111,3 +111,8 @@ std::string fbx::PlaylistPanel::Current()
 	listbox->SetSelection(playlist->CurrentIdx());
 	return playlist->Current();
 }
+
+unsigned int fbx::PlaylistPanel::Size()
+{
+	return playlist->Size();
+}

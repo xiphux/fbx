@@ -31,6 +31,7 @@
 #include "FBXEngine.h"
 #include "playlist/PlaylistFactory.h"
 #include "PlaylistPanel.h"
+#include "config/ConfigFactory.h"
 
 #include "icons/stop.xpm"
 #include "icons/pause.xpm"
@@ -50,6 +51,7 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_COMMAND_SCROLL(FBX_frame_progress, fbx::FBXFrame::OnSeek)
 	EVT_IDLE(fbx::FBXFrame::OnIdle)
 	EVT_TIMER(FBX_frame_timer, fbx::FBXFrame::OnTimer)
+	EVT_CHOICE(FBX_frame_order, fbx::FBXFrame::OnOrder)
 END_EVENT_TABLE()
 
 fbx::FBXFrame::FBXFrame():
@@ -97,6 +99,7 @@ fbx::FBXFrame::FBXFrame():
 	tmp.Add(wxT("Repeat (playlist)"));
 	tmp.Add(wxT("Repeat (track)"));
 	order = new wxChoice(playbacktoolbar,FBX_frame_order,wxDefaultPosition,wxDefaultSize,tmp);
+	order->SetSelection(ConfigFactory::GetConfig().GetInt("order",0));
 	playbacktoolbar->AddControl(order);
 	playbacktoolbar->Realize();
 
@@ -191,6 +194,10 @@ void fbx::FBXFrame::OnPrev(wxCommandEvent& WXUNUSED(event))
 {
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
 	bool ret = page->Prev((order->GetCurrentSelection() == 1));
+	if (order->GetCurrentSelection() == 2 && !ret) {
+		page->SetActive(page->Size()-1);
+		ret = true;
+	}
 	if (ret)
 		Play(page->Current());
 #ifdef DEBUG
@@ -202,6 +209,10 @@ void fbx::FBXFrame::OnNext(wxCommandEvent& WXUNUSED(event))
 {
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
 	bool ret = page->Next((order->GetCurrentSelection() == 1));
+	if (order->GetCurrentSelection() == 2 && !ret) {
+		page->SetActive(0);
+		ret = true;
+	}
 	if (ret)
 		Play(page->Current());
 #ifdef DEBUG
@@ -259,7 +270,11 @@ bool fbx::FBXFrame::TryAdvance()
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
 	bool ret = true;
 	if (order->GetCurrentSelection() != 3)
-		page->Next((order->GetCurrentSelection() == 1));
+		ret = page->Next((order->GetCurrentSelection() == 1));
+	if (order->GetCurrentSelection() == 2 && !ret) {
+		page->SetActive(0);
+		ret = true;
+	}
 	if (ret)
 		return Play(page->Current());
 	return false;
@@ -283,4 +298,9 @@ void fbx::FBXFrame::UpdateStatus()
 	wxString s(st.c_str(), *wxConvCurrent);
 	statusbar->SetStatusText(s);
 	progress->SetValue(engine->Current());
+}
+
+void fbx::FBXFrame::OnOrder(wxCommandEvent& WXUNUSED(event))
+{
+	ConfigFactory::GetConfig().SetInt("order",order->GetCurrentSelection());
 }
