@@ -11,6 +11,7 @@
 class wxAuiNotebook;
 class wxStatusBar;
 class wxToolBar;
+class wxSlider;
 
 namespace fbx
 {
@@ -30,6 +31,8 @@ namespace fbx
 		void OpenPlaylists(std::string pls);
 		void AddPlaylistPage(std::string name, std::string file);
 		void OnIdle(wxIdleEvent &event);
+		void ResetSlider();
+		bool Play(const std::string& file);
 	protected:
 		FBXEngine *engine;
 		friend class FBX;
@@ -42,6 +45,7 @@ namespace fbx
 		wxToolBar *ordertoolbar;
 		wxToolBar *progresstoolbar;
 		wxToolBar *vistoolbar;
+		wxSlider *progress;
 	};
 
 	enum {
@@ -52,6 +56,7 @@ namespace fbx
 		FBX_frame_play,
 		FBX_frame_prev,
 		FBX_frame_next,
+		FBX_frame_progress,
 	};
 
 }

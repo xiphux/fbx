@@ -23,6 +23,9 @@ namespace fbx
 		bool Pause();
 		bool Stop();
 		std::string StatusString();
+		unsigned int Size();
+		unsigned int Current();
+		bool Stopped();
 	protected:
 		std::string ReadableTime(double t);
 		FBXAudioThread *thread;

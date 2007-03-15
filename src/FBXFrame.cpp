@@ -17,6 +17,7 @@
 #include <wx/toolbar.h>
 #include <wx/bitmap.h>
 #include <wx/panel.h>
+#include <wx/slider.h>
 #include <wx/aui/auibook.h>
 #endif
 
@@ -80,6 +81,10 @@ fbx::FBXFrame::FBXFrame():
 	playbacktoolbar->AddTool(FBX_frame_next, wxT("Next"), nextbitmap, wxT("Next"));
 	playbacktoolbar->Realize();
 
+	progress = new wxSlider(this,FBX_frame_progress,0,0,1);
+	progress->Enable(false);
+	topsizer->Add(progress, 0, wxEXPAND|wxALL);
+
 	notebook = new wxAuiNotebook(this);
 	topsizer->Add(notebook, 1, wxEXPAND|wxALL);
 
@@ -137,6 +142,7 @@ void fbx::FBXFrame::OnStop(wxCommandEvent& WXUNUSED(event))
 {
 	std::cout << "FBXFrame::OnStop:";
 	std::cout << (engine->Stop() ? "true" : "false") << std::endl;
+	ResetSlider();
 }
 
 void fbx::FBXFrame::OnPause(wxCommandEvent& WXUNUSED(event))
@@ -148,7 +154,7 @@ void fbx::FBXFrame::OnPause(wxCommandEvent& WXUNUSED(event))
 void fbx::FBXFrame::OnPlay(wxCommandEvent& WXUNUSED(event))
 {
 	std::cout << "FBXFrame::OnPlay:";
-	std::cout << (engine->Play("/home/xiphux/reason demo.ogg") ? "true" : "false") << std::endl;
+	std::cout << (Play("/home/xiphux/reason demo.ogg") ? "true" : "false") << std::endl;
 }
 
 void fbx::FBXFrame::OnPrev(wxCommandEvent& WXUNUSED(event))
@@ -166,5 +172,25 @@ void fbx::FBXFrame::OnIdle(wxIdleEvent& event)
 	std::string st = engine->StatusString();
 	wxString s(st.c_str(), *wxConvCurrent);
 	statusbar->SetStatusText(s);
+	progress->SetValue(engine->Current());
+	if (engine->Stopped() && progress->IsEnabled())
+		ResetSlider();
 	event.RequestMore();
+}
+
+void fbx::FBXFrame::ResetSlider()
+{
+	std::cout << "FBXFrame::ResetSlider" << std::endl;
+	progress->Enable(false);
+	progress->SetValue(0);
+	progress->SetRange(0,1);
+}
+
+bool fbx::FBXFrame::Play(const std::string& file)
+{
+	bool ret = engine->Play(file);
+	progress->Enable(true);
+	progress->SetRange(0,engine->Size());
+	std::cout << "Range [0:" << engine->Size() << "]" << std::endl;
+	return ret;
 }

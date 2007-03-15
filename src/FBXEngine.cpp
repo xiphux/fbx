@@ -75,10 +75,10 @@ bool fbx::FBXEngine::Stop()
 {
 	if (thread)
 		thread->Delete();
-	if (audio) {
-		delete audio;
-		audio = 0;
-	}
+//	if (audio) {
+//		delete audio;
+//		audio = 0;
+//	}
 	if (audiofile) {
 		delete audiofile;
 		audiofile = 0;
@@ -115,4 +115,23 @@ std::string fbx::FBXEngine::ReadableTime(double d)
 		str << 0;
 	str << s;
 	return str.str();
+}
+
+unsigned int fbx::FBXEngine::Size()
+{
+	if (!audiofile)
+		return 0;
+	return (int)(audiofile->Size());
+}
+
+unsigned int fbx::FBXEngine::Current()
+{
+	if (!audiofile)
+		return 0;
+	return (int)(audiofile->Current());
+}
+
+bool fbx::FBXEngine::Stopped()
+{
+	return !(thread && audiofile);
 }
