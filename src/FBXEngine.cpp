@@ -135,3 +135,10 @@ bool fbx::FBXEngine::Stopped()
 {
 	return !(thread && audiofile);
 }
+
+bool fbx::FBXEngine::Seek(double t)
+{
+	if (!audiofile)
+		return false;
+	return (audiofile->Seek(t) == 0);
+}

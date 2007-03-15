@@ -22,6 +22,7 @@ namespace fbx
 		bool Play(const std::string& filename);
 		bool Pause();
 		bool Stop();
+		bool Seek(double t);
 		std::string StatusString();
 		unsigned int Size();
 		unsigned int Current();

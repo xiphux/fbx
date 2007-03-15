@@ -28,6 +28,7 @@ namespace fbx
 		void OnPlay(wxCommandEvent &event);
 		void OnPrev(wxCommandEvent &event);
 		void OnNext(wxCommandEvent &event);
+		void OnSeek(wxScrollEvent &event);
 		void OpenPlaylists(std::string pls);
 		void AddPlaylistPage(std::string name, std::string file);
 		void OnIdle(wxIdleEvent &event);

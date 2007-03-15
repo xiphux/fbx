@@ -41,6 +41,7 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_MENU(FBX_frame_play, fbx::FBXFrame::OnPlay)
 	EVT_MENU(FBX_frame_prev, fbx::FBXFrame::OnPrev)
 	EVT_MENU(FBX_frame_next, fbx::FBXFrame::OnNext)
+	EVT_COMMAND_SCROLL(FBX_frame_progress, fbx::FBXFrame::OnSeek)
 	EVT_IDLE(fbx::FBXFrame::OnIdle)
 END_EVENT_TABLE()
 
@@ -193,4 +194,10 @@ bool fbx::FBXFrame::Play(const std::string& file)
 	progress->SetRange(0,engine->Size());
 	std::cout << "Range [0:" << engine->Size() << "]" << std::endl;
 	return ret;
+}
+
+void fbx::FBXFrame::OnSeek(wxScrollEvent& event)
+{
+	std::cout << "FBXFrame::OnSeek(" << event.GetPosition() << "): ";
+	std::cout << (engine->Seek((double)event.GetPosition()) ? "true" : "false") << std::endl;
 }
