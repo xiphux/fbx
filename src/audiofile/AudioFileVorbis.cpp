@@ -100,20 +100,21 @@ std::string fbx::AudioFileVorbis::Metadata(const unsigned int field)
 			std::string idx;
 			switch (field) {
 				case FBX_METADATA_TITLE:
-					idx = "TITLE=";
+					idx = "TITLE";
 					break;
 				case FBX_METADATA_TRACK:
-					idx = "TRACKNUMBER=";
+					idx = "TRACKNUMBER";
 					break;
 				case FBX_METADATA_ALBUM:
-					idx = "ALBUM=";
+					idx = "ALBUM";
 					break;
 				case FBX_METADATA_ARTIST:
-					idx = "ARTIST=";
+					idx = "ARTIST";
 					break;
 				default:
 					return "";
 			}
+			idx += "=";
 			for (int i = 0; i < com->comments; i++) {
 				std::string uc = com->user_comments[i];
 				if (idx == uc.substr(0,idx.length()))
