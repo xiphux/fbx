@@ -32,7 +32,11 @@ bool fbx::PlaylistM3U::Write()
 		std::cerr << "[PlaylistM3U] Could not open M3U file: " << filename << std::endl;
 		return false;
 	}
-	for (std::vector<std::string>::iterator iter = playlist.begin(); iter != playlist.end(); iter++)
-		file << (*iter) << std::endl;
+	for (std::vector<std::string>::iterator iter = playlist.begin(); iter != playlist.end(); iter++) {
+		if (GetPath() == iter->substr(0,GetPath().length()))
+			file << iter->substr(GetPath().length()+1) << std::endl;
+		else
+			file << (*iter) << std::endl;
+	}
 	file.flush();
 }
