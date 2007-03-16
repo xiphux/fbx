@@ -55,6 +55,7 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_IDLE(fbx::FBXFrame::OnIdle)
 	EVT_TIMER(FBX_frame_timer, fbx::FBXFrame::OnTimer)
 	EVT_CHOICE(FBX_frame_order, fbx::FBXFrame::OnOrder)
+	EVT_MENU(FBX_frame_saveplaylist, fbx::FBXFrame::OnSavePlaylist)
 END_EVENT_TABLE()
 
 fbx::FBXFrame::FBXFrame():
@@ -68,6 +69,8 @@ fbx::FBXFrame::FBXFrame():
 	wxMenuBar *menubar = new wxMenuBar;
 	wxMenu *filemenu = new wxMenu;
 	filemenu->Append(FBX_frame_addfiles, wxT("&Add files"));
+	filemenu->AppendSeparator();
+	filemenu->Append(FBX_frame_saveplaylist, wxT("&Save playlist"));
 	filemenu->AppendSeparator();
 	filemenu->Append(FBX_frame_quit, wxT("E&xit"));
 	menubar->Append(filemenu, wxT("&File"));
@@ -328,4 +331,13 @@ void fbx::FBXFrame::OnAddFiles(wxCommandEvent& WXUNUSED(event))
 			page->Add(tmp,true);
 		}
 	}
+}
+
+void fbx::FBXFrame::OnSavePlaylist(wxCommandEvent& WXUNUSED(event))
+{
+	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
+	bool ret = page->Save();
+#ifdef DEBUG
+	std::cout << "FBXFrame::OnSavePlaylist: " << (ret ? "true" : "false") << std::endl;
+#endif
 }

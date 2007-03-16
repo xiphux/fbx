@@ -123,3 +123,8 @@ bool fbx::PlaylistPanel::Add(const std::string& file, bool newitem)
 		playlist->Append(file);
 	return true;
 }
+
+bool fbx::PlaylistPanel::Save()
+{
+	return playlist->Write();
+}
