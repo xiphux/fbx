@@ -96,12 +96,17 @@ std::string fbx::FBXEngine::StatusString()
 		tmp += FBXUtil::ReadableTime(audiofile->Current());
 		tmp += " / ";
 		tmp += FBXUtil::ReadableTime(audiofile->Size());
+
+		/*
+		 * This next part should be temporary if possible
+		 */
 		tmp += " | ";
 		std::string tmp2 = audiofile->MetadataString();
 		if (tmp2.length() > 3)
 			tmp += tmp2;
 		else
 			tmp += audiofile->Filename();
+
 	} else
 		tmp = "Stopped";
 	return tmp;
