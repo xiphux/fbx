@@ -23,6 +23,7 @@
 #include <wx/timer.h>
 #include <wx/stattext.h>
 #include <wx/choice.h>
+#include <wx/filedlg.h>
 #endif
 
 #include <iostream>
@@ -32,6 +33,7 @@
 #include "playlist/PlaylistFactory.h"
 #include "PlaylistPanel.h"
 #include "config/ConfigFactory.h"
+#include "audiofile/AudioFileFactory.h"
 
 #include "icons/stop.xpm"
 #include "icons/pause.xpm"
@@ -48,6 +50,7 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_MENU(FBX_frame_prev, fbx::FBXFrame::OnPrev)
 	EVT_MENU(FBX_frame_next, fbx::FBXFrame::OnNext)
 	EVT_LISTBOX_DCLICK(FBX_frame_playlist, fbx::FBXFrame::OnPlaylistChoice)
+	EVT_MENU(FBX_frame_addfiles, fbx::FBXFrame::OnAddFiles)
 	EVT_COMMAND_SCROLL(FBX_frame_progress, fbx::FBXFrame::OnSeek)
 	EVT_IDLE(fbx::FBXFrame::OnIdle)
 	EVT_TIMER(FBX_frame_timer, fbx::FBXFrame::OnTimer)
@@ -64,6 +67,8 @@ fbx::FBXFrame::FBXFrame():
 
 	wxMenuBar *menubar = new wxMenuBar;
 	wxMenu *filemenu = new wxMenu;
+	filemenu->Append(FBX_frame_addfiles, wxT("&Add files"));
+	filemenu->AppendSeparator();
 	filemenu->Append(FBX_frame_quit, wxT("E&xit"));
 	menubar->Append(filemenu, wxT("&File"));
 	wxMenu *playmenu = new wxMenu;
@@ -303,4 +308,24 @@ void fbx::FBXFrame::UpdateStatus()
 void fbx::FBXFrame::OnOrder(wxCommandEvent& WXUNUSED(event))
 {
 	ConfigFactory::GetConfig().SetInt("order",order->GetCurrentSelection());
+}
+
+void fbx::FBXFrame::OnAddFiles(wxCommandEvent& WXUNUSED(event))
+{
+	std::string ext = "Audio files|";
+	ext += AudioFileFactory::Extensions();
+	ext += "|All files|*.*";
+	wxString e(ext.c_str(), *wxConvCurrent);
+	wxFileDialog dlg(this,wxT("Add files"),wxT(""),wxT(""),e,wxFD_OPEN|wxFD_FILE_MUST_EXIST|wxFD_MULTIPLE);
+	if (dlg.ShowModal() == wxID_OK) {
+		PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
+		wxArrayString ret;
+		dlg.GetPaths(ret);
+		size_t count = ret.GetCount();
+		for (int i = 0; i < count; i++) {
+			std::cout << "Item " << i << ": " << ret[i].mb_str() << std::endl;
+			std::string tmp(ret[i].mb_str());
+			page->Add(tmp,true);
+		}
+	}
 }

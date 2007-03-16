@@ -23,6 +23,7 @@ namespace fbx
 		static bool IsAudioFile(const std::string& filename);
 		static unsigned int AudioFileType(const std::string& filename);
 		static AudioFileBase *OpenAudioFile(const std::string& filename);
+		static std::string Extensions();
 	protected:
 		static unsigned int AudioFileTypeByExtension(const std::string& filename);
 #ifdef HAVE_MAGIC

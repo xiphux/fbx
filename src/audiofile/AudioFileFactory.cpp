@@ -80,3 +80,13 @@ unsigned int fbx::AudioFileFactory::AudioFileTypeByMagic(const std::string& file
 }
 #endif
 
+std::string fbx::AudioFileFactory::Extensions()
+{
+	std::string tmp;
+#ifdef HAVE_VORBIS
+	tmp += "*.ogg";
+#endif
+	if (tmp.length() < 1)
+		tmp = "*.*";
+	return tmp;
+}
