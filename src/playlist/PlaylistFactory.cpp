@@ -1,17 +1,27 @@
-/*
- * PlaylistFactory.cpp
- * Playlist Factory implementation
- * Copyright (C) 2007 Christopher Han
+/**
+ * @file PlaylistFactory.cpp
+ * @brief Playlist Factory implementation
+ * @author Christopher Han
+ *
+ * Playlist Factory and utility class implementation
+ * Copyright (C) 2007
+ * Licensed under the terms of the GNU GPL v2
  */
 
 #include "PlaylistFactory.h"
 #include "PlaylistM3U.h"
 
+/**
+ * Tests whether a given playlist filename is a recognized playlist format
+ */
 bool fbx::PlaylistFactory::IsPlaylist(const std::string& filename)
 {
 	return (PlaylistType(filename) > FBX_PLAYLIST_NONE);
 }
 
+/**
+ * Attempts to determine the format of the given playlist
+ */
 unsigned int fbx::PlaylistFactory::PlaylistType(const std::string& filename)
 {
 	std::string::size_type pos = filename.find_last_of('.');
@@ -23,6 +33,10 @@ unsigned int fbx::PlaylistFactory::PlaylistType(const std::string& filename)
 	return FBX_PLAYLIST_NONE;
 }
 
+/**
+ * Attempts to open a given playlist, and returns a typed playlist instance
+ * appropriate for the given playlist
+ */
 fbx::PlaylistBase* fbx::PlaylistFactory::OpenPlaylist(const std::string& filename)
 {
 	unsigned int type = PlaylistType(filename);
@@ -37,6 +51,12 @@ fbx::PlaylistBase* fbx::PlaylistFactory::OpenPlaylist(const std::string& filenam
 	return 0;
 }
 
+/**
+ * Attempts to transform an original playlist of one type into a new type based on
+ * the given filename for it
+ * (Usually used to transform untyped in-memory playlists into a typed format when
+ * saving it to a specific file)
+ */
 fbx::PlaylistBase* fbx::PlaylistFactory::ChangePlaylistType(fbx::PlaylistBase* orig, std::string fname)
 {
 	if (!orig)

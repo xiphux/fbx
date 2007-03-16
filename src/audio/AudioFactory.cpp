@@ -1,7 +1,10 @@
-/*
- * AudioFactory.cpp
- * Audio Factory implementation
- * Copyright (C) 2007 Christopher Han
+/**
+ * @file AudioFactory.cpp
+ * @brief Audio Factory implementation
+ *
+ * Audio output driver factory class implementation
+ * Copyright (C) 2007
+ * Licensed under the terms of the GNU GPL v2
  */
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -15,6 +18,9 @@
 #include "AudioAo.h"
 #endif
 
+/**
+ * Creates an instance of the audio driver that was requested
+ */
 fbx::AudioBase* fbx::AudioFactory::CreateAudio(unsigned int type)
 {
 	if (type == FBX_AUDIO_NONE)
@@ -32,6 +38,9 @@ fbx::AudioBase* fbx::AudioFactory::CreateAudio(unsigned int type)
 	return 0;
 }
 
+/**
+ * Returns the best audio output driver for the current platform
+ */
 unsigned int fbx::AudioFactory::DefaultAudio()
 {
 #ifdef HAVE_AO

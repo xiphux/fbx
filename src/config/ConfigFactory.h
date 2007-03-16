@@ -1,7 +1,11 @@
-/*
- * ConfigFactory.h
- * Config Factory definition
- * Copyright (C) 2007 Christopher Han
+/**
+ * @file ConfigFactory.h
+ * @brief Config Factory definition
+ * @author Christopher Han
+ *
+ * Config factory and utility class definition
+ * Copyright (C) 2007
+ * Licensed under the terms of the GNU GPL v2
  */
 #ifndef FBX_CONFIGFACTORY_H
 #define FBX_CONFIGFACTORY_H
@@ -11,12 +15,34 @@
 namespace fbx
 {
 
+	/**
+	 * @brief Config factory and utility class
+	 */
 	class ConfigFactory
 	{
 	public:
+		/**
+		 * @brief Get Config
+		 * @return singleton instance of config
+		 *
+		 * Returns config instance appropriate for platform,
+		 * instantiating one if necessary
+		 */
 		static ConfigBase& GetConfig();
+
+		/**
+		 * @brief Deallocate
+		 *
+		 * Deallocates existing config instance
+		 */
 		static void Deallocate();
+
 	protected:
+		/**
+		 * @brief instance
+		 * 
+		 * Singleton instance of config
+		 */
 		static ConfigBase* instance;
 	};
 

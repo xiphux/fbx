@@ -1,29 +1,48 @@
-/*
- * AudioFileBase.cpp
- * Base AudioFile implementation
- * Copyright (C) 2006 Christopher Han
+/**
+ * @file AudioFileBase.cpp
+ * @brief Base AudioFile implementation
+ * @author Christopher Han
+ *
+ * Base abstract audiofile class implementation
+ * Copyright (C) 2007
+ * Licensed under the terms of the GNU GPL v2
  */
 #include "AudioFileBase.h"
 
+/**
+ * Constructor
+ */
 fbx::AudioFileBase::AudioFileBase(const std::string& fname)
 {
 	filename = fname;
 }
 
+/**
+ * Destructor
+ */
 fbx::AudioFileBase::~AudioFileBase()
 {
 }
 
+/**
+ * Returns the currently open filename
+ */
 std::string fbx::AudioFileBase::Filename() const
 {
 	return filename;
 }
 
+/**
+ * Tests whether audiofile is successfully opened
+ */
 bool fbx::AudioFileBase::Opened() const
 {
 	return opened;
 }
 
+/**
+ * Returns a formatted string of a number of common metadata fields
+ */
 std::string fbx::AudioFileBase::MetadataString()
 {
 	std::string tmp;

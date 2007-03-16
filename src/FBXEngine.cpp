@@ -1,7 +1,11 @@
-/*
- * FBXEngine.cpp
- * FBX engine implementation
- * Copyright (C) 2007 Christopher Han
+/**
+ * @file FBXEngine.cpp
+ * @brief FBX engine implementation
+ * @author Christopher Han
+ *
+ * Audio processing engine implementation
+ * Copyright (C) 2007
+ * Licensed under the terms of the GNU GPL v2
  */
 
 #include <wx/wxprec.h>
@@ -19,6 +23,9 @@
 #include "audio/AudioFactory.h"
 #include "FBXAudioThread.h"
 
+/**
+ * Constructor
+ */
 fbx::FBXEngine::FBXEngine()
 {
 	audio = 0;
@@ -26,10 +33,17 @@ fbx::FBXEngine::FBXEngine()
 	thread = 0;
 }
 
+/**
+ * Destructor
+ */
 fbx::FBXEngine::~FBXEngine()
 {
+	Stop();
 }
 
+/**
+ * Tells the engine to begin processing and playback of a file
+ */
 bool fbx::FBXEngine::Play(const std::string& filename)
 {
 	//if (thread || audiofile)
@@ -61,6 +75,9 @@ bool fbx::FBXEngine::Play(const std::string& filename)
 	return true;
 }
 
+/**
+ * Pauses or unpauses playback thread
+ */
 bool fbx::FBXEngine::Pause()
 {
 	if (!thread)
@@ -72,6 +89,9 @@ bool fbx::FBXEngine::Pause()
 	return true;
 }
 
+/**
+ * Stops a running audiofile / audiothread if there is one
+ */
 bool fbx::FBXEngine::Stop()
 {
 //	if (thread)
@@ -87,6 +107,10 @@ bool fbx::FBXEngine::Stop()
 	return true;
 }
 
+/**
+ * Outputs the status string for the current file
+ * (file type, info, current time, total length, etc)
+ */
 std::string fbx::FBXEngine::StatusString()
 {
 	std::string tmp;
@@ -112,6 +136,9 @@ std::string fbx::FBXEngine::StatusString()
 	return tmp;
 }
 
+/**
+ * Gives the size of the currently playing file (in seconds)
+ */
 unsigned int fbx::FBXEngine::Size()
 {
 	if (!audiofile)
@@ -119,6 +146,9 @@ unsigned int fbx::FBXEngine::Size()
 	return (int)(audiofile->Size());
 }
 
+/**
+ * Gives the current position of the playing audiofile (in seconds)
+ */
 unsigned int fbx::FBXEngine::Current()
 {
 	if (!audiofile)
@@ -126,11 +156,17 @@ unsigned int fbx::FBXEngine::Current()
 	return (int)(audiofile->Current());
 }
 
+/**
+ * Returns whether the engine is currently playing a file or stopped
+ */
 bool fbx::FBXEngine::Stopped()
 {
 	return !(thread || audiofile);
 }
 
+/**
+ * Seeks audiofile to a specific position
+ */
 bool fbx::FBXEngine::Seek(double t)
 {
 	if (!audiofile)
@@ -138,6 +174,10 @@ bool fbx::FBXEngine::Seek(double t)
 	return (audiofile->Seek(t) == 0);
 }
 
+/**
+ * Outputs the metadata of the playing file in a
+ * formatted manner
+ */
 std::string fbx::FBXEngine::Metadata()
 {
 	if (!audiofile)
@@ -145,6 +185,10 @@ std::string fbx::FBXEngine::Metadata()
 	return audiofile->MetadataString();
 }
 
+/**
+ * Returns whether the current file has reached the end
+ * of the file (finished playback)
+ */
 bool fbx::FBXEngine::Eof()
 {
 	if (!audiofile)

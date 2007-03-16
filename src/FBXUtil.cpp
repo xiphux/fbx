@@ -1,7 +1,11 @@
-/*
- * FBXUtil.cpp
- * FBX utilities implementation
- * Copyright (C) 2007 Christopher Han
+/**
+ * @file FBXUtil.cpp
+ * @brief FBX utilities implementation
+ * @author Christopher Han
+ *
+ * Utility function toolbox class implementation
+ * Copyright (C) 2007
+ * Licensed under the terms of the GNU GPL v2
  */
 #include "FBXUtil.h"
 
@@ -9,11 +13,17 @@
 #include <cstdlib>
 #include <time.h>
 
+/**
+ * Formats time in seconds into standard mm:ss time string
+ */
 std::string fbx::FBXUtil::ReadableTime(const double d)
 {
 	return ReadableTime((int)d);
 }
 
+/**
+ * Formats time in seconds into standard mm:ss time string
+ */
 std::string fbx::FBXUtil::ReadableTime(const int i)
 {
 	int s = i;
@@ -31,6 +41,9 @@ std::string fbx::FBXUtil::ReadableTime(const int i)
 	return str.str();
 }
 
+/**
+ * Seeds the random number generator
+ */
 void fbx::FBXUtil::SeedRand()
 {
 	time_t seconds;
@@ -38,6 +51,9 @@ void fbx::FBXUtil::SeedRand()
 	srand((unsigned int)seconds);
 }
 
+/**
+ * Returns a random number between the given lower/upper bound
+ */
 int fbx::FBXUtil::Rand(const int lower, const int upper)
 {
 	return (int)(rand() % (upper - lower + 1) + lower);

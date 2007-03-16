@@ -1,13 +1,21 @@
-/*
- * AudioFileVorbis.cpp
- * Vorbis AudioFile implementation
- * Copyright (C) 2007 Christopher Han
+/**
+ * @file AudioFileVorbis.cpp
+ * @brief Vorbis AudioFile implementation
+ * @author Christopher Han
+ *
+ * Ogg Vorbis audiofile class implementation
+ * Copyright (C) 2007
+ * Licensed under the terms of the GNU GPL v2
  */
 
 #include <iostream>
 #include <sstream>
 #include "AudioFileVorbis.h"
 
+/**
+ * Constructor
+ * Opens file and initializes libvorbisfile
+ */
 fbx::AudioFileVorbis::AudioFileVorbis(const std::string& fname):
 	AudioFileBase(fname)
 {
@@ -24,6 +32,10 @@ fbx::AudioFileVorbis::AudioFileVorbis(const std::string& fname):
 	opened = true;
 }
 
+/**
+ * Destructor
+ * Closes file and libvorbisfile
+ */
 fbx::AudioFileVorbis::~AudioFileVorbis()
 {
 	if (opened && ov_clear(&file))
@@ -32,6 +44,9 @@ fbx::AudioFileVorbis::~AudioFileVorbis()
 //		std::cerr << "[AudioFileVorbis] Failed to close file" << std::endl;
 }
 
+/**
+ * Attempts to seek to the given position
+ */
 int fbx::AudioFileVorbis::Seek(double pos)
 {
 	if (!opened)
@@ -39,6 +54,9 @@ int fbx::AudioFileVorbis::Seek(double pos)
 	return ov_time_seek(&file, pos);
 }
 
+/**
+ * Attempts to read audio data from vorbis file into buffer
+ */
 long fbx::AudioFileVorbis::Read(char *buf, long len)
 {
 	if (!opened)
@@ -47,6 +65,9 @@ long fbx::AudioFileVorbis::Read(char *buf, long len)
 	return ov_read(&file, buf, len, 0, 2, 1, &section);
 }
 
+/**
+ * Returns the size of the loaded vorbis file
+ */
 double fbx::AudioFileVorbis::Size()
 {
 	if (!opened)
@@ -54,6 +75,9 @@ double fbx::AudioFileVorbis::Size()
 	return ov_time_total(&file, -1);
 }
 
+/**
+ * Returns the current position of the playing vorbis file
+ */
 double fbx::AudioFileVorbis::Current()
 {
 	if (!opened)
@@ -61,6 +85,9 @@ double fbx::AudioFileVorbis::Current()
 	return ov_time_tell(&file);
 }
 
+/**
+ * Tests whether the vorbis file has reached the EOF
+ */
 bool fbx::AudioFileVorbis::Eof()
 {
 	if (!opened)
@@ -68,6 +95,10 @@ bool fbx::AudioFileVorbis::Eof()
 	return (ov_time_tell(&file) >= ov_time_total(&file, -1));
 }
 
+/**
+ * Returns a string of info about the vorbis file
+ * (format, bitrate, sampling rate, channels, etc)
+ */
 std::string fbx::AudioFileVorbis::InfoString()
 {
 	std::stringstream str;
@@ -92,6 +123,9 @@ std::string fbx::AudioFileVorbis::InfoString()
 	return str.str();
 }
 
+/**
+ * Fetches and returns a specific field of metadata
+ */
 std::string fbx::AudioFileVorbis::Metadata(const unsigned int field)
 {
 	if (opened) {

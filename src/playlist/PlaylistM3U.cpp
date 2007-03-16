@@ -1,11 +1,19 @@
-/*
- * PlaylistM3U.cpp
- * M3U Playlist implementation
- * Copyright (C) 2007 Christopher Han
+/**
+ * @file PlaylistM3U.cpp
+ * @brief M3U Playlist implementation
+ * @author Christopher Han
+ *
+ * M3U typed playlist class implementation
+ * Copyright (C) 2007
+ * Licensed under the terms of the GNU GPL v2
  */
 #include "PlaylistM3U.h"
 #include <iostream>
 
+/**
+ * Constructor
+ * Loads and parses given M3U list
+ */
 fbx::PlaylistM3U::PlaylistM3U(const std::string& fname):
 	PlaylistBase(fname)
 {
@@ -20,11 +28,18 @@ fbx::PlaylistM3U::PlaylistM3U(const std::string& fname):
 	}
 }
 
+/**
+ * Destructor
+ * Cleans up open file references
+ */
 fbx::PlaylistM3U::~PlaylistM3U()
 {
 	file.close();
 }
 
+/**
+ * Attempts to write playlist data to disk in M3U format
+ */
 bool fbx::PlaylistM3U::Write()
 {
 	file.open(filename.c_str(),std::ios::out|std::ios::trunc);

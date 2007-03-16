@@ -1,27 +1,45 @@
-/*
- * PlaylistBase.cpp
- * Base Playlist implementation
- * Copyright (C) 2007 Christopher Han
+/**
+ * @file PlaylistBase.cpp
+ * @brief Base Playlist implementation
+ * @author Christopher Han
+ *
+ * Base playlist data class implementation
+ * Copyright (C) 2007
+ * Licensed under the terms of the GNU GPL v2
  */
 
 #include "PlaylistBase.h"
 #include "../FBXUtil.h"
 
+/**
+ * Constructor
+ * Typed playlists should parse/load playlist files here
+ */
 fbx::PlaylistBase::PlaylistBase(const std::string &fname):
 	idx(0)
 {
 	filename = fname;
 }
 
+/**
+ * Destructor
+ */
 fbx::PlaylistBase::~PlaylistBase()
 {
 }
 
+/**
+ * Attempts to write playlist to disk in specific playlist's format
+ * (typed playlist classes must override this)
+ */
 bool fbx::PlaylistBase::Write()
 {
 	return false;
 }
 
+/**
+ * Returns the current song (full path)
+ */
 std::string fbx::PlaylistBase::Current()
 {
 	std::string item = playlist.at(idx);
@@ -30,11 +48,17 @@ std::string fbx::PlaylistBase::Current()
 	return item;
 }
 
+/**
+ * Returns the index of the currently active song
+ */
 unsigned int fbx::PlaylistBase::CurrentIdx() const
 {
 	return idx;
 }
 
+/**
+ * Attempts to advance the playlist to the previous song
+ */
 bool fbx::PlaylistBase::Prev(bool random)
 {
 	if (random) {
@@ -47,6 +71,9 @@ bool fbx::PlaylistBase::Prev(bool random)
 	return true;
 }
 
+/**
+ * Attempts to advance the playlist to the next song
+ */
 bool fbx::PlaylistBase::Next(bool random)
 {
 	if (random) {
@@ -59,26 +86,42 @@ bool fbx::PlaylistBase::Next(bool random)
 	return true;
 }
 
+/**
+ * Returns the number of items in the current playlist
+ */
 unsigned int fbx::PlaylistBase::Size()
 {
 	return playlist.size();
 }
 
+/**
+ * Returns the filename of the current playlist
+ */
 std::string fbx::PlaylistBase::GetFilename() const
 {
 	return filename;
 }
 
+/**
+ * Sets the filename of the current playlist
+ */
 void fbx::PlaylistBase::SetFilename(const std::string& name)
 {
 	filename = name;
 }
 
+/**
+ * Appends a song to the playlist
+ */
 void fbx::PlaylistBase::Append(const std::string& f)
 {
 	playlist.push_back(f);
 }
 
+/**
+ * Returns the path of the playlist minus the filename
+ * (for use in playlist types that support relative filenames in them)
+ */
 std::string fbx::PlaylistBase::GetPath()
 {
 	std::string::size_type idx = filename.find_last_of('/');
@@ -87,6 +130,9 @@ std::string fbx::PlaylistBase::GetPath()
 	return "";
 }
 
+/**
+ * Forces the given song index to be currently active
+ */
 bool fbx::PlaylistBase::Set(const unsigned int i)
 {
 	if (i >= Size())
@@ -95,6 +141,9 @@ bool fbx::PlaylistBase::Set(const unsigned int i)
 	return true;
 }
 
+/**
+ * Attempts to remove song at the given index from the playlist
+ */
 bool fbx::PlaylistBase::Remove(const unsigned int i)
 {
 	if (i >= Size())

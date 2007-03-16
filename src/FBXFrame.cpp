@@ -1,7 +1,11 @@
-/*
- * FBXFrame.cpp
- * FBX frame implementation
- * Copyright (C) 2007 Christopher Han
+/**
+ * @file FBXFrame.cpp
+ * @brief FBX frame implementation
+ * @author Christopher Han
+ *
+ * Main FBX window frame implementation
+ * Copyright (C) 2007
+ * Licensed under the terms of the GNU GPL v2
  */
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -41,6 +45,14 @@
 #include "icons/prev.xpm"
 #include "icons/next.xpm"
 
+/**
+ * @brief GUI status bar update frequency
+ */
+#define GUIUPDATE 500
+
+/**
+ * Event handler table
+ */
 BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_MENU(FBX_frame_quit, fbx::FBXFrame::OnQuit)
 	EVT_MENU(FBX_frame_about, fbx::FBXFrame::OnAbout)
@@ -49,16 +61,19 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_MENU(FBX_frame_play, fbx::FBXFrame::OnPlay)
 	EVT_MENU(FBX_frame_prev, fbx::FBXFrame::OnPrev)
 	EVT_MENU(FBX_frame_next, fbx::FBXFrame::OnNext)
-	EVT_LISTBOX_DCLICK(FBX_frame_playlist, fbx::FBXFrame::OnPlaylistChoice)
 	EVT_MENU(FBX_frame_addfiles, fbx::FBXFrame::OnAddFiles)
+	EVT_MENU(FBX_frame_saveplaylist, fbx::FBXFrame::OnSavePlaylist)
+	EVT_MENU(FBX_frame_remfile, fbx::FBXFrame::OnRemFile)
+	EVT_CHOICE(FBX_frame_order, fbx::FBXFrame::OnOrder)
+	EVT_LISTBOX_DCLICK(FBX_frame_playlist, fbx::FBXFrame::OnPlaylistChoice)
 	EVT_COMMAND_SCROLL(FBX_frame_progress, fbx::FBXFrame::OnSeek)
 	EVT_IDLE(fbx::FBXFrame::OnIdle)
 	EVT_TIMER(FBX_frame_timer, fbx::FBXFrame::OnTimer)
-	EVT_CHOICE(FBX_frame_order, fbx::FBXFrame::OnOrder)
-	EVT_MENU(FBX_frame_saveplaylist, fbx::FBXFrame::OnSavePlaylist)
-	EVT_MENU(FBX_frame_remfile, fbx::FBXFrame::OnRemFile)
 END_EVENT_TABLE()
 
+/**
+ * Constructor
+ */
 fbx::FBXFrame::FBXFrame():
 	wxFrame((wxFrame*)NULL, -1, wxEmptyString, wxDefaultPosition, wxSize(640,480)),
 	timer(this,FBX_frame_timer),
@@ -129,23 +144,32 @@ fbx::FBXFrame::FBXFrame():
 
 	SetExtraStyle(wxWS_EX_PROCESS_IDLE);
 	wxIdleEvent::SetMode(wxIDLE_PROCESS_SPECIFIED);
-	timer.Start(500);
+	timer.Start(GUIUPDATE);
 }
 
-void fbx::FBXFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
+/**
+ * Called when quit menu option is chosen
+ */
+void fbx::FBXFrame::OnQuit(wxCommandEvent& event)
 {
 	if (engine)
 		engine->Stop();
 	Close(true);
 }
 
-void fbx::FBXFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
+/**
+ * Called when about menu option is chosen
+ */
+void fbx::FBXFrame::OnAbout(wxCommandEvent& event)
 {
 	wxString about = wxT(PACKAGE_STRING);
 	about += wxT("\nCopyright (C) 2007 Christopher Han");
 	wxMessageBox(about, wxT("About FBX"), wxOK|wxICON_INFORMATION);
 }
 
+/**
+ * Opens a series of playlists given in a string
+ */
 void fbx::FBXFrame::OpenPlaylists(std::string pls)
 {
 	std::string::size_type lastpos = pls.find_first_not_of(",",0);
@@ -168,13 +192,20 @@ void fbx::FBXFrame::OpenPlaylists(std::string pls)
 		AddPlaylistPage(iter->first, iter->second);
 }
 
+/**
+ * Adds a page to the tabbed playlist interface with the given
+ * name/file
+ */
 void fbx::FBXFrame::AddPlaylistPage(std::string name, std::string file)
 {
 	wxString n(name.c_str(), *wxConvCurrent);
 	notebook->AddPage(new PlaylistPanel(notebook,FBX_frame_playlist,file), n);
 }
 
-void fbx::FBXFrame::OnStop(wxCommandEvent& WXUNUSED(event))
+/**
+ * Called when stop button or menu option is chosen
+ */
+void fbx::FBXFrame::OnStop(wxCommandEvent& event)
 {
 	bool ret = engine->Stop();
 #ifdef DEBUG
@@ -183,7 +214,10 @@ void fbx::FBXFrame::OnStop(wxCommandEvent& WXUNUSED(event))
 	ResetSlider();
 }
 
-void fbx::FBXFrame::OnPause(wxCommandEvent& WXUNUSED(event))
+/**
+ * Called when pause button or menu option is chosen
+ */
+void fbx::FBXFrame::OnPause(wxCommandEvent& event)
 {
 	bool ret = engine->Pause();
 #ifdef DEBUG
@@ -191,7 +225,10 @@ void fbx::FBXFrame::OnPause(wxCommandEvent& WXUNUSED(event))
 #endif
 }
 
-void fbx::FBXFrame::OnPlay(wxCommandEvent& WXUNUSED(event))
+/**
+ * Called when play button or menu option is chosen
+ */
+void fbx::FBXFrame::OnPlay(wxCommandEvent& event)
 {
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
 	bool ret = Play(page->Current());
@@ -200,7 +237,10 @@ void fbx::FBXFrame::OnPlay(wxCommandEvent& WXUNUSED(event))
 #endif
 }
 
-void fbx::FBXFrame::OnPrev(wxCommandEvent& WXUNUSED(event))
+/**
+ * Called when prev button or menu option is chosen
+ */
+void fbx::FBXFrame::OnPrev(wxCommandEvent& event)
 {
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
 	bool ret = page->Prev((order->GetCurrentSelection() == 1));
@@ -215,7 +255,10 @@ void fbx::FBXFrame::OnPrev(wxCommandEvent& WXUNUSED(event))
 #endif
 }
 
-void fbx::FBXFrame::OnNext(wxCommandEvent& WXUNUSED(event))
+/**
+ * Called when next button or menu option is chosen
+ */
+void fbx::FBXFrame::OnNext(wxCommandEvent& event)
 {
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
 	bool ret = page->Next((order->GetCurrentSelection() == 1));
@@ -230,11 +273,17 @@ void fbx::FBXFrame::OnNext(wxCommandEvent& WXUNUSED(event))
 #endif
 }
 
+/**
+ * Called when GUI idles
+ */
 void fbx::FBXFrame::OnIdle(wxIdleEvent& event)
 {
 	//event.RequestMore();
 }
 
+/**
+ * Resets seek bar position and disables it (when stopping playback)
+ */
 void fbx::FBXFrame::ResetSlider()
 {
 #ifdef DEBUG
@@ -245,6 +294,9 @@ void fbx::FBXFrame::ResetSlider()
 	progress->Enable(false);
 }
 
+/**
+ * Forwards play command to running audio engine
+ */
 bool fbx::FBXFrame::Play(const std::string& file)
 {
 	//engine->Stop();
@@ -258,6 +310,9 @@ bool fbx::FBXFrame::Play(const std::string& file)
 	return ret;
 }
 
+/**
+ * Called when seek bar position is moved
+ */
 void fbx::FBXFrame::OnSeek(wxScrollEvent& event)
 {
 	bool ret = engine->Seek((double)event.GetPosition());
@@ -266,6 +321,9 @@ void fbx::FBXFrame::OnSeek(wxScrollEvent& event)
 #endif
 }
 
+/**
+ * Called when double-clicking an entry in the playlist
+ */
 void fbx::FBXFrame::OnPlaylistChoice(wxCommandEvent& event)
 {
 	int idx = event.GetSelection();
@@ -275,6 +333,9 @@ void fbx::FBXFrame::OnPlaylistChoice(wxCommandEvent& event)
 	Play(std::string(str));
 }
 
+/**
+ * Attempts to advance playlist to next song
+ */
 bool fbx::FBXFrame::TryAdvance()
 {
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
@@ -290,7 +351,10 @@ bool fbx::FBXFrame::TryAdvance()
 	return false;
 }
 
-void fbx::FBXFrame::OnTimer(wxTimerEvent& WXUNUSED(event))
+/**
+ * Called when update timer fires
+ */
+void fbx::FBXFrame::OnTimer(wxTimerEvent& event)
 {
 	//wxWakeUpIdle();
 	UpdateStatus();
@@ -302,6 +366,9 @@ void fbx::FBXFrame::OnTimer(wxTimerEvent& WXUNUSED(event))
 	}
 }
 
+/**
+ * Updates status bar information
+ */
 void fbx::FBXFrame::UpdateStatus()
 {
 	std::string st = engine->StatusString();
@@ -310,12 +377,18 @@ void fbx::FBXFrame::UpdateStatus()
 	progress->SetValue(engine->Current());
 }
 
-void fbx::FBXFrame::OnOrder(wxCommandEvent& WXUNUSED(event))
+/**
+ * Called when changing the order setting in the toolbar
+ */
+void fbx::FBXFrame::OnOrder(wxCommandEvent& event)
 {
 	ConfigFactory::GetConfig().SetInt("order",order->GetCurrentSelection());
 }
 
-void fbx::FBXFrame::OnAddFiles(wxCommandEvent& WXUNUSED(event))
+/**
+ * Called when Add Files menu option is chosen
+ */
+void fbx::FBXFrame::OnAddFiles(wxCommandEvent& event)
 {
 	std::string ext = "Audio files|";
 	ext += AudioFileFactory::Extensions();
@@ -335,7 +408,10 @@ void fbx::FBXFrame::OnAddFiles(wxCommandEvent& WXUNUSED(event))
 	}
 }
 
-void fbx::FBXFrame::OnSavePlaylist(wxCommandEvent& WXUNUSED(event))
+/**
+ * Called when Save playlist menu option is chosen
+ */
+void fbx::FBXFrame::OnSavePlaylist(wxCommandEvent& event)
 {
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
 	bool ret = page->Save();
@@ -344,7 +420,10 @@ void fbx::FBXFrame::OnSavePlaylist(wxCommandEvent& WXUNUSED(event))
 #endif
 }
 
-void fbx::FBXFrame::OnRemFile(wxCommandEvent& WXUNUSED(event))
+/**
+ * Called when Remove file menu option is chosen
+ */
+void fbx::FBXFrame::OnRemFile(wxCommandEvent& event)
 {
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
 	unsigned int selected = page->SelectedIdx();

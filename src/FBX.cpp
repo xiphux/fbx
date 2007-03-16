@@ -1,7 +1,11 @@
-/*
- * FBX.cpp
- * Core FBX implementation
- * Copyright (C) 2007 Christopher Han
+/**
+ * @file FBX.cpp
+ * @brief Core FBX implementation
+ * @author Christopher Han
+ *
+ * Core FBX app class implementation
+ * Copyright (C) 2007
+ * Licensed under the terms of the GNU GPL v2
  */
 
 #ifdef HAVE_CONFIG_H
@@ -24,6 +28,9 @@
 #include "FBXUtil.h"
 #include "config/ConfigFactory.h"
 
+/**
+ * Definition of commandline options
+ */
 const wxCmdLineEntryDesc cmdLineDesc[] =
 {
 	{ wxCMD_LINE_SWITCH, wxT("h"), wxT("help"), wxT("Display usage info"), wxCMD_LINE_VAL_NONE, wxCMD_LINE_OPTION_HELP },
@@ -34,6 +41,9 @@ const wxCmdLineEntryDesc cmdLineDesc[] =
 
 IMPLEMENT_APP(fbx::FBX)
 
+/**
+ * Called on initialization of the application
+ */
 bool fbx::FBX::OnInit()
 {
 	if (!ParseCmdLine())
@@ -49,6 +59,9 @@ bool fbx::FBX::OnInit()
 	return true;
 }
 
+/**
+ * Called on termination of the application
+ */
 int fbx::FBX::OnExit()
 {
 	if (engine) {
@@ -59,6 +72,9 @@ int fbx::FBX::OnExit()
 	return 0;
 }
 
+/**
+ * This parses the given commandline options and sets appropriate flags
+ */
 bool fbx::FBX::ParseCmdLine()
 {
 	wxCmdLineParser cmd(cmdLineDesc, argc, argv);
@@ -73,6 +89,9 @@ bool fbx::FBX::ParseCmdLine()
 	return true;
 }
 
+/**
+ * Called to return the verbosity of the app
+ */
 bool fbx::FBX::GetVerbose() const
 {
 	return verbose;

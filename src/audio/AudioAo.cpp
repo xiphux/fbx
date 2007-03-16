@@ -1,12 +1,20 @@
-/*
- * AudioAo.cpp
- * Libao Audio implementation
- * Copyright (C) 2007 Christopher Han
+/**
+ * @file AudioAo.cpp
+ * @brief Libao Audio implementation
+ * @author Christopher Han
+ *
+ * Libao audio driver class implementation
+ * Copyright (C) 2007
+ * Licensed under the terms of the GNU GPL v2
  */
 
 #include <iostream>
 #include "AudioAo.h"
 
+/**
+ * Constructor
+ * Initializes libao
+ */
 fbx::AudioAo::AudioAo()
 {
 	opened = false;
@@ -25,6 +33,10 @@ fbx::AudioAo::AudioAo()
 	opened = true;
 }
 
+/**
+ * Destructor
+ * Closes libao
+ */
 fbx::AudioAo::~AudioAo()
 {
 	if (device)
@@ -32,6 +44,9 @@ fbx::AudioAo::~AudioAo()
 	ao_shutdown();
 }
 
+/**
+ * Write audio data to libao
+ */
 long fbx::AudioAo::Write(char *buf, long len)
 {
 	if (!opened)

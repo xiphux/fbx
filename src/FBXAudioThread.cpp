@@ -1,7 +1,11 @@
-/*
- * FBXAudioThread.cpp
- * Audio thread implementation
- * Copyright (C) 2007 Christopher Han
+/**
+ * @file FBXAudioThread.cpp
+ * @brief Audio thread implementation
+ * @author Christopher Han
+ *
+ * Audio processing thread implementation
+ * Copyright (C) 2007
+ * Licensed under the terms of the GNU GPL v2
  */
 
 #include <wx/wxprec.h>
@@ -17,13 +21,16 @@
 #include "audiofile/AudioFileBase.h"
 #include "FBXEngine.h"
 
+/**
+ * @brief BUFSIZE
+ *
+ * Defines the internal audio buffer size
+ */
 #define BUFSIZE 2048
 
-fbx::FBXAudioThread::FBXAudioThread():
-	wxThread(wxTHREAD_DETACHED)
-{
-}
-
+/**
+ * Entry point for thread execution
+ */
 void *fbx::FBXAudioThread::Entry()
 {
 	int len = 0;

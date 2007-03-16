@@ -1,7 +1,11 @@
-/*
- * PlaylistPanel.cpp
- * Playlist panel implementation
- * Copyright (C) 2007 Christopher Han
+/**
+ * @file PlaylistPanel.cpp
+ * @brief Playlist panel implementation
+ * @author Christopher Han
+ *
+ * Playlist subpanel implementation
+ * Copyright (C) 2007
+ * Licensed under the terms of the GNU GPL v2
  */
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -21,6 +25,9 @@
 #include "playlist/PlaylistFactory.h"
 #include "PlaylistPanel.h"
 
+/**
+ * Constructor
+ */
 fbx::PlaylistPanel::PlaylistPanel(wxWindow *parent, wxWindowID id, const std::string& pls):
 	wxPanel(parent,id)
 {
@@ -36,6 +43,9 @@ fbx::PlaylistPanel::PlaylistPanel(wxWindow *parent, wxWindowID id, const std::st
 		playlist = new PlaylistBase("");
 }
 
+/**
+ * Load a given playlist into the listbox/memory
+ */
 bool fbx::PlaylistPanel::LoadPlaylist(const std::string& pls)
 {
 #ifdef DEBUG
@@ -47,6 +57,9 @@ bool fbx::PlaylistPanel::LoadPlaylist(const std::string& pls)
 	PopulatePlaylist();
 }
 
+/**
+ * Populates the listbox control with the songs from the playlist
+ */
 bool fbx::PlaylistPanel::PopulatePlaylist()
 {
 #ifdef DEBUG
@@ -62,12 +75,18 @@ bool fbx::PlaylistPanel::PopulatePlaylist()
 	playlist->Set(0);
 }
 
+/**
+ * Sets a given song index active (in playlist and in listbox)
+ */
 bool fbx::PlaylistPanel::SetActive(int idx)
 {
 	playlist->Set(idx);
 	listbox->SetSelection(idx);
 }
 
+/**
+ * Attempts to advance the playlist to the next song
+ */
 bool fbx::PlaylistPanel::Next(bool random)
 {
 	bool ret = playlist->Next(random);
@@ -76,6 +95,9 @@ bool fbx::PlaylistPanel::Next(bool random)
 	return ret;
 }
 
+/**
+ * Attempts to advance the playlist to the previous song
+ */
 bool fbx::PlaylistPanel::Prev(bool random)
 {
 	bool ret = playlist->Prev(random);
@@ -84,17 +106,26 @@ bool fbx::PlaylistPanel::Prev(bool random)
 	return ret;
 }
 
+/**
+ * Fetches the current playlist position song file
+ */
 std::string fbx::PlaylistPanel::Current()
 {
 	listbox->SetSelection(playlist->CurrentIdx());
 	return playlist->Current();
 }
 
+/**
+ * Returns number of songs in the playlist
+ */
 unsigned int fbx::PlaylistPanel::Size()
 {
 	return playlist->Size();
 }
 
+/**
+ * Adds the given song to the listbox control, and optionally, to the playlist in memory
+ */
 bool fbx::PlaylistPanel::Add(const std::string& file, bool newitem)
 {
 	std::string meta;
@@ -124,21 +155,33 @@ bool fbx::PlaylistPanel::Add(const std::string& file, bool newitem)
 	return true;
 }
 
+/**
+ * Calls the playlist to write changes to disk
+ */
 bool fbx::PlaylistPanel::Save()
 {
 	return playlist->Write();
 }
 
+/**
+ * Returns the currently selected listbox item's index
+ */
 unsigned int fbx::PlaylistPanel::SelectedIdx()
 {
 	return listbox->GetSelection();
 }
 
+/**
+ * Returns the current playlist song's index
+ */
 unsigned int fbx::PlaylistPanel::CurrentIdx()
 {
 	return playlist->CurrentIdx();
 }
 
+/**
+ * Attempts to remove the song at the given index from the listbox and playlist memory
+ */
 bool fbx::PlaylistPanel::Remove(const unsigned int idx)
 {
 	if ((idx >= playlist->Size()) || (idx >= listbox->GetCount()))
