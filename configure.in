@@ -106,6 +106,10 @@ fi
 # Types
 AC_HEADER_STDBOOL
 AC_C_CONST
+AC_TYPE_SIZE_T
+
+# Library functions
+AC_CHECK_FUNCS([mkdir])
 
 # Output
 AC_CONFIG_FILES([
