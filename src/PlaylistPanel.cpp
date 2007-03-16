@@ -128,3 +128,22 @@ bool fbx::PlaylistPanel::Save()
 {
 	return playlist->Write();
 }
+
+unsigned int fbx::PlaylistPanel::SelectedIdx()
+{
+	return listbox->GetSelection();
+}
+
+unsigned int fbx::PlaylistPanel::CurrentIdx()
+{
+	return playlist->CurrentIdx();
+}
+
+bool fbx::PlaylistPanel::Remove(const unsigned int idx)
+{
+	if ((idx >= playlist->Size()) || (idx >= listbox->GetCount()))
+		return false;
+	playlist->Remove(idx);
+	listbox->Delete(idx);
+	return true;
+}

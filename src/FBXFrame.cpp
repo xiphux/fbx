@@ -56,6 +56,7 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_TIMER(FBX_frame_timer, fbx::FBXFrame::OnTimer)
 	EVT_CHOICE(FBX_frame_order, fbx::FBXFrame::OnOrder)
 	EVT_MENU(FBX_frame_saveplaylist, fbx::FBXFrame::OnSavePlaylist)
+	EVT_MENU(FBX_frame_remfile, fbx::FBXFrame::OnRemFile)
 END_EVENT_TABLE()
 
 fbx::FBXFrame::FBXFrame():
@@ -69,6 +70,7 @@ fbx::FBXFrame::FBXFrame():
 	wxMenuBar *menubar = new wxMenuBar;
 	wxMenu *filemenu = new wxMenu;
 	filemenu->Append(FBX_frame_addfiles, wxT("&Add files"));
+	filemenu->Append(FBX_frame_remfile, wxT("&Remove file"));
 	filemenu->AppendSeparator();
 	filemenu->Append(FBX_frame_saveplaylist, wxT("&Save playlist"));
 	filemenu->AppendSeparator();
@@ -339,5 +341,29 @@ void fbx::FBXFrame::OnSavePlaylist(wxCommandEvent& WXUNUSED(event))
 	bool ret = page->Save();
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnSavePlaylist: " << (ret ? "true" : "false") << std::endl;
+#endif
+}
+
+void fbx::FBXFrame::OnRemFile(wxCommandEvent& WXUNUSED(event))
+{
+	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
+	unsigned int selected = page->SelectedIdx();
+	while (selected == page->CurrentIdx()) {
+		bool ret = true;
+		if (order->GetCurrentSelection() != 3)
+			ret = page->Next((order->GetCurrentSelection() == 1));
+		if (!ret) {
+			page->SetActive(0);
+			if (order->GetCurrentSelection() != 2) {
+				engine->Stop();
+				ResetSlider();
+			}
+		}
+		if (progress->IsEnabled())
+			Play(page->Current());
+	}
+	bool r = page->Remove(selected);
+#ifdef DEBUG
+	std::cout << "FBXFrame::OnRemFile: " << (r ? "true" : "false") << std::endl;
 #endif
 }

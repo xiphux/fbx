@@ -94,3 +94,19 @@ bool fbx::PlaylistBase::Set(const unsigned int i)
 	idx = i;
 	return true;
 }
+
+bool fbx::PlaylistBase::Remove(const unsigned int i)
+{
+	if (i >= Size())
+		return false;
+	std::vector<std::string>::iterator it = playlist.begin();
+	int j = 0;
+	while (j < i) {
+		it++;
+		j++;
+	}
+	if (it == playlist.end())
+		return false;
+	playlist.erase(it);
+	return true;
+}

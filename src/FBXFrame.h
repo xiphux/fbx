@@ -39,6 +39,7 @@ namespace fbx
 		void OnOrder(wxCommandEvent &event);
 		void OnTimer(wxTimerEvent &event);
 		void OnAddFiles(wxCommandEvent& event);
+		void OnRemFile(wxCommandEvent& event);
 		void OnSavePlaylist(wxCommandEvent& event);
 		void UpdateStatus();
 		void ResetSlider();
@@ -74,6 +75,7 @@ namespace fbx
 		FBX_frame_order,
 		FBX_frame_timer,
 		FBX_frame_addfiles,
+		FBX_frame_remfile,
 		FBX_frame_saveplaylist,
 		FBX_frame_playlist,
 	};

@@ -32,6 +32,7 @@ namespace fbx
 		std::string GetFilename() const;
 		void SetFilename(const std::string& name);
 		void Append(const std::string& f);
+		bool Remove(const unsigned int i);
 	protected:
 		std::string filename;
 		unsigned int idx;
