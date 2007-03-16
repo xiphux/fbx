@@ -32,7 +32,7 @@ fbx::FBXEngine::~FBXEngine()
 
 bool fbx::FBXEngine::Play(const std::string& filename)
 {
-	if (thread)
+	//if (thread || audiofile)
 		Stop();
 	if (!fbx::AudioFileFactory::IsAudioFile(filename)) {
 		std::cerr << "[FBXEngine] Not a recognized audio file: " << filename << std::endl;
@@ -74,15 +74,15 @@ bool fbx::FBXEngine::Pause()
 
 bool fbx::FBXEngine::Stop()
 {
-	if (thread)
-		thread->Delete();
-//	if (audio) {
-//		delete audio;
-//		audio = 0;
-//	}
+//	if (thread)
+//		thread->Delete();
 	if (audiofile) {
 		delete audiofile;
 		audiofile = 0;
+	}
+	if (audio) {
+		delete audio;
+		audio = 0;
 	}
 	return true;
 }
@@ -90,7 +90,7 @@ bool fbx::FBXEngine::Stop()
 std::string fbx::FBXEngine::StatusString()
 {
 	std::string tmp;
-	if (thread && audiofile) {
+	if (audiofile) {
 		tmp += audiofile->InfoString();
 		tmp += " | ";
 		tmp += FBXUtil::ReadableTime(audiofile->Current());

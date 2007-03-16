@@ -237,7 +237,7 @@ void fbx::FBXFrame::ResetSlider()
 
 bool fbx::FBXFrame::Play(const std::string& file)
 {
-	engine->Stop();
+	//engine->Stop();
 	bool ret = engine->Play(file);
 	progress->Enable(true);
 	progress->SetRange(0,engine->Size());
@@ -284,7 +284,7 @@ void fbx::FBXFrame::OnTimer(wxTimerEvent& WXUNUSED(event))
 {
 	//wxWakeUpIdle();
 	UpdateStatus();
-	if ((engine->Eof() || engine->Stopped()) && progress->IsEnabled()) {
+	if ((engine->Eof()/* || engine->Stopped()*/) && progress->IsEnabled()) {
 		if (!TryAdvance()) {
 			engine->Stop();
 			ResetSlider();
