@@ -108,7 +108,7 @@ fbx::FBXFrame::FBXFrame():
 
 	toolbarpanel = new wxPanel(this,-1);
 	topsizer->Add(toolbarpanel,0,wxEXPAND|wxALL);
-	manager = new wxAuiManager(toolbarpanel);
+	manager = new wxAuiManager(toolbarpanel, wxAUI_MGR_DEFAULT | wxAUI_MGR_TRANSPARENT_DRAG );
 
 	playbacktoolbar = new wxToolBar(toolbarpanel,-1);
 	//playbacktoolbar = CreateToolBar();
