@@ -120,6 +120,14 @@ namespace fbx
 		 */
 		bool Stopped();
 
+		/**
+		 * @brief Paused
+		 * @return whether engine is paused
+		 *
+		 * Returns whether the engine is current playing but paused
+		 */
+		bool Paused();
+
 	protected:
 		/**
 		 * @brief thread

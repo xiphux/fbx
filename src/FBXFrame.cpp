@@ -231,8 +231,15 @@ void fbx::FBXFrame::OnPause(wxCommandEvent& event)
  */
 void fbx::FBXFrame::OnPlay(wxCommandEvent& event)
 {
-	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
-	bool ret = Play(page->Current());
+	if (!engine->Stopped())
+		return;
+	bool ret;
+	if (engine->Paused())
+		ret = engine->Pause();
+	else {
+		PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
+		ret = Play(page->Current());
+	}
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnPlay:" << (ret ? "true" : "false") << std::endl;
 #endif

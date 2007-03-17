@@ -195,3 +195,11 @@ bool fbx::FBXEngine::Eof()
 		return true;
 	return audiofile->Eof();
 }
+
+/**
+ * Returns whether the engine is current playing but paused
+ */
+bool fbx::FBXEngine::Paused()
+{
+	return (thread && thread->IsPaused());
+}
