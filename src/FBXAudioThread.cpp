@@ -36,7 +36,9 @@ void *fbx::engine::FBXAudioThread::Entry()
 	int len = 0;
 	char buf[BUFSIZE];
 	while (!TestDestroy() && engine && engine->audio && engine->audiofile && !engine->audiofile->Eof()) {
+		engine->mutex.Lock();
 		len = engine->audiofile->Read(buf, BUFSIZE);
+		engine->mutex.Unlock();
 		if (len < 0)
 			std::cerr << "[FBXAudioThread] Error reading audiofile" << std::endl;
 		else if (!engine->audio->Write(buf, len))

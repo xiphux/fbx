@@ -166,6 +166,8 @@ namespace fbx
 			 * audio/audiofile data structures
 			 */
 			friend class FBXAudioThread;
+
+			wxMutex mutex;
 		};
 
 	}

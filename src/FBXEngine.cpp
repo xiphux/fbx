@@ -171,7 +171,11 @@ bool fbx::engine::FBXEngine::Seek(double t)
 {
 	if (!audiofile)
 		return false;
-	return (audiofile->Seek(t) == 0);
+	int ret;
+	mutex.Lock();
+	ret = audiofile->Seek(t);
+	mutex.Unlock();
+	return (ret == 0);
 }
 
 /**
