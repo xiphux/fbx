@@ -282,7 +282,7 @@ void fbx::FBXFrame::OnPrev(wxCommandEvent& event)
 		page->SetActive(page->Size()-1);
 		ret = true;
 	}
-	if (ret)
+	if (ret && !engine->Stopped())
 		Play(page->Current());
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnPrev" << std::endl;
@@ -300,7 +300,7 @@ void fbx::FBXFrame::OnNext(wxCommandEvent& event)
 		page->SetActive(0);
 		ret = true;
 	}
-	if (ret)
+	if (ret && !engine->Stopped())
 		Play(page->Current());
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnNext" << std::endl;
