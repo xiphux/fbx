@@ -305,7 +305,18 @@ namespace fbx
 		 */
 		unsigned int plidx;
 
+		/**
+		 * @brief manager
+		 *
+		 * Dockable toolbar manager
+		 */
 		wxAuiManager *manager;
+
+		/**
+		 * @brief toolbarpanel
+		 *
+		 * Panel containing all dockable toolbars
+		 */
 		wxPanel *toolbarpanel;
 	};
 
