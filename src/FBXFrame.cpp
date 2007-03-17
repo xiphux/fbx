@@ -75,7 +75,6 @@ END_EVENT_TABLE()
  */
 fbx::FBXFrame::FBXFrame():
 	wxFrame((wxFrame*)NULL, -1, wxEmptyString, wxDefaultPosition, wxSize(640,480)),
-	timer(this,FBX_frame_timer),
 	plidx(0)
 {
 	wxString ttl = wxT(PACKAGE_STRING);
@@ -143,7 +142,8 @@ fbx::FBXFrame::FBXFrame():
 
 	SetExtraStyle(wxWS_EX_PROCESS_IDLE);
 	wxIdleEvent::SetMode(wxIDLE_PROCESS_SPECIFIED);
-	timer.Start(GUIUPDATE);
+	timer = new wxTimer(this,FBX_frame_timer);
+	timer->Start(GUIUPDATE);
 }
 
 /**

@@ -289,9 +289,9 @@ namespace fbx
 		/**
 		 * @brief timer
 		 *
-		 * Update timer instance
+		 * Update timer
 		 */
-		wxTimer timer;
+		wxTimer *timer;
 
 		/**
 		 * @brief playlist index

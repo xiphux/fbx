@@ -17,7 +17,6 @@
 #include <wx/app.h>
 #include <wx/frame.h>
 #include <wx/cmdline.h>
-#include <wx/timer.h>
 #endif
 
 #include <iostream>
