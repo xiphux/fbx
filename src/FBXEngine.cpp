@@ -161,7 +161,7 @@ unsigned int fbx::FBXEngine::Current()
  */
 bool fbx::FBXEngine::Stopped()
 {
-	return !(thread || audiofile);
+	return !(thread && audiofile);
 }
 
 /**
