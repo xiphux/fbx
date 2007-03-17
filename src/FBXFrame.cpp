@@ -143,7 +143,7 @@ fbx::FBXFrame::FBXFrame():
 	tmp.Add(wxT("Repeat (playlist)"));
 	tmp.Add(wxT("Repeat (track)"));
 	order = new wxChoice(playbacktoolbar,FBX_frame_order,wxDefaultPosition,wxDefaultSize,tmp);
-	order->SetSelection(ConfigFactory::GetConfig().GetInt("order",0));
+	order->SetSelection(config::ConfigFactory::GetConfig().GetInt("order",0));
 	pti.Caption(wxT("Order"));
 	manager->AddPane(order,pti);
 
@@ -203,7 +203,7 @@ void fbx::FBXFrame::OpenPlaylists(std::string pls)
 	std::string::size_type pos = pls.find_first_of(",",lastpos);
 	while ((pos != std::string::npos) || (lastpos != std::string::npos)) {
 		std::string pl = pls.substr(lastpos, pos - lastpos);
-		if (PlaylistFactory::IsPlaylist(pl)) {
+		if (playlist::PlaylistFactory::IsPlaylist(pl)) {
 			std::string name = pls.substr(0,pls.find_last_of('.'));
 			std::string::size_type tmp = name.find_last_of('/');
 			if (tmp != std::string::npos)
@@ -416,7 +416,7 @@ void fbx::FBXFrame::UpdateStatus()
  */
 void fbx::FBXFrame::OnOrder(wxCommandEvent& event)
 {
-	ConfigFactory::GetConfig().SetInt("order",order->GetCurrentSelection());
+	config::ConfigFactory::GetConfig().SetInt("order",order->GetCurrentSelection());
 }
 
 /**
@@ -425,7 +425,7 @@ void fbx::FBXFrame::OnOrder(wxCommandEvent& event)
 void fbx::FBXFrame::OnAddFiles(wxCommandEvent& event)
 {
 	std::string ext = "Audio files|";
-	ext += AudioFileFactory::Extensions();
+	ext += audiofile::AudioFileFactory::Extensions();
 	ext += "|All files|*.*";
 	wxString e(ext.c_str(), *wxConvCurrent);
 	wxFileDialog dlg(this,wxT("Add files"),wxT(""),wxT(""),e,wxFD_OPEN|wxFD_FILE_MUST_EXIST|wxFD_MULTIPLE);

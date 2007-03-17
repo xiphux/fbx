@@ -17,45 +17,50 @@
 namespace fbx
 {
 
-	/**
-	 * @brief M3U Playlist class
-	 *
-	 * Derives from PlaylistBase
-	 */
-	class PlaylistM3U: public PlaylistBase
+	namespace playlist
 	{
-	public:
-		/**
-		 * @brief Constructor
-		 * @param fname filename to load
-		 *
-		 * Loads and parses given M3U list
-		 */
-		PlaylistM3U(const std::string& fname);
 
 		/**
-		 * @brief Destructor
+		 * @brief M3U Playlist class
 		 *
-		 * Cleans up open file references
+		 * Derives from PlaylistBase
 		 */
-		virtual ~PlaylistM3U();
+		class PlaylistM3U: public PlaylistBase
+		{
+		public:
+			/**
+			 * @brief Constructor
+			 * @param fname filename to load
+			 *
+			 * Loads and parses given M3U list
+			 */
+			PlaylistM3U(const std::string& fname);
 
-		/**
-		 * @brief Write
-		 * @return whether write was successful
-		 *
-		 * Attempts to write playlist data to disk in M3U format
-		 */
-		virtual bool Write();
+			/**
+			 * @brief Destructor
+			 *
+			 * Cleans up open file references
+			 */
+			virtual ~PlaylistM3U();
 
-	protected:
-		/**
-		 * @brief file
-		 *
-		 * Output file stream
-		 */
-		std::ofstream file;
-	};
+			/**
+			 * @brief Write
+			 * @return whether write was successful
+			 *
+			 * Attempts to write playlist data to disk in M3U format
+			 */
+			virtual bool Write();
+
+		protected:
+			/**
+			 * @brief file
+			 *
+			 * Output file stream
+			 */
+			std::ofstream file;
+		};
+
+	}
 
 }
 

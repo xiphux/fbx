@@ -24,7 +24,7 @@
 /**
  * Tests whether given file is a recognized audio file format
  */
-bool fbx::AudioFileFactory::IsAudioFile(const std::string& filename)
+bool fbx::audiofile::AudioFileFactory::IsAudioFile(const std::string& filename)
 {
 	return (AudioFileType(filename) > FBX_AUDIOFILE_NONE);
 }
@@ -32,7 +32,7 @@ bool fbx::AudioFileFactory::IsAudioFile(const std::string& filename)
 /**
  * Attempts to determine the type of audio file given (or NONE if unrecognized)
  */
-unsigned int fbx::AudioFileFactory::AudioFileType(const std::string& filename)
+unsigned int fbx::audiofile::AudioFileFactory::AudioFileType(const std::string& filename)
 {
 	unsigned int type = FBX_AUDIOFILE_NONE;
 #ifdef HAVE_MAGIC
@@ -46,7 +46,7 @@ unsigned int fbx::AudioFileFactory::AudioFileType(const std::string& filename)
 /**
  * Attempts to return an audiofile reader appropriate for the given filename
  */
-fbx::AudioFileBase* fbx::AudioFileFactory::OpenAudioFile(const std::string& filename)
+fbx::audiofile::AudioFileBase* fbx::audiofile::AudioFileFactory::OpenAudioFile(const std::string& filename)
 {
 	unsigned int type = AudioFileType(filename);
 	switch (type) {
@@ -62,7 +62,7 @@ fbx::AudioFileBase* fbx::AudioFileFactory::OpenAudioFile(const std::string& file
 /**
  * Attempts to determine the type of the given audio file using its extension
  */
-unsigned int fbx::AudioFileFactory::AudioFileTypeByExtension(const std::string& filename)
+unsigned int fbx::audiofile::AudioFileFactory::AudioFileTypeByExtension(const std::string& filename)
 {
 	std::string::size_type pos = filename.find_last_of('.');
 	std::string ext = filename.substr(pos+1);
@@ -78,7 +78,7 @@ unsigned int fbx::AudioFileFactory::AudioFileTypeByExtension(const std::string& 
  * Attempts to determine the type of the given audio file using libmagic
  * to test the file magic and get the mime type
  */
-unsigned int fbx::AudioFileFactory::AudioFileTypeByMagic(const std::string& filename)
+unsigned int fbx::audiofile::AudioFileFactory::AudioFileTypeByMagic(const std::string& filename)
 {
 	unsigned int type = FBX_AUDIOFILE_NONE;
 	magic_t cookie = magic_open(MAGIC_MIME|MAGIC_SYMLINK);
@@ -104,7 +104,7 @@ unsigned int fbx::AudioFileFactory::AudioFileTypeByMagic(const std::string& file
  * Returns a semicolon-delimited list of recognized audiofile extensions
  * (for use in open dialogs)
  */
-std::string fbx::AudioFileFactory::Extensions()
+std::string fbx::audiofile::AudioFileFactory::Extensions()
 {
 	std::string tmp;
 #ifdef HAVE_VORBIS

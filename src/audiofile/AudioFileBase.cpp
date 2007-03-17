@@ -12,7 +12,7 @@
 /**
  * Constructor
  */
-fbx::AudioFileBase::AudioFileBase(const std::string& fname)
+fbx::audiofile::AudioFileBase::AudioFileBase(const std::string& fname)
 {
 	filename = fname;
 }
@@ -20,14 +20,14 @@ fbx::AudioFileBase::AudioFileBase(const std::string& fname)
 /**
  * Destructor
  */
-fbx::AudioFileBase::~AudioFileBase()
+fbx::audiofile::AudioFileBase::~AudioFileBase()
 {
 }
 
 /**
  * Returns the currently open filename
  */
-std::string fbx::AudioFileBase::Filename() const
+std::string fbx::audiofile::AudioFileBase::Filename() const
 {
 	return filename;
 }
@@ -35,7 +35,7 @@ std::string fbx::AudioFileBase::Filename() const
 /**
  * Tests whether audiofile is successfully opened
  */
-bool fbx::AudioFileBase::Opened() const
+bool fbx::audiofile::AudioFileBase::Opened() const
 {
 	return opened;
 }
@@ -43,7 +43,7 @@ bool fbx::AudioFileBase::Opened() const
 /**
  * Returns a formatted string of a number of common metadata fields
  */
-std::string fbx::AudioFileBase::MetadataString()
+std::string fbx::audiofile::AudioFileBase::MetadataString()
 {
 	std::string tmp;
 	tmp += Metadata(FBX_METADATA_ARTIST);

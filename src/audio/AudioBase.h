@@ -42,46 +42,51 @@
 namespace fbx
 {
 
-	/**
-	 * @brief Abstract base audio driver class
-	 *
-	 * All audio driver classes must inherit from this
-	 */
-	class AudioBase
+	namespace audio
 	{
-	public:
-		/**
-		 * @brief Destructor
-		 */
-		virtual ~AudioBase() {};
 
 		/**
-		 * @brief Opened
-		 * @return whether audio output is open
+		 * @brief Abstract base audio driver class
 		 *
-		 * Returns whether audio output driver is open and ready
+		 * All audio driver classes must inherit from this
 		 */
-		virtual bool Opened() const {return opened;};
+		class AudioBase
+		{
+		public:
+			/**
+			 * @brief Destructor
+			 */
+			virtual ~AudioBase() {};
 
-		/**
-		 * @brief Write
-		 * @param buf buffer of audio data to write
-		 * @param len length of audio data to write
-		 * @return amount written
-		 *
-		 * Write audio data to output driver
-		 * Must be implemented
-		 */
-		virtual long Write(char *buf, long len) = 0;
+			/**
+			 * @brief Opened
+			 * @return whether audio output is open
+			 *
+			 * Returns whether audio output driver is open and ready
+			 */
+			virtual bool Opened() const {return opened;};
 
-	protected:
-		/**
-		 * @brief opened
-		 *
-		 * Flag whether audio output is open and ready
-		 */
-		bool opened;
-	};
+			/**
+			 * @brief Write
+			 * @param buf buffer of audio data to write
+			 * @param len length of audio data to write
+			 * @return amount written
+			 *
+			 * Write audio data to output driver
+			 * Must be implemented
+			 */
+			virtual long Write(char *buf, long len) = 0;
+
+		protected:
+			/**
+			 * @brief opened
+			 *
+			 * Flag whether audio output is open and ready
+			 */
+			bool opened;
+		};
+
+	}
 
 }
 

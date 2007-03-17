@@ -19,7 +19,7 @@ static FLAC__StreamDecoderWriteStatus flac_callback_write(const FLAC_SeekableStr
 {
 }
 
-fbx::AudioFileFlac::AudioFileFlac(const std::string& fname):
+fbx::audiofile::AudioFileFlac::AudioFileFlac(const std::string& fname):
 	AudioFileBase(fname)
 {
 	opened = false;
@@ -32,36 +32,36 @@ fbx::AudioFileFlac::AudioFileFlac(const std::string& fname):
 	opened = true;
 }
 
-fbx::AudioFileFlac::~AudioFileFlac()
+fbx::audiofile::AudioFileFlac::~AudioFileFlac()
 {
 	FLAC__seekable_stream_decoder_finish(decoder);
 	FLAC__seekable_stream_decoder_delete(decoder);
 }
 
-int fbx::AudioFileFlac::Seek(double pos)
+int fbx::audiofile::AudioFileFlac::Seek(double pos)
 {
 }
 
-long fbx::AudioFileFlac::Read(char *buf, long len)
+long fbx::audiofile::AudioFileFlac::Read(char *buf, long len)
 {
 }
 
-double fbx::AudioFileFlac::Size()
+double fbx::audiofile::AudioFileFlac::Size()
 {
 }
 
-double fbx::AudioFileFlac::Current()
+double fbx::audiofile::AudioFileFlac::Current()
 {
 }
 
-bool fbx::AudioFileFlac::Eof()
+bool fbx::audiofile::AudioFileFlac::Eof()
 {
 }
 
-std::string fbx::AudioFileFlac::InfoString()
+std::string fbx::audiofile::AudioFileFlac::InfoString()
 {
 }
 
-std::string fbx::AudioFileFlac::Metadata(const unsigned int field)
+std::string fbx::audiofile::AudioFileFlac::Metadata(const unsigned int field)
 {
 }

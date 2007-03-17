@@ -14,13 +14,13 @@
 /**
  * Singleton instance of config
  */
-fbx::ConfigBase* fbx::ConfigFactory::instance = 0;
+fbx::config::ConfigBase* fbx::config::ConfigFactory::instance = 0;
 
 /**
  * Returns config instance appropriate for platform,
  * instantiating one if necessary
  */
-fbx::ConfigBase& fbx::ConfigFactory::GetConfig()
+fbx::config::ConfigBase& fbx::config::ConfigFactory::GetConfig()
 {
 	if (!instance) {
 		instance = new ConfigDotfile();
@@ -31,7 +31,7 @@ fbx::ConfigBase& fbx::ConfigFactory::GetConfig()
 /**
  * Deallocates existing config instance
  */
-void fbx::ConfigFactory::Deallocate()
+void fbx::config::ConfigFactory::Deallocate()
 {
 	if (instance)
 		delete instance;

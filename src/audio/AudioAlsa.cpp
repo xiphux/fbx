@@ -6,7 +6,7 @@
 #include <iostream>
 #include "AudioAlsa.h"
 
-fbx::AudioAlsa::AudioAlsa():
+fbx::audio::AudioAlsa::AudioAlsa():
 {
 	opened = false;
 	snd_pcm_hw_params_t *params;
@@ -52,12 +52,12 @@ fbx::AudioAlsa::AudioAlsa():
 	opened = true;
 }
 
-fbx::AudioAlsa::~AudioAlsa()
+fbx::audio::AudioAlsa::~AudioAlsa()
 {
 	snd_pcm_close(handle);
 }
 
-long fbx::AudioAlsa::Write(char *buf, long len)
+long fbx::audio::AudioAlsa::Write(char *buf, long len)
 {
 	if (!opened)
 		return -1;

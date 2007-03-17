@@ -52,7 +52,7 @@ bool fbx::FBX::OnInit()
 	frame = new FBXFrame();
 	frame->engine = engine;
 	frame->Show(true);
-	frame->OpenPlaylists(ConfigFactory::GetConfig().GetString("playlists",""));
+	frame->OpenPlaylists(config::ConfigFactory::GetConfig().GetString("playlists",""));
 	SetTopWindow(frame);
 	SetExitOnFrameDelete(true);
 	return true;
@@ -67,7 +67,7 @@ int fbx::FBX::OnExit()
 		engine->Stop();
 		delete engine;
 	}
-	ConfigFactory::Deallocate();
+	config::ConfigFactory::Deallocate();
 	return 0;
 }
 

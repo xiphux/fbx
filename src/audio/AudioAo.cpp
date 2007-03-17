@@ -15,7 +15,7 @@
  * Constructor
  * Initializes libao
  */
-fbx::AudioAo::AudioAo()
+fbx::audio::AudioAo::AudioAo()
 {
 	opened = false;
 	ao_sample_format format;
@@ -37,7 +37,7 @@ fbx::AudioAo::AudioAo()
  * Destructor
  * Closes libao
  */
-fbx::AudioAo::~AudioAo()
+fbx::audio::AudioAo::~AudioAo()
 {
 	if (device)
 		ao_close(device);
@@ -47,7 +47,7 @@ fbx::AudioAo::~AudioAo()
 /**
  * Write audio data to libao
  */
-long fbx::AudioAo::Write(char *buf, long len)
+long fbx::audio::AudioAo::Write(char *buf, long len)
 {
 	if (!opened)
 		return -1;

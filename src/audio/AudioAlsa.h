@@ -12,15 +12,20 @@
 namespace fbx
 {
 
-	class AudioAlsa: public AudioBase
+	namespace audio
 	{
-	public:
-		AudioAlsa();
-		virtual ~AudioAlsa();
-		virtual long Write(char *buf, long len);
-	protected:
-		snd_pcm_t *handle;
-	};
+
+		class AudioAlsa: public AudioBase
+		{
+		public:
+			AudioAlsa();
+			virtual ~AudioAlsa();
+			virtual long Write(char *buf, long len);
+		protected:
+			snd_pcm_t *handle;
+		};
+
+	}
 
 }
 

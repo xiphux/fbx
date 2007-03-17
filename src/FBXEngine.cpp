@@ -48,16 +48,16 @@ bool fbx::FBXEngine::Play(const std::string& filename)
 {
 	//if (thread || audiofile)
 		Stop();
-	if (!fbx::AudioFileFactory::IsAudioFile(filename)) {
+	if (!audiofile::AudioFileFactory::IsAudioFile(filename)) {
 		std::cerr << "[FBXEngine] Not a recognized audio file: " << filename << std::endl;
 		return false;
 	}
-	audiofile = fbx::AudioFileFactory::OpenAudioFile(filename);
+	audiofile = audiofile::AudioFileFactory::OpenAudioFile(filename);
 	if (!audiofile) {
 		std::cerr << "[FBXEngine] Error instantiating audiofile: " << filename << std::endl;
 		return false;
 	}
-	audio = fbx::AudioFactory::CreateAudio();
+	audio = audio::AudioFactory::CreateAudio();
 	if (!audio) {
 		std::cerr << "[FBXEngine] Error instantiating audio" << std::endl;
 		Stop();

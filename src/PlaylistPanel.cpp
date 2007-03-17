@@ -42,7 +42,7 @@ fbx::PlaylistPanel::PlaylistPanel(wxWindow *parent, wxWindowID id, const std::st
 	if (pls.length() > 0)
 		LoadPlaylist(pls);
 	else
-		playlist = new PlaylistBase("");
+		playlist = new playlist::PlaylistBase("");
 }
 
 /**
@@ -53,7 +53,7 @@ bool fbx::PlaylistPanel::LoadPlaylist(const std::string& pls)
 #ifdef DEBUG
 	std::cout << "PlaylistPanel::LoadPlaylist:" << pls << std::endl;
 #endif
-	PlaylistBase *tmp = PlaylistFactory::OpenPlaylist(pls);
+	playlist::PlaylistBase *tmp = playlist::PlaylistFactory::OpenPlaylist(pls);
 	if (tmp)
 		playlist = tmp;
 	PopulatePlaylist();
@@ -131,7 +131,7 @@ unsigned int fbx::PlaylistPanel::Size()
 bool fbx::PlaylistPanel::Add(const std::string& file, bool newitem)
 {
 	std::string meta;
-	AudioFileBase *tmp = AudioFileFactory::OpenAudioFile(file);
+	audiofile::AudioFileBase *tmp = audiofile::AudioFileFactory::OpenAudioFile(file);
 	if (tmp)
 		meta = tmp->MetadataString();
 	if (meta.length() > 3) {

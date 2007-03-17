@@ -16,46 +16,51 @@
 namespace fbx
 {
 
-	/**
-	 * @brief Libao output driver
-	 *
-	 * Derives from AudioBase
-	 */
-	class AudioAo: public AudioBase
+	namespace audio
 	{
-	public:
-		/**
-		 * @brief Constructor
-		 *
-		 * Initializes libao
-		 */
-		AudioAo();
 
 		/**
-		 * @brief Destructor
+		 * @brief Libao output driver
 		 *
-		 * Closes libao
+		 * Derives from AudioBase
 		 */
-		virtual ~AudioAo();
+		class AudioAo: public AudioBase
+		{
+		public:
+			/**
+			 * @brief Constructor
+			 *
+			 * Initializes libao
+			 */
+			AudioAo();
 
-		/**
-		 * @brief Write
-		 * @param buf buffer of audio data to write
-		 * @param len length of audio data to write
-		 * @return amount written
-		 *
-		 * Write audio data to libao
-		 */
-		virtual long Write(char *buf, long len);
+			/**
+			 * @brief Destructor
+			 *
+			 * Closes libao
+			 */
+			virtual ~AudioAo();
 
-	protected:
-		/**
-		 * @brief device
-		 *
-		 * Libao open device pointer
-		 */
-		ao_device *device;
-	};
+			/**
+			 * @brief Write
+			 * @param buf buffer of audio data to write
+			 * @param len length of audio data to write
+			 * @return amount written
+			 *
+			 * Write audio data to libao
+			 */
+			virtual long Write(char *buf, long len);
+
+		protected:
+			/**
+			 * @brief device
+			 *
+			 * Libao open device pointer
+			 */
+			ao_device *device;
+		};
+
+	}
 
 }
 

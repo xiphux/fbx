@@ -140,7 +140,7 @@ namespace fbx
 		 *
 		 * Pointer to the current playlist
 		 */
-		PlaylistBase *playlist;
+		playlist::PlaylistBase *playlist;
 
 		/**
 		 * @brief listbox

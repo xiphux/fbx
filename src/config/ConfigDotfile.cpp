@@ -18,7 +18,7 @@
  * Loads an existing config into memory if one exists
  * Creates dir and config file if nonexistent
  */
-fbx::ConfigDotfile::ConfigDotfile(std::string dir, std::string fname)
+fbx::config::ConfigDotfile::ConfigDotfile(std::string dir, std::string fname)
 {
 	mkdir(dir.c_str(),0755);
 	filename = dir.append("/").append(fname);
@@ -41,7 +41,7 @@ fbx::ConfigDotfile::ConfigDotfile(std::string dir, std::string fname)
  * Destructor
  * Cleans up open file references
  */
-fbx::ConfigDotfile::~ConfigDotfile()
+fbx::config::ConfigDotfile::~ConfigDotfile()
 {
 	Flush();
 	file.close();
@@ -50,7 +50,7 @@ fbx::ConfigDotfile::~ConfigDotfile()
 /**
  * Sets a key to a given integer value
  */
-void fbx::ConfigDotfile::SetInt(std::string name, unsigned int value)
+void fbx::config::ConfigDotfile::SetInt(std::string name, unsigned int value)
 {
 	std::stringstream ss;
 	ss << value;
@@ -61,7 +61,7 @@ void fbx::ConfigDotfile::SetInt(std::string name, unsigned int value)
 /**
  * Sets a key to a given string value
  */
-void fbx::ConfigDotfile::SetString(std::string name, std::string value)
+void fbx::config::ConfigDotfile::SetString(std::string name, std::string value)
 {
 	data[name] = value;
 	Flush();
@@ -70,7 +70,7 @@ void fbx::ConfigDotfile::SetString(std::string name, std::string value)
 /**
  * Attempts to get an integer key value, or gives default if not found
  */
-unsigned int fbx::ConfigDotfile::GetInt(std::string name, unsigned int def)
+unsigned int fbx::config::ConfigDotfile::GetInt(std::string name, unsigned int def)
 {
 	std::map<std::string,std::string>::iterator pos = data.find(name);
 	return ( pos == data.end() ? def : atoi(data[name].c_str()) );
@@ -79,7 +79,7 @@ unsigned int fbx::ConfigDotfile::GetInt(std::string name, unsigned int def)
 /**
  * Attempts to get a string key value, or gives default if not found
  */
-std::string fbx::ConfigDotfile::GetString(std::string name, std::string def)
+std::string fbx::config::ConfigDotfile::GetString(std::string name, std::string def)
 {
 	std::map<std::string,std::string>::iterator pos = data.find(name);
 	return ( pos == data.end() ? def : data[name] );
@@ -88,7 +88,7 @@ std::string fbx::ConfigDotfile::GetString(std::string name, std::string def)
 /**
  * Flushes in-memory data to disk
  */
-void fbx::ConfigDotfile::Flush()
+void fbx::config::ConfigDotfile::Flush()
 {
 	Truncate();
 	for(std::map<std::string,std::string>::iterator iter = data.begin(); iter != data.end(); iter++)
@@ -100,7 +100,7 @@ void fbx::ConfigDotfile::Flush()
  * Truncates existing config file to 0
  * (to avoid trailing characters)
  */
-void fbx::ConfigDotfile::Truncate()
+void fbx::config::ConfigDotfile::Truncate()
 {
 	if (file)
 		file.close();

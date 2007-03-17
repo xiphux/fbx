@@ -15,29 +15,34 @@
 namespace fbx
 {
 
-	/**
-	 * @brief Audio output driver factory
-	 */
-	class AudioFactory
+	namespace audio
 	{
-	public:
-		/**
-		 * @brief Create Audio
-		 * @param type audio driver to create
-		 * @return typed audio driver
-		 *
-		 * Creates an instance of the audio driver that was requested
-		 */
-		static AudioBase *CreateAudio(unsigned int type = FBX_AUDIO_NONE);
 
 		/**
-		 * @brief Default audio
-		 * @return type of audio driver
-		 *
-		 * Returns the best audio output driver for the current platform
+		 * @brief Audio output driver factory
 		 */
-		static unsigned int DefaultAudio();
-	};
+		class AudioFactory
+		{
+		public:
+			/**
+			 * @brief Create Audio
+			 * @param type audio driver to create
+			 * @return typed audio driver
+			 *
+			 * Creates an instance of the audio driver that was requested
+			 */
+			static AudioBase *CreateAudio(unsigned int type = FBX_AUDIO_NONE);
+
+			/**
+			 * @brief Default audio
+			 * @return type of audio driver
+			 *
+			 * Returns the best audio output driver for the current platform
+			 */
+			static unsigned int DefaultAudio();
+		};
+
+	}
 
 }
 

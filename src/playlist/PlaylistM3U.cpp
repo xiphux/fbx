@@ -14,7 +14,7 @@
  * Constructor
  * Loads and parses given M3U list
  */
-fbx::PlaylistM3U::PlaylistM3U(const std::string& fname):
+fbx::playlist::PlaylistM3U::PlaylistM3U(const std::string& fname):
 	PlaylistBase(fname)
 {
 	std::ifstream reader(fname.c_str());
@@ -32,7 +32,7 @@ fbx::PlaylistM3U::PlaylistM3U(const std::string& fname):
  * Destructor
  * Cleans up open file references
  */
-fbx::PlaylistM3U::~PlaylistM3U()
+fbx::playlist::PlaylistM3U::~PlaylistM3U()
 {
 	file.close();
 }
@@ -40,7 +40,7 @@ fbx::PlaylistM3U::~PlaylistM3U()
 /**
  * Attempts to write playlist data to disk in M3U format
  */
-bool fbx::PlaylistM3U::Write()
+bool fbx::playlist::PlaylistM3U::Write()
 {
 	file.open(filename.c_str(),std::ios::out|std::ios::trunc);
 	if (!file) {

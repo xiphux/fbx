@@ -16,105 +16,110 @@
 namespace fbx
 {
 
-	/**
-	 * @brief Ogg Vorbis audiofile class
-	 *
-	 * Implements AudioFileBase
-	 */
-	class AudioFileVorbis: public AudioFileBase
+	namespace audiofile
 	{
-	public:
-		/**
-		 * @brief Constructor
-		 * @param fname filename to open
-		 *
-		 * Opens file and initializes libvorbisfile
-		 */
-		AudioFileVorbis(const std::string& fname);
 
 		/**
-		 * @brief Destructor
+		 * @brief Ogg Vorbis audiofile class
 		 *
-		 * Closes file and libvorbisfile
+		 * Implements AudioFileBase
 		 */
-		virtual ~AudioFileVorbis();
+		class AudioFileVorbis: public AudioFileBase
+		{
+		public:
+			/**
+			 * @brief Constructor
+			 * @param fname filename to open
+			 *
+			 * Opens file and initializes libvorbisfile
+			 */
+			AudioFileVorbis(const std::string& fname);
 
-		/**
-		 * @brief Seek
-		 * @param pos position to seek to in seconds
-		 * @return whether seek was successful
-		 *
-		 * Attempts to seek to the given position
-		 */
-		virtual int Seek(double pos);
+			/**
+			 * @brief Destructor
+			 *
+			 * Closes file and libvorbisfile
+			 */
+			virtual ~AudioFileVorbis();
 
-		/**
-		 * @brief Read
-		 * @param buf buffer to read into
-		 * @param len amount of data to read
-		 * @return amount of data read
-		 *
-		 * Attempts to read audio data from vorbis file into buffer
-		 */
-		virtual long Read(char *buf, long len);
+			/**
+			 * @brief Seek
+			 * @param pos position to seek to in seconds
+			 * @return whether seek was successful
+			 *
+			 * Attempts to seek to the given position
+			 */
+			virtual int Seek(double pos);
 
-		/**
-		 * @brief Size
-		 * @return size of vorbis file
-		 * 
-		 * Returns the size of the loaded vorbis file
-		 */
-		virtual double Size();
+			/**
+			 * @brief Read
+			 * @param buf buffer to read into
+			 * @param len amount of data to read
+			 * @return amount of data read
+			 *
+			 * Attempts to read audio data from vorbis file into buffer
+			 */
+			virtual long Read(char *buf, long len);
 
-		/**
-		 * @brief Current
-		 * @return current position of vorbis file
-		 *
-		 * Returns the current position of the playing vorbis file
-		 */
-		virtual double Current();
+			/**
+			 * @brief Size
+			 * @return size of vorbis file
+			 * 
+			 * Returns the size of the loaded vorbis file
+			 */
+			virtual double Size();
 
-		/**
-		 * @brief End of file
-		 * @return whether the vorbis file is at the end of file
-		 *
-		 * Tests whether the vorbis file has reached the EOF
-		 */
-		virtual bool Eof();
+			/**
+			 * @brief Current
+			 * @return current position of vorbis file
+			 *
+			 * Returns the current position of the playing vorbis file
+			 */
+			virtual double Current();
 
-		/**
-		 * @brief Info String
-		 * @return string of info about file
-		 *
-		 * Returns a string of info about the vorbis file
-		 * (format, bitrate, sampling rate, channels, etc)
-		 */
-		virtual std::string InfoString();
+			/**
+			 * @brief End of file
+			 * @return whether the vorbis file is at the end of file
+			 *
+			 * Tests whether the vorbis file has reached the EOF
+			 */
+			virtual bool Eof();
 
-		/**
-		 * @brief Metadata
-		 * @param field metadata field to fetch
-		 * @return string of metadata requested
-		 *
-		 * Fetches and returns a specific field of metadata
-		 */
-		virtual std::string Metadata(const unsigned int field);
+			/**
+			 * @brief Info String
+			 * @return string of info about file
+			 *
+			 * Returns a string of info about the vorbis file
+			 * (format, bitrate, sampling rate, channels, etc)
+			 */
+			virtual std::string InfoString();
 
-	protected:
-		/**
-		 * @brief fp
-		 *
-		 * File pointer
-		 */
-		FILE *fp;
+			/**
+			 * @brief Metadata
+			 * @param field metadata field to fetch
+			 * @return string of metadata requested
+			 *
+			 * Fetches and returns a specific field of metadata
+			 */
+			virtual std::string Metadata(const unsigned int field);
 
-		/**
-		 * @brief file
-		 *
-		 * Libvorbisfile ogg vorbis file pointer
-		 */
-		OggVorbis_File file;
-	};
+		protected:
+			/**
+			 * @brief fp
+			 *
+			 * File pointer
+			 */
+			FILE *fp;
+
+			/**
+			 * @brief file
+			 *
+			 * Libvorbisfile ogg vorbis file pointer
+			 */
+			OggVorbis_File file;
+		};
+
+	}
 
 }
 

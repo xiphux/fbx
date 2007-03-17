@@ -21,7 +21,7 @@
 /**
  * Creates an instance of the audio driver that was requested
  */
-fbx::AudioBase* fbx::AudioFactory::CreateAudio(unsigned int type)
+fbx::audio::AudioBase* fbx::audio::AudioFactory::CreateAudio(unsigned int type)
 {
 	if (type == FBX_AUDIO_NONE)
 		type = DefaultAudio();
@@ -41,7 +41,7 @@ fbx::AudioBase* fbx::AudioFactory::CreateAudio(unsigned int type)
 /**
  * Returns the best audio output driver for the current platform
  */
-unsigned int fbx::AudioFactory::DefaultAudio()
+unsigned int fbx::audio::AudioFactory::DefaultAudio()
 {
 #ifdef HAVE_AO
 	return FBX_AUDIO_AO;

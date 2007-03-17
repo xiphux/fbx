@@ -17,17 +17,17 @@ int main(int argc, char **argv)
 		std::cout << "Requires an argument" << std::endl;
 		return 1;
 	}
-	fbx::AudioBase *audio = fbx::AudioFactory::CreateAudio();
+	fbx::audio::AudioBase *audio = fbx::audio::AudioFactory::CreateAudio();
 	if (!audio) {
 		std::cout << "Could not create audio output" << std::endl;
 		return 2;
 	}
 	std::string fname = argv[1];
-	if (!fbx::AudioFileFactory::IsAudioFile(fname)) {
+	if (!fbx::audiofile::AudioFileFactory::IsAudioFile(fname)) {
 		std::cout << "Not a recognized audio file" << std::endl;
 		return 2;
 	}
-	fbx::AudioFileBase *audiofile = fbx::AudioFileFactory::OpenAudioFile(fname);
+	fbx::audiofile::AudioFileBase *audiofile = fbx::audiofile::AudioFileFactory::OpenAudioFile(fname);
 	if (!audiofile) {
 		std::cout << "Error opening audiofile" << std::endl;
 		return 2;

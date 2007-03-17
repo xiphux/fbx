@@ -14,7 +14,7 @@
 /**
  * Tests whether a given playlist filename is a recognized playlist format
  */
-bool fbx::PlaylistFactory::IsPlaylist(const std::string& filename)
+bool fbx::playlist::PlaylistFactory::IsPlaylist(const std::string& filename)
 {
 	return (PlaylistType(filename) > FBX_PLAYLIST_NONE);
 }
@@ -22,7 +22,7 @@ bool fbx::PlaylistFactory::IsPlaylist(const std::string& filename)
 /**
  * Attempts to determine the format of the given playlist
  */
-unsigned int fbx::PlaylistFactory::PlaylistType(const std::string& filename)
+unsigned int fbx::playlist::PlaylistFactory::PlaylistType(const std::string& filename)
 {
 	std::string::size_type pos = filename.find_last_of('.');
 	std::string ext = filename.substr(pos+1);
@@ -37,7 +37,7 @@ unsigned int fbx::PlaylistFactory::PlaylistType(const std::string& filename)
  * Attempts to open a given playlist, and returns a typed playlist instance
  * appropriate for the given playlist
  */
-fbx::PlaylistBase* fbx::PlaylistFactory::OpenPlaylist(const std::string& filename)
+fbx::playlist::PlaylistBase* fbx::playlist::PlaylistFactory::OpenPlaylist(const std::string& filename)
 {
 	unsigned int type = PlaylistType(filename);
 	switch (type) {
@@ -57,7 +57,7 @@ fbx::PlaylistBase* fbx::PlaylistFactory::OpenPlaylist(const std::string& filenam
  * (Usually used to transform untyped in-memory playlists into a typed format when
  * saving it to a specific file)
  */
-fbx::PlaylistBase* fbx::PlaylistFactory::ChangePlaylistType(fbx::PlaylistBase* orig, std::string fname)
+fbx::playlist::PlaylistBase* fbx::playlist::PlaylistFactory::ChangePlaylistType(fbx::playlist::PlaylistBase* orig, std::string fname)
 {
 	if (!orig)
 		return 0;

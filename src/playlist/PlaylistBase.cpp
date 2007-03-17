@@ -15,7 +15,7 @@
  * Constructor
  * Typed playlists should parse/load playlist files here
  */
-fbx::PlaylistBase::PlaylistBase(const std::string &fname):
+fbx::playlist::PlaylistBase::PlaylistBase(const std::string &fname):
 	idx(0)
 {
 	filename = fname;
@@ -24,7 +24,7 @@ fbx::PlaylistBase::PlaylistBase(const std::string &fname):
 /**
  * Destructor
  */
-fbx::PlaylistBase::~PlaylistBase()
+fbx::playlist::PlaylistBase::~PlaylistBase()
 {
 }
 
@@ -32,7 +32,7 @@ fbx::PlaylistBase::~PlaylistBase()
  * Attempts to write playlist to disk in specific playlist's format
  * (typed playlist classes must override this)
  */
-bool fbx::PlaylistBase::Write()
+bool fbx::playlist::PlaylistBase::Write()
 {
 	return false;
 }
@@ -40,7 +40,7 @@ bool fbx::PlaylistBase::Write()
 /**
  * Returns the current song (full path)
  */
-std::string fbx::PlaylistBase::Current()
+std::string fbx::playlist::PlaylistBase::Current()
 {
 	std::string item = playlist.at(idx);
 	if (item.at(0) != '/')
@@ -51,7 +51,7 @@ std::string fbx::PlaylistBase::Current()
 /**
  * Returns the index of the currently active song
  */
-unsigned int fbx::PlaylistBase::CurrentIdx() const
+unsigned int fbx::playlist::PlaylistBase::CurrentIdx() const
 {
 	return idx;
 }
@@ -59,7 +59,7 @@ unsigned int fbx::PlaylistBase::CurrentIdx() const
 /**
  * Attempts to advance the playlist to the previous song
  */
-bool fbx::PlaylistBase::Prev(bool random)
+bool fbx::playlist::PlaylistBase::Prev(bool random)
 {
 	if (random) {
 		idx = FBXUtil::Rand(0, playlist.size() - 1);
@@ -74,7 +74,7 @@ bool fbx::PlaylistBase::Prev(bool random)
 /**
  * Attempts to advance the playlist to the next song
  */
-bool fbx::PlaylistBase::Next(bool random)
+bool fbx::playlist::PlaylistBase::Next(bool random)
 {
 	if (random) {
 		idx = FBXUtil::Rand(0, playlist.size() - 1);
@@ -89,7 +89,7 @@ bool fbx::PlaylistBase::Next(bool random)
 /**
  * Returns the number of items in the current playlist
  */
-unsigned int fbx::PlaylistBase::Size()
+unsigned int fbx::playlist::PlaylistBase::Size()
 {
 	return playlist.size();
 }
@@ -97,7 +97,7 @@ unsigned int fbx::PlaylistBase::Size()
 /**
  * Returns the filename of the current playlist
  */
-std::string fbx::PlaylistBase::GetFilename() const
+std::string fbx::playlist::PlaylistBase::GetFilename() const
 {
 	return filename;
 }
@@ -105,7 +105,7 @@ std::string fbx::PlaylistBase::GetFilename() const
 /**
  * Sets the filename of the current playlist
  */
-void fbx::PlaylistBase::SetFilename(const std::string& name)
+void fbx::playlist::PlaylistBase::SetFilename(const std::string& name)
 {
 	filename = name;
 }
@@ -113,7 +113,7 @@ void fbx::PlaylistBase::SetFilename(const std::string& name)
 /**
  * Appends a song to the playlist
  */
-void fbx::PlaylistBase::Append(const std::string& f)
+void fbx::playlist::PlaylistBase::Append(const std::string& f)
 {
 	playlist.push_back(f);
 }
@@ -122,7 +122,7 @@ void fbx::PlaylistBase::Append(const std::string& f)
  * Returns the path of the playlist minus the filename
  * (for use in playlist types that support relative filenames in them)
  */
-std::string fbx::PlaylistBase::GetPath()
+std::string fbx::playlist::PlaylistBase::GetPath()
 {
 	std::string::size_type idx = filename.find_last_of('/');
 	if ((idx >= 0) && (idx != std::string::npos))
@@ -133,7 +133,7 @@ std::string fbx::PlaylistBase::GetPath()
 /**
  * Forces the given song index to be currently active
  */
-bool fbx::PlaylistBase::Set(const unsigned int i)
+bool fbx::playlist::PlaylistBase::Set(const unsigned int i)
 {
 	if (i >= Size())
 		return false;
@@ -144,7 +144,7 @@ bool fbx::PlaylistBase::Set(const unsigned int i)
 /**
  * Attempts to remove song at the given index from the playlist
  */
-bool fbx::PlaylistBase::Remove(const unsigned int i)
+bool fbx::playlist::PlaylistBase::Remove(const unsigned int i)
 {
 	if (i >= Size())
 		return false;

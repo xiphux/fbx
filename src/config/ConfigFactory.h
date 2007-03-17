@@ -15,36 +15,41 @@
 namespace fbx
 {
 
-	/**
-	 * @brief Config factory and utility class
-	 */
-	class ConfigFactory
+	namespace config
 	{
-	public:
-		/**
-		 * @brief Get Config
-		 * @return singleton instance of config
-		 *
-		 * Returns config instance appropriate for platform,
-		 * instantiating one if necessary
-		 */
-		static ConfigBase& GetConfig();
 
 		/**
-		 * @brief Deallocate
-		 *
-		 * Deallocates existing config instance
+		 * @brief Config factory and utility class
 		 */
-		static void Deallocate();
+		class ConfigFactory
+		{
+		public:
+			/**
+			 * @brief Get Config
+			 * @return singleton instance of config
+			 *
+			 * Returns config instance appropriate for platform,
+			 * instantiating one if necessary
+			 */
+			static ConfigBase& GetConfig();
 
-	protected:
-		/**
-		 * @brief instance
-		 * 
-		 * Singleton instance of config
-		 */
-		static ConfigBase* instance;
-	};
+			/**
+			 * @brief Deallocate
+			 *
+			 * Deallocates existing config instance
+			 */
+			static void Deallocate();
+
+		protected:
+			/**
+			 * @brief instance
+			 * 
+			 * Singleton instance of config
+			 */
+			static ConfigBase* instance;
+		};
+
+	}
 
 }
 

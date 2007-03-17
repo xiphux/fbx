@@ -16,7 +16,7 @@
  * Constructor
  * Opens file and initializes libvorbisfile
  */
-fbx::AudioFileVorbis::AudioFileVorbis(const std::string& fname):
+fbx::audiofile::AudioFileVorbis::AudioFileVorbis(const std::string& fname):
 	AudioFileBase(fname)
 {
 	opened = false;
@@ -36,7 +36,7 @@ fbx::AudioFileVorbis::AudioFileVorbis(const std::string& fname):
  * Destructor
  * Closes file and libvorbisfile
  */
-fbx::AudioFileVorbis::~AudioFileVorbis()
+fbx::audiofile::AudioFileVorbis::~AudioFileVorbis()
 {
 	if (opened && ov_clear(&file))
 		std::cerr << "[AudioFileVorbis] Failed to clear vorbis" << std::endl;
@@ -47,7 +47,7 @@ fbx::AudioFileVorbis::~AudioFileVorbis()
 /**
  * Attempts to seek to the given position
  */
-int fbx::AudioFileVorbis::Seek(double pos)
+int fbx::audiofile::AudioFileVorbis::Seek(double pos)
 {
 	if (!opened)
 		return -1;
@@ -57,7 +57,7 @@ int fbx::AudioFileVorbis::Seek(double pos)
 /**
  * Attempts to read audio data from vorbis file into buffer
  */
-long fbx::AudioFileVorbis::Read(char *buf, long len)
+long fbx::audiofile::AudioFileVorbis::Read(char *buf, long len)
 {
 	if (!opened)
 		return -1;
@@ -68,7 +68,7 @@ long fbx::AudioFileVorbis::Read(char *buf, long len)
 /**
  * Returns the size of the loaded vorbis file
  */
-double fbx::AudioFileVorbis::Size()
+double fbx::audiofile::AudioFileVorbis::Size()
 {
 	if (!opened)
 		return -1;
@@ -78,7 +78,7 @@ double fbx::AudioFileVorbis::Size()
 /**
  * Returns the current position of the playing vorbis file
  */
-double fbx::AudioFileVorbis::Current()
+double fbx::audiofile::AudioFileVorbis::Current()
 {
 	if (!opened)
 		return -1;
@@ -88,7 +88,7 @@ double fbx::AudioFileVorbis::Current()
 /**
  * Tests whether the vorbis file has reached the EOF
  */
-bool fbx::AudioFileVorbis::Eof()
+bool fbx::audiofile::AudioFileVorbis::Eof()
 {
 	if (!opened)
 		return true;
@@ -99,7 +99,7 @@ bool fbx::AudioFileVorbis::Eof()
  * Returns a string of info about the vorbis file
  * (format, bitrate, sampling rate, channels, etc)
  */
-std::string fbx::AudioFileVorbis::InfoString()
+std::string fbx::audiofile::AudioFileVorbis::InfoString()
 {
 	std::stringstream str;
 	str << "Vorbis";
@@ -126,7 +126,7 @@ std::string fbx::AudioFileVorbis::InfoString()
 /**
  * Fetches and returns a specific field of metadata
  */
-std::string fbx::AudioFileVorbis::Metadata(const unsigned int field)
+std::string fbx::audiofile::AudioFileVorbis::Metadata(const unsigned int field)
 {
 	if (opened) {
 		vorbis_comment *com = ov_comment(&file,-1);

@@ -16,8 +16,16 @@ namespace fbx
 {
 
 	class FBXAudioThread;
-	class AudioBase;
-	class AudioFileBase;
+
+	namespace audio
+	{
+		class AudioBase;
+	}
+
+	namespace audiofile
+	{
+		class AudioFileBase;
+	}
 
 	/**
 	 * @brief FBX audio engine class
@@ -141,14 +149,14 @@ namespace fbx
 		 *
 		 * Pointer to current audio output driver
 		 */
-		AudioBase *audio;
+		audio::AudioBase *audio;
 
 		/**
 		 * @brief audiofile
 		 *
 		 * Pointer to currently processing audiofile
 		 */
-		AudioFileBase *audiofile;
+		audiofile::AudioFileBase *audiofile;
 
 		/**
 		 * Friend FBXAudioThread so audiothread can access
