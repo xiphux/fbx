@@ -151,7 +151,7 @@ fbx::FBXFrame::FBXFrame():
 	progress = new wxSlider(this,FBX_frame_progress,0,0,1);
 	progress->Enable(false);
 	//topsizer->Add(progress, 0, wxEXPAND|wxALL);
-//	pti.Resizable(true);
+	pti.Resizable(true);
 	pti.MinSize(128,20);
 	pti.Caption(wxT("Progress"));
 	manager->AddPane(progress,pti);
@@ -181,6 +181,7 @@ void fbx::FBXFrame::OnQuit(wxCommandEvent& event)
 	timer->Stop();
 	if (engine)
 		engine->Stop();
+	manager->UnInit();
 	Close(true);
 }
 
