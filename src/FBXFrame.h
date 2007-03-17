@@ -19,6 +19,8 @@ class wxSlider;
 class wxTimer;
 class wxTimerEvent;
 class wxChoice;
+class wxAuiManager;
+class wxPanel;
 
 namespace fbx
 {
@@ -299,6 +301,9 @@ namespace fbx
 		 * Count of open playlists
 		 */
 		unsigned int plidx;
+
+		wxAuiManager *manager;
+		wxPanel *toolbarpanel;
 	};
 
 	/**

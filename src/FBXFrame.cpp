@@ -27,6 +27,7 @@
 #include <wx/stattext.h>
 #include <wx/choice.h>
 #include <wx/filedlg.h>
+#include <wx/aui/aui.h>
 #endif
 
 #ifdef DEBUG
@@ -105,7 +106,12 @@ fbx::FBXFrame::FBXFrame():
 
 	wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 
-	playbacktoolbar = CreateToolBar();
+	toolbarpanel = new wxPanel(this,-1);
+	topsizer->Add(toolbarpanel,0,wxEXPAND|wxALL);
+	manager = new wxAuiManager(toolbarpanel);
+
+	playbacktoolbar = new wxToolBar(toolbarpanel,-1);
+	//playbacktoolbar = CreateToolBar();
 	wxBitmap stopbitmap(stop_xpm);
 	playbacktoolbar->AddTool(FBX_frame_stop, wxT("Stop"), stopbitmap, wxT("Stop"));
 	wxBitmap pausebitmap(pause_xpm);
@@ -116,8 +122,21 @@ fbx::FBXFrame::FBXFrame():
 	playbacktoolbar->AddTool(FBX_frame_prev, wxT("Previous"), prevbitmap, wxT("Previous"));
 	wxBitmap nextbitmap(next_xpm);
 	playbacktoolbar->AddTool(FBX_frame_next, wxT("Next"), nextbitmap, wxT("Next"));
-	playbacktoolbar->AddSeparator();
-	playbacktoolbar->AddControl(new wxStaticText(playbacktoolbar,-1,wxT("Order")));
+	playbacktoolbar->Realize();
+//	playbacktoolbar->AddSeparator();
+//	playbacktoolbar->AddControl(new wxStaticText(playbacktoolbar,-1,wxT("Order")));
+//	playbacktoolbar->AddControl(order);
+	wxAuiPaneInfo pti;
+	pti.CloseButton(false);
+	pti.Top();
+	pti.Resizable(false);
+	pti.Gripper(true);
+	pti.GripperTop(false);
+	pti.MaxSize(128,20);
+	pti.Caption(wxT("Playback"));
+	pti.CaptionVisible(true);
+	manager->AddPane(playbacktoolbar,pti);
+
 	wxArrayString tmp;
 	tmp.Add(wxT("Default"));
 	tmp.Add(wxT("Random"));
@@ -125,18 +144,23 @@ fbx::FBXFrame::FBXFrame():
 	tmp.Add(wxT("Repeat (track)"));
 	order = new wxChoice(playbacktoolbar,FBX_frame_order,wxDefaultPosition,wxDefaultSize,tmp);
 	order->SetSelection(ConfigFactory::GetConfig().GetInt("order",0));
-	playbacktoolbar->AddControl(order);
-	playbacktoolbar->Realize();
+	pti.Caption(wxT("Order"));
+	manager->AddPane(order,pti);
 
 	//progresstoolbar = CreateToolBar(wxTB_DOCKABLE);
 	progress = new wxSlider(this,FBX_frame_progress,0,0,1);
 	progress->Enable(false);
-	topsizer->Add(progress, 0, wxEXPAND|wxALL);
+	//topsizer->Add(progress, 0, wxEXPAND|wxALL);
+	pti.Resizable(true);
+	pti.MinSize(128,20);
+	pti.Caption(wxT("Progress"));
+	manager->AddPane(progress,pti);
+	
 	//progresstoolbar->AddControl(progress);
 	//progresstoolbar->Realize();
 
 	notebook = new wxAuiNotebook(this);
-	topsizer->Add(notebook, 1, wxEXPAND|wxALL);
+	topsizer->Add(notebook, 3, wxEXPAND|wxALL);
 
 	statusbar = CreateStatusBar();
 
@@ -146,6 +170,7 @@ fbx::FBXFrame::FBXFrame():
 	wxIdleEvent::SetMode(wxIDLE_PROCESS_SPECIFIED);
 	timer = new wxTimer(this,FBX_frame_timer);
 	timer->Start(GUIUPDATE);
+	manager->Update();
 }
 
 /**
@@ -153,6 +178,7 @@ fbx::FBXFrame::FBXFrame():
  */
 void fbx::FBXFrame::OnQuit(wxCommandEvent& event)
 {
+	timer->Stop();
 	if (engine)
 		engine->Stop();
 	Close(true);
