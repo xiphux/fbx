@@ -18,7 +18,9 @@
 #include <wx/listbox.h>
 #endif
 
+#ifdef DEBUG
 #include <iostream>
+#endif
 
 #include "FBXUtil.h"
 #include "audiofile/AudioFileFactory.h"

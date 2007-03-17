@@ -29,7 +29,9 @@
 #include <wx/filedlg.h>
 #endif
 
+#ifdef DEBUG
 #include <iostream>
+#endif
 
 #include "FBXFrame.h"
 #include "FBXEngine.h"
@@ -400,7 +402,9 @@ void fbx::FBXFrame::OnAddFiles(wxCommandEvent& event)
 		dlg.GetPaths(ret);
 		size_t count = ret.GetCount();
 		for (int i = 0; i < count; i++) {
+#ifdef DEBUG
 			std::cout << "Item " << i << ": " << ret[i].mb_str() << std::endl;
+#endif
 			std::string tmp(ret[i].mb_str());
 			page->Add(tmp,true);
 		}
