@@ -257,8 +257,8 @@ void fbx::FBXFrame::OnPause(wxCommandEvent& event)
  */
 void fbx::FBXFrame::OnPlay(wxCommandEvent& event)
 {
-	if (!engine->Stopped())
-		return;
+//	if (!engine->Stopped())
+//		return;
 	bool ret;
 	if (engine->Paused())
 		ret = engine->Pause();
