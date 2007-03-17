@@ -26,7 +26,7 @@
 /**
  * Constructor
  */
-fbx::FBXEngine::FBXEngine()
+fbx::engine::FBXEngine::FBXEngine()
 {
 	audio = 0;
 	audiofile = 0;
@@ -36,7 +36,7 @@ fbx::FBXEngine::FBXEngine()
 /**
  * Destructor
  */
-fbx::FBXEngine::~FBXEngine()
+fbx::engine::FBXEngine::~FBXEngine()
 {
 	Stop();
 }
@@ -44,7 +44,7 @@ fbx::FBXEngine::~FBXEngine()
 /**
  * Tells the engine to begin processing and playback of a file
  */
-bool fbx::FBXEngine::Play(const std::string& filename)
+bool fbx::engine::FBXEngine::Play(const std::string& filename)
 {
 	//if (thread || audiofile)
 		Stop();
@@ -78,7 +78,7 @@ bool fbx::FBXEngine::Play(const std::string& filename)
 /**
  * Pauses or unpauses playback thread
  */
-bool fbx::FBXEngine::Pause()
+bool fbx::engine::FBXEngine::Pause()
 {
 	if (!thread)
 		return false;
@@ -92,7 +92,7 @@ bool fbx::FBXEngine::Pause()
 /**
  * Stops a running audiofile / audiothread if there is one
  */
-bool fbx::FBXEngine::Stop()
+bool fbx::engine::FBXEngine::Stop()
 {
 //	if (thread)
 //		thread->Delete();
@@ -111,7 +111,7 @@ bool fbx::FBXEngine::Stop()
  * Outputs the status string for the current file
  * (file type, info, current time, total length, etc)
  */
-std::string fbx::FBXEngine::StatusString()
+std::string fbx::engine::FBXEngine::StatusString()
 {
 	std::string tmp;
 	if (audiofile) {
@@ -139,7 +139,7 @@ std::string fbx::FBXEngine::StatusString()
 /**
  * Gives the size of the currently playing file (in seconds)
  */
-unsigned int fbx::FBXEngine::Size()
+unsigned int fbx::engine::FBXEngine::Size()
 {
 	if (!audiofile)
 		return 0;
@@ -149,7 +149,7 @@ unsigned int fbx::FBXEngine::Size()
 /**
  * Gives the current position of the playing audiofile (in seconds)
  */
-unsigned int fbx::FBXEngine::Current()
+unsigned int fbx::engine::FBXEngine::Current()
 {
 	if (!audiofile)
 		return 0;
@@ -159,7 +159,7 @@ unsigned int fbx::FBXEngine::Current()
 /**
  * Returns whether the engine is currently playing a file or stopped
  */
-bool fbx::FBXEngine::Stopped()
+bool fbx::engine::FBXEngine::Stopped()
 {
 	return !(thread && audiofile);
 }
@@ -167,7 +167,7 @@ bool fbx::FBXEngine::Stopped()
 /**
  * Seeks audiofile to a specific position
  */
-bool fbx::FBXEngine::Seek(double t)
+bool fbx::engine::FBXEngine::Seek(double t)
 {
 	if (!audiofile)
 		return false;
@@ -178,7 +178,7 @@ bool fbx::FBXEngine::Seek(double t)
  * Outputs the metadata of the playing file in a
  * formatted manner
  */
-std::string fbx::FBXEngine::Metadata()
+std::string fbx::engine::FBXEngine::Metadata()
 {
 	if (!audiofile)
 		return "";
@@ -189,7 +189,7 @@ std::string fbx::FBXEngine::Metadata()
  * Returns whether the current file has reached the end
  * of the file (finished playback)
  */
-bool fbx::FBXEngine::Eof()
+bool fbx::engine::FBXEngine::Eof()
 {
 	if (!audiofile)
 		return true;
@@ -199,7 +199,7 @@ bool fbx::FBXEngine::Eof()
 /**
  * Returns whether the engine is current playing but paused
  */
-bool fbx::FBXEngine::Paused()
+bool fbx::engine::FBXEngine::Paused()
 {
 	return (thread && thread->IsPaused());
 }

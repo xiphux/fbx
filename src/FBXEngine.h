@@ -15,8 +15,6 @@
 namespace fbx
 {
 
-	class FBXAudioThread;
-
 	namespace audio
 	{
 		class AudioBase;
@@ -27,143 +25,150 @@ namespace fbx
 		class AudioFileBase;
 	}
 
-	/**
-	 * @brief FBX audio engine class
-	 */
-	class FBXEngine
+	namespace engine
 	{
-	public:
-		/**
-		 * @brief Constructor
-		 */
-		FBXEngine();
+
+		class FBXAudioThread;
 
 		/**
-		 * @brief Destructor
+		 * @brief FBX audio engine class
 		 */
-		virtual ~FBXEngine();
+		class FBXEngine
+		{
+		public:
+			/**
+			 * @brief Constructor
+			 */
+			FBXEngine();
 
-		/**
-		 * @brief Play
-		 * @param filename path to file to play
-		 * @return whether playback initialized successfully
-		 *
-		 * Tells the engine to begin processing and playback of a file
-		 */
-		bool Play(const std::string& filename);
+			/**
+			 * @brief Destructor
+			 */
+			virtual ~FBXEngine();
 
-		/**
-		 * @brief Pause
-		 * @return whether pause was successful
-		 *
-		 * Pauses or unpauses playback thread
-		 */
-		bool Pause();
+			/**
+			 * @brief Play
+			 * @param filename path to file to play
+			 * @return whether playback initialized successfully
+			 *
+			 * Tells the engine to begin processing and playback of a file
+			 */
+			bool Play(const std::string& filename);
 
-		/**
-		 * @brief Stop
-		 * @return whether stop was successful
-		 *
-		 * Stops a running audiofile / audiothread if there is one
-		 */
-		bool Stop();
+			/**
+			 * @brief Pause
+			 * @return whether pause was successful
+			 *
+			 * Pauses or unpauses playback thread
+			 */
+			bool Pause();
 
-		/**
-		 * @brief Seek
-		 * @param t time position to seek to (in seconds)
-		 * @return whether seek was successful
-		 *
-		 * Seeks audiofile to a specific position
-		 */
-		bool Seek(double t);
+			/**
+			 * @brief Stop
+			 * @return whether stop was successful
+			 *
+			 * Stops a running audiofile / audiothread if there is one
+			 */
+			bool Stop();
 
-		/**
-		 * @brief Status String
-		 * @return status string
-		 *
-		 * Outputs the status string for the current file
-		 * (file type, info, current time, total length, etc)
-		 */
-		std::string StatusString();
+			/**
+			 * @brief Seek
+			 * @param t time position to seek to (in seconds)
+			 * @return whether seek was successful
+			 *
+			 * Seeks audiofile to a specific position
+			 */
+			bool Seek(double t);
 
-		/**
-		 * @brief Metadata
-		 * @return metadata string
-		 *
-		 * Outputs the metadata of the playing file in a
-		 * formatted manner
-		 */
-		std::string Metadata();
+			/**
+			 * @brief Status String
+			 * @return status string
+			 *
+			 * Outputs the status string for the current file
+			 * (file type, info, current time, total length, etc)
+			 */
+			std::string StatusString();
 
-		/**
-		 * @brief Size
-		 * @return size of file
-		 * 
-		 * Gives the size of the currently playing file (in seconds)
-		 */
-		unsigned int Size();
+			/**
+			 * @brief Metadata
+			 * @return metadata string
+			 *
+			 * Outputs the metadata of the playing file in a
+			 * formatted manner
+			 */
+			std::string Metadata();
 
-		/**
-		 * @brief current
-		 * @return current position
-		 *
-		 * Gives the current position of the playing audiofile (in seconds)
-		 */
-		unsigned int Current();
+			/**
+			 * @brief Size
+			 * @return size of file
+			 * 
+			 * Gives the size of the currently playing file (in seconds)
+			 */
+			unsigned int Size();
 
-		/**
-		 * @brief End of file
-		 * @return whether audiofile has reached EOF
-		 *
-		 * Returns whether the current file has reached the end
-		 * of the file (finished playback)
-		 */
-		bool Eof();
+			/**
+			 * @brief current
+			 * @return current position
+			 *
+			 * Gives the current position of the playing audiofile (in seconds)
+			 */
+			unsigned int Current();
 
-		/**
-		 * @brief Stopped
-		 * @return whether engine is stopped
-		 *
-		 * Returns whether the engine is currently playing a file or stopped
-		 */
-		bool Stopped();
+			/**
+			 * @brief End of file
+			 * @return whether audiofile has reached EOF
+			 *
+			 * Returns whether the current file has reached the end
+			 * of the file (finished playback)
+			 */
+			bool Eof();
 
-		/**
-		 * @brief Paused
-		 * @return whether engine is paused
-		 *
-		 * Returns whether the engine is current playing but paused
-		 */
-		bool Paused();
+			/**
+			 * @brief Stopped
+			 * @return whether engine is stopped
+			 *
+			 * Returns whether the engine is currently playing a file or stopped
+			 */
+			bool Stopped();
 
-	protected:
-		/**
-		 * @brief thread
-		 *
-		 * Pointer to current audio thread instance
-		 */
-		FBXAudioThread *thread;
+			/**
+			 * @brief Paused
+			 * @return whether engine is paused
+			 *
+			 * Returns whether the engine is current playing but paused
+			 */
+			bool Paused();
 
-		/**
-		 * @brief audio
-		 *
-		 * Pointer to current audio output driver
-		 */
-		audio::AudioBase *audio;
+		protected:
+			/**
+			 * @brief thread
+			 *
+			 * Pointer to current audio thread instance
+			 */
+			FBXAudioThread *thread;
 
-		/**
-		 * @brief audiofile
-		 *
-		 * Pointer to currently processing audiofile
-		 */
-		audiofile::AudioFileBase *audiofile;
+			/**
+			 * @brief audio
+			 *
+			 * Pointer to current audio output driver
+			 */
+			audio::AudioBase *audio;
 
-		/**
-		 * Friend FBXAudioThread so audiothread can access
-		 * audio/audiofile data structures
-		 */
-		friend class FBXAudioThread;
-	};
+			/**
+			 * @brief audiofile
+			 *
+			 * Pointer to currently processing audiofile
+			 */
+			audiofile::AudioFileBase *audiofile;
+
+			/**
+			 * Friend FBXAudioThread so audiothread can access
+			 * audio/audiofile data structures
+			 */
+			friend class FBXAudioThread;
+		};
+
+	}
 
 }
 

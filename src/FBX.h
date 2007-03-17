@@ -16,7 +16,11 @@ namespace fbx
 {
 
 	class FBXFrame;
-	class FBXEngine;
+
+	namespace engine
+	{
+		class FBXEngine;
+	}
 
 	/**
 	 * @brief FBX app class
@@ -78,7 +82,7 @@ namespace fbx
 		 *
 		 * Pointer to FBX audio engine instance
 		 */
-		FBXEngine *engine;
+		engine::FBXEngine *engine;
 	};
 
 }

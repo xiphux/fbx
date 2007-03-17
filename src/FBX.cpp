@@ -48,7 +48,7 @@ bool fbx::FBX::OnInit()
 	if (!ParseCmdLine())
 		return false;
 	FBXUtil::SeedRand();
-	engine = new FBXEngine();
+	engine = new engine::FBXEngine();
 	frame = new FBXFrame();
 	frame->engine = engine;
 	frame->Show(true);

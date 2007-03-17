@@ -25,7 +25,10 @@ class wxPanel;
 namespace fbx
 {
 
-	class FBXEngine;
+	namespace engine
+	{
+		class FBXEngine;
+	}
 
 	/**
 	 * @brief FBX frame class
@@ -215,7 +218,7 @@ namespace fbx
 		 *
 		 * Pointer to audio engine instance
 		 */
-		FBXEngine *engine;
+		engine::FBXEngine *engine;
 
 		/**
 		 * Friend FBX so app class can set engine pointer

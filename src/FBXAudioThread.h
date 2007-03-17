@@ -13,35 +13,40 @@
 namespace fbx
 {
 
-	class FBXEngine;
-
-	/**
-	 * @brief FBX audio thread class
-	 *
-	 * Derives from wxThread
-	 */
-	class FBXAudioThread: public wxThread
+	namespace engine
 	{
-	public:
-		/**
-		 * @brief Entry
-		 *
-		 * Entry point for thread execution
-		 */
-		virtual void *Entry();
-	protected:
-		/**
-		 * @brief engine
-		 *
-		 * Pointer to calling engine instance
-		 */
-		FBXEngine *engine;
+
+		class FBXEngine;
 
 		/**
-		 * Friend FBXEngine so the engine can edit engine pointer
+		 * @brief FBX audio thread class
+		 *
+		 * Derives from wxThread
 		 */
-		friend class FBXEngine;
-	};
+		class FBXAudioThread: public wxThread
+		{
+		public:
+			/**
+			 * @brief Entry
+			 *
+			 * Entry point for thread execution
+			 */
+			virtual void *Entry();
+		protected:
+			/**
+			 * @brief engine
+			 *
+			 * Pointer to calling engine instance
+			 */
+			FBXEngine *engine;
+
+			/**
+			 * Friend FBXEngine so the engine can edit engine pointer
+			 */
+			friend class FBXEngine;
+		};
+
+	}
 
 }
 

@@ -31,7 +31,7 @@
 /**
  * Entry point for thread execution
  */
-void *fbx::FBXAudioThread::Entry()
+void *fbx::engine::FBXAudioThread::Entry()
 {
 	int len = 0;
 	char buf[BUFSIZE];
