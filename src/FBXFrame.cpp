@@ -16,7 +16,6 @@
 #include <wx/frame.h>
 #include <wx/menu.h>
 #include <wx/msgdlg.h>
-#include <wx/listbox.h>
 #include <wx/statusbr.h>
 #include <wx/toolbar.h>
 #include <wx/bitmap.h>
