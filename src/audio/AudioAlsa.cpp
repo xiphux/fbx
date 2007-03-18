@@ -1,11 +1,19 @@
-/*
- * AudioAlsa.cpp
- * Alsa Audio implementation
- * Copyright (C) 2007 Christopher Han
+/**
+ * @file AudioAlsa.cpp
+ * @brief Alsa Audio implementation
+ * @author Christopher Han
+ *
+ * ALSA audio driver class implementation
+ * Copyright (C) 2007
+ * Licensed under the terms of the GNU GPL v2
  */
 #include <iostream>
 #include "AudioAlsa.h"
 
+/**
+ * Constructor
+ * Initializes ALSA
+ */
 fbx::audio::AudioAlsa::AudioAlsa():
 {
 	opened = false;
@@ -52,11 +60,18 @@ fbx::audio::AudioAlsa::AudioAlsa():
 	opened = true;
 }
 
+/**
+ * Destructor
+ * Closes ALSA
+ */
 fbx::audio::AudioAlsa::~AudioAlsa()
 {
 	snd_pcm_close(handle);
 }
 
+/**
+ * Write audio data to ALSA
+ */
 long fbx::audio::AudioAlsa::Write(char *buf, long len)
 {
 	if (!opened)
