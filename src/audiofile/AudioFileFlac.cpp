@@ -1,7 +1,11 @@
-/*
- * AudioFileFlac.cpp
- * FLAC AudioFile implementation
- * Copyright (C) 2007 Christopher Han
+/**
+ * @file AudioFileFlac.cpp
+ * @brief FLAC AudioFile implementation
+ * @author Christopher Han
+ *
+ * FLAC audiofile class implementation
+ * Copyright (C) 2007
+ * Licensed under the terms of the GNU GPL v2
  */
 
 #include <iostream>
@@ -19,6 +23,10 @@ static FLAC__StreamDecoderWriteStatus flac_callback_write(const FLAC_SeekableStr
 {
 }
 
+/**
+ * Constructor
+ * Opens file
+ */
 fbx::audiofile::AudioFileFlac::AudioFileFlac(const std::string& fname):
 	AudioFileBase(fname)
 {
@@ -32,36 +40,62 @@ fbx::audiofile::AudioFileFlac::AudioFileFlac(const std::string& fname):
 	opened = true;
 }
 
+/**
+ * Destructor
+ * Closes file
+ */
 fbx::audiofile::AudioFileFlac::~AudioFileFlac()
 {
 	FLAC__seekable_stream_decoder_finish(decoder);
 	FLAC__seekable_stream_decoder_delete(decoder);
 }
 
+/**
+ * Attempts to seek to the given position
+ */
 int fbx::audiofile::AudioFileFlac::Seek(double pos)
 {
 }
 
+/**
+ * Attempts to read audio data from FLAC file into buffer
+ */
 long fbx::audiofile::AudioFileFlac::Read(char *buf, long len)
 {
 }
 
+/**
+ * Returns the size of the loaded FLAC file
+ */
 double fbx::audiofile::AudioFileFlac::Size()
 {
 }
 
+/**
+ * Returns the current position of the playing FLAC file
+ */
 double fbx::audiofile::AudioFileFlac::Current()
 {
 }
 
+/**
+ * Tests whether the FLAC file has reached the EOF
+ */
 bool fbx::audiofile::AudioFileFlac::Eof()
 {
 }
 
+/**
+ * Returns a string of info about the FLAC file
+ * (format, bitrate, sampling rate, channels, etc)
+ */
 std::string fbx::audiofile::AudioFileFlac::InfoString()
 {
 }
 
+/**
+ * Fetches and returns a specific field of metadata
+ */
 std::string fbx::audiofile::AudioFileFlac::Metadata(const unsigned int field)
 {
 }
