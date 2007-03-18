@@ -67,3 +67,14 @@ fbx::playlist::PlaylistBase* fbx::playlist::PlaylistFactory::ChangePlaylistType(
 	newpls->playlist = orig->playlist;
 	return newpls;
 }
+
+/**
+ * Returns a semicolon-delimited list of recognized playlist extensions
+ * (for use in open dialogs)
+ */
+std::string fbx::playlist::PlaylistFactory::Extensions()
+{
+	std::string tmp;
+	tmp += "*.m3u";
+	return tmp;
+}

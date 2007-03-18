@@ -182,6 +182,14 @@ namespace fbx
 		void OnSavePlaylist(wxCommandEvent& event);
 
 		/**
+		 * @brief Open playlist event handler
+		 * @param event command event
+		 *
+		 * Called when Open playlist menu option is chosen
+		 */
+		void OnOpenPlaylist(wxCommandEvent& event);
+
+		/**
 		 * @brief Update status
 		 *
 		 * Updates status bar information
@@ -390,6 +398,11 @@ namespace fbx
 		 * @brief save playlist event
 		 */
 		FBX_frame_saveplaylist,
+
+		/**
+		 * @brief open playlist event
+		 */
+		FBX_frame_openplaylist,
 
 		/**
 		 * @brief playlist event

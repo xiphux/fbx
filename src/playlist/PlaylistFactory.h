@@ -64,6 +64,15 @@ namespace fbx
 			 * saving it to a specific file)
 			 */
 			static PlaylistBase* ChangePlaylistType(PlaylistBase* orig, std::string fname);
+
+			/**
+			 * @brief Extensions
+			 * @return list of recognized playlist extensions
+			 *
+			 * Returns a semicolon-delimited list of recognized playlist extensions
+			 * (for use in open dialogs)
+			 */
+			static std::string Extensions();
 		};
 
 	}

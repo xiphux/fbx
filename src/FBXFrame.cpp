@@ -66,6 +66,7 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_MENU(FBX_frame_addfiles, fbx::FBXFrame::OnAddFiles)
 	EVT_MENU(FBX_frame_saveplaylist, fbx::FBXFrame::OnSavePlaylist)
 	EVT_MENU(FBX_frame_remfile, fbx::FBXFrame::OnRemFile)
+	EVT_MENU(FBX_frame_openplaylist, fbx::FBXFrame::OnOpenPlaylist)
 	EVT_CHOICE(FBX_frame_order, fbx::FBXFrame::OnOrder)
 	EVT_LISTBOX_DCLICK(FBX_frame_playlist, fbx::FBXFrame::OnPlaylistChoice)
 	EVT_COMMAND_SCROLL(FBX_frame_progress, fbx::FBXFrame::OnSeek)
@@ -88,6 +89,7 @@ fbx::FBXFrame::FBXFrame():
 	filemenu->Append(FBX_frame_addfiles, wxT("&Add files"));
 	filemenu->Append(FBX_frame_remfile, wxT("&Remove file"));
 	filemenu->AppendSeparator();
+	filemenu->Append(FBX_frame_openplaylist, wxT("&Open playlist"));
 	filemenu->Append(FBX_frame_saveplaylist, wxT("&Save playlist"));
 	filemenu->AppendSeparator();
 	filemenu->Append(FBX_frame_quit, wxT("E&xit"));
@@ -209,6 +211,11 @@ void fbx::FBXFrame::OpenPlaylists(std::string pls)
 			std::string::size_type tmp = name.find_last_of('/');
 			if (tmp != std::string::npos)
 				name = name.substr(tmp + 1);
+//			std::map<std::string,std::string>::iterator tp = playlists.find(name);
+//			while (tp != playlists.end()) {
+//				name += "(1)";
+//				tp = playlists.find(name);
+//			}
 			playlists[name] = pls;
 		}
 		lastpos = pls.find_first_not_of(",",pos);
@@ -482,4 +489,32 @@ void fbx::FBXFrame::OnRemFile(wxCommandEvent& event)
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnRemFile: " << (r ? "true" : "false") << std::endl;
 #endif
+}
+
+/**
+ * Called when Open playlist menu option is chosen
+ */
+void fbx::FBXFrame::OnOpenPlaylist(wxCommandEvent& event)
+{
+	std::string ext = "Playlists|";
+	ext += playlist::PlaylistFactory::Extensions();
+	ext += "|All files|*.*";
+	wxString e(ext.c_str(), *wxConvCurrent);
+	wxFileDialog dlg(this,wxT("Open playlist"),wxT(""),wxT(""),e,wxFD_OPEN|wxFD_FILE_MUST_EXIST);
+	if (dlg.ShowModal() == wxID_OK) {
+		std::string pl(dlg.GetPath().mb_str());
+		if (playlist::PlaylistFactory::IsPlaylist(pl)) {
+			std::string name = pl.substr(0,pl.find_last_of('.'));
+			std::string::size_type tmp = name.find_last_of('/');
+			if (tmp != std::string::npos)
+				name = name.substr(tmp + 1);
+//			std::map<std::string,std::string>::iterator tp = playlists.find(name);
+//			while (tp != playlists.end()) {
+//				name += "(1)";
+//				tp = playlists.find(name);
+//			}
+			playlists[name] = pl;
+			AddPlaylistPage(name,pl);
+		}
+	}
 }
