@@ -192,3 +192,11 @@ bool fbx::PlaylistPanel::Remove(const unsigned int idx)
 	listbox->Delete(idx);
 	return true;
 }
+
+/**
+ * Returns the filename of the current playlist
+ */
+std::string fbx::PlaylistPanel::GetFilename()
+{
+	return playlist->GetFilename();
+}

@@ -134,6 +134,14 @@ namespace fbx
 		 */
 		bool Remove(const unsigned int idx);
 
+		/**
+		 * @brief Get Filename
+		 * @return filename of current playlist
+		 *
+ 		 * Returns the filename of the current playlist
+		 */
+		std::string GetFilename();
+
 	protected:
 		/**
 		 * @brief playlist
