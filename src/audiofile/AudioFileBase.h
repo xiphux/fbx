@@ -32,6 +32,15 @@
 #define FBX_AUDIOFILE_VORBIS 1
 #endif
 
+#ifdef HAVE_FLAC
+/**
+ * @brief FLAC audiofile
+ *
+ * FLAC audiofile
+ */
+#define FBX_AUDIOFILE_FLAC 2
+#endif
+
 
 /**
  * @brief null metadata

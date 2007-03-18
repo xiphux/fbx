@@ -11,6 +11,7 @@
 #define FBX_AUDIOFILEFLAC_H
 
 #include "AudioFileBase.h"
+#include <FLAC/all.h>
 
 namespace fbx
 {

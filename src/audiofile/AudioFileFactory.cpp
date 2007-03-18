@@ -13,6 +13,10 @@
 #include "AudioFileVorbis.h"
 #endif
 
+#ifdef HAVE_FLAC
+#include "AudioFileFlac.h"
+#endif
+
 #ifdef HAVE_MAGIC
 #include <magic.h>
 #endif
@@ -55,6 +59,11 @@ fbx::audiofile::AudioFileBase* fbx::audiofile::AudioFileFactory::OpenAudioFile(c
 			return new AudioFileVorbis(filename);
 			break;
 #endif
+#ifdef HAVE_FLAC
+		case FBX_AUDIOFILE_FLAC:
+			return new AudioFileFlac(filename);
+			break;
+#endif
 	}
 	return NULL;
 }
@@ -69,6 +78,10 @@ unsigned int fbx::audiofile::AudioFileFactory::AudioFileTypeByExtension(const st
 #ifdef HAVE_VORBIS
 	if (ext == "ogg")
 		return FBX_AUDIOFILE_VORBIS;
+#endif
+#ifdef HAVE_FLAC
+	if (ext == "flac")
+		return FBX_AUDIOFILE_FLAC;
 #endif
 	return FBX_AUDIOFILE_NONE;
 }
@@ -91,8 +104,14 @@ unsigned int fbx::audiofile::AudioFileFactory::AudioFileTypeByMagic(const std::s
 #ifdef DEBUG
 			std::cout << "Mimetype: " << mime << std::endl;
 #endif
+#ifdef HAVE_VORBIS
 			if (mime == "application/ogg")
 				type = FBX_AUDIOFILE_VORBIS;
+#endif
+#ifdef HAVE_FLAC
+			if (mime == "audio/x-flac")
+				type = FBX_AUDIOFILE_FLAC;
+#endif
 		}
 	}
 	magic_close(cookie);
@@ -108,7 +127,14 @@ std::string fbx::audiofile::AudioFileFactory::Extensions()
 {
 	std::string tmp;
 #ifdef HAVE_VORBIS
+	if (tmp.length() > 0)
+		tmp += ";";
 	tmp += "*.ogg";
+#endif
+#ifdef HAVE_FLAC
+	if (tmp.length() > 0)
+		tmp += ";";
+	tmp += "*.flac";
 #endif
 	if (tmp.length() < 1)
 		tmp = "*.*";
