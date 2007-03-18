@@ -12,6 +12,10 @@ if VORBIS
 libfbxaudiofile_la_SOURCES += AudioFileVorbis.cpp
 libfbxaudiofile_la_LIBADD += @VORBISFILE_LIBS@
 endif
+if FLAC
+libfbxaudiofile_la_SOURCES += AudioFileFlac.cpp
+libfbxaudiofile_la_LIBADD += @FLAC_LIBS@
+endif
 if MAGIC
 libfbxaudiofile_la_LIBADD += @MAGIC_LIBS@
 endif
