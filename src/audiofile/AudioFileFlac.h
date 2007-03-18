@@ -116,6 +116,15 @@ namespace fbx
 			 * FLAC Seekable Stream Decoder pointer
 			 */
 			FLAC__SeekableStreamDecoder *decoder;
+
+			FLAC__StreamMetadata *vorbiscomment;
+			struct {
+				unsigned int channels;
+				unsigned int sample_rate;
+				unsigned int bit_rate;
+				unsigned int bits_per_sample;
+				unsigned int total_samples;
+			} fileinfo;
 		};
 
 	}

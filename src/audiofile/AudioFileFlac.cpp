@@ -13,10 +13,23 @@
 
 static void flac_callback_metadata(const FLAC__SeekableStreamDecoder *decoder, const FLAC__StreamMetadata *metadata, void *client_data)
 {
+	fbx::audiofile::AudioFileFlac *data = (fbx::audiofile::AudioFileFlac*)client_data;
+	switch (metadata->type) {
+		case FLAC__METADATA_TYPE_STREAMINFO:
+			data->fileinfo.bits_per_sample = metadata->data.stream_info.bits_per_sample;
+			data->fileinfo.sample_rate = metadata->data.stream_info.sample_rate;
+			data->fileinfo.channels = metadata->data.stream_info.channels;
+			data->fileinfo.total_samples = metadata->data.stream_info.total_samples;
+			break;
+		case FLAC__METADATA_TYPE_VORBIS_COMMENT:
+			data->vorbiscomment = FLAC__metadata_object_clone(metadata);
+			break;
+	}
 }
 
 static void flac_callback_error(const FLAC__SeekableStreamDecoder *decoder, FLAC__StreamDecoderErrorStatus status, void *client_data)
 {
+	std::cerr << "[AudioFileFlac] Error: " << FLAC__StreamDecoderErrorStatusString[status] << std::endl;
 }
 
 static FLAC__StreamDecoderWriteStatus flac_callback_write(const FLAC_SeekableStreamDecoder *decoder, const FLAC__Frame *frame, const FLAC__int32* const buffer[], void *client_data)
@@ -37,6 +50,16 @@ fbx::audiofile::AudioFileFlac::AudioFileFlac(const std::string& fname):
 		return;
 	}
 	decoder = FLAC__seekable_stream_decoder_new();
+	FLAC__SeekableStreamDecoderInitStatus stat = FLAC__seekable_stream_decoder_init_FILE(decoder,fp,flac_callback_write,flac_callback_metadata,flac_callback_error,this);
+	if (stat != FLAC__SEEKABLE_STREAM_DECODER_OK) {
+		std::cerr << "[AudioFileFlac] Error initializing FLAC decoder: " << FLAC__seekable_stream_decoder_get_resolved_state_string (decoder) << std::endl;
+		return;
+	}
+	FLAC__bool retval = FLAC__seekable_stream_decoder_process_until_end_of_metadata(decoder);
+	if (!retval) {
+		std::cerr << "[AudioFileFlac] Error reading metadata" << std::endl;
+		return;
+	}
 	opened = true;
 }
 
@@ -46,6 +69,8 @@ fbx::audiofile::AudioFileFlac::AudioFileFlac(const std::string& fname):
  */
 fbx::audiofile::AudioFileFlac::~AudioFileFlac()
 {
+	if (vorbiscomment)
+		FLAC__metadata_object_delete(vorbiscomment);
 	FLAC__seekable_stream_decoder_finish(decoder);
 	FLAC__seekable_stream_decoder_delete(decoder);
 }
