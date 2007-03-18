@@ -184,6 +184,22 @@ void fbx::FBXFrame::OnQuit(wxCommandEvent& event)
 	if (engine)
 		engine->Stop();
 	manager->UnInit();
+
+	bool first = true;
+	std::string pls;
+	size_t pagecount = notebook->GetPageCount();
+	for (int i = 0; i < pagecount; i++) {
+		PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(i);
+		if (page) {
+			if (!first)
+				pls += ",";
+			pls += page->GetFilename();
+			first = false;
+		}
+	}
+	if (pls.length() > 1)
+		config::ConfigFactory::GetConfig().SetString("playlists",pls);
+
 	Close(true);
 }
 
@@ -207,7 +223,7 @@ void fbx::FBXFrame::OpenPlaylists(std::string pls)
 	while ((pos != std::string::npos) || (lastpos != std::string::npos)) {
 		std::string pl = pls.substr(lastpos, pos - lastpos);
 		if (playlist::PlaylistFactory::IsPlaylist(pl)) {
-			std::string name = pls.substr(0,pls.find_last_of('.'));
+			std::string name = pl.substr(0,pl.find_last_of('.'));
 			std::string::size_type tmp = name.find_last_of('/');
 			if (tmp != std::string::npos)
 				name = name.substr(tmp + 1);
@@ -216,7 +232,10 @@ void fbx::FBXFrame::OpenPlaylists(std::string pls)
 //				name += "(1)";
 //				tp = playlists.find(name);
 //			}
-			playlists[name] = pls;
+			playlists[name] = pl;
+#ifdef DEBUG
+			std::cout << "FBXFrame::OpenPlaylists: [ " << name << " : " << pl << " ]" << std::endl;
+#endif
 		}
 		lastpos = pls.find_first_not_of(",",pos);
 		pos = pls.find_first_of(",",lastpos);
@@ -233,6 +252,9 @@ void fbx::FBXFrame::OpenPlaylists(std::string pls)
  */
 void fbx::FBXFrame::AddPlaylistPage(std::string name, std::string file)
 {
+#ifdef DEBUG
+	std::cout << "FBXFrame::AddPlaylistPage: [ " << name << " : " << file << " ]" << std::endl;
+#endif
 	wxString n(name.c_str(), *wxConvCurrent);
 	notebook->AddPage(new PlaylistPanel(notebook,FBX_frame_playlist,file), n);
 }
