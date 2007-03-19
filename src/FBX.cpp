@@ -52,7 +52,7 @@ bool fbx::FBX::OnInit()
 	frame = new FBXFrame();
 	frame->engine = engine;
 	frame->Show(true);
-	frame->OpenPlaylists(config::ConfigFactory::GetConfig().GetString("playlists",""));
+	frame->OpenSavedPlaylists(config::ConfigFactory::GetConfig().GetString("playlists",""));
 	SetTopWindow(frame);
 	SetExitOnFrameDelete(true);
 	return true;

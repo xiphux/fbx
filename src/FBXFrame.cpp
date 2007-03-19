@@ -216,34 +216,48 @@ void fbx::FBXFrame::OnAbout(wxCommandEvent& event)
 /**
  * Opens a series of playlists given in a string
  */
-void fbx::FBXFrame::OpenPlaylists(std::string pls)
+void fbx::FBXFrame::OpenSavedPlaylists(std::string pls)
 {
 	std::string::size_type lastpos = pls.find_first_not_of(",",0);
 	std::string::size_type pos = pls.find_first_of(",",lastpos);
 	while ((pos != std::string::npos) || (lastpos != std::string::npos)) {
 		std::string pl = pls.substr(lastpos, pos - lastpos);
-		if (playlist::PlaylistFactory::IsPlaylist(pl)) {
-			std::string name = pl.substr(0,pl.find_last_of('.'));
-			std::string::size_type tmp = name.find_last_of('/');
-			if (tmp != std::string::npos)
-				name = name.substr(tmp + 1);
+#ifdef DEBUG
+		std::cout << "FBXFrame::OpenSavedPlaylists: \"" << pl << "\"" << std::endl;
+#endif
+		OpenPlaylist(pl);
+		lastpos = pls.find_first_not_of(",",pos);
+		pos = pls.find_first_of(",",lastpos);
+	}
+	if (playlists.size() < 1) {
+		playlists["Default"] = "";
+		AddPlaylistPage("Default","");
+	}
+}
+
+/**
+ * Opens a single playlist
+ */
+bool fbx::FBXFrame::OpenPlaylist(std::string pls)
+{
+	if (playlist::PlaylistFactory::IsPlaylist(pls)) {
+		std::string name = pls.substr(0,pls.find_last_of('.'));
+		std::string::size_type tmp = name.find_last_of('/');
+		if (tmp != std::string::npos)
+			name = name.substr(tmp + 1);
 //			std::map<std::string,std::string>::iterator tp = playlists.find(name);
 //			while (tp != playlists.end()) {
 //				name += "(1)";
 //				tp = playlists.find(name);
 //			}
-			playlists[name] = pl;
 #ifdef DEBUG
-			std::cout << "FBXFrame::OpenPlaylists: [ " << name << " : " << pl << " ]" << std::endl;
+		std::cout << "FBXFrame::OpenPlaylist: [ " << name << " : " << pls << " ] " << std::endl;
 #endif
-		}
-		lastpos = pls.find_first_not_of(",",pos);
-		pos = pls.find_first_of(",",lastpos);
+		playlists[name] = pls;
+		AddPlaylistPage(name,pls);
+		return true;
 	}
-	if (playlists.size() < 1)
-		playlists["Default"] = "";
-	for (std::map<std::string,std::string>::iterator iter = playlists.begin(); iter != playlists.end(); iter++)
-		AddPlaylistPage(iter->first, iter->second);
+	return false;
 }
 
 /**
@@ -525,18 +539,6 @@ void fbx::FBXFrame::OnOpenPlaylist(wxCommandEvent& event)
 	wxFileDialog dlg(this,wxT("Open playlist"),wxT(""),wxT(""),e,wxFD_OPEN|wxFD_FILE_MUST_EXIST);
 	if (dlg.ShowModal() == wxID_OK) {
 		std::string pl(dlg.GetPath().mb_str());
-		if (playlist::PlaylistFactory::IsPlaylist(pl)) {
-			std::string name = pl.substr(0,pl.find_last_of('.'));
-			std::string::size_type tmp = name.find_last_of('/');
-			if (tmp != std::string::npos)
-				name = name.substr(tmp + 1);
-//			std::map<std::string,std::string>::iterator tp = playlists.find(name);
-//			while (tp != playlists.end()) {
-//				name += "(1)";
-//				tp = playlists.find(name);
-//			}
-			playlists[name] = pl;
-			AddPlaylistPage(name,pl);
-		}
+		OpenPlaylist(pl);
 	}
 }

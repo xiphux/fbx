@@ -108,12 +108,20 @@ namespace fbx
 		void OnSeek(wxScrollEvent &event);
 
 		/**
-		 * @brief Open playlists
+		 * @brief Open saved playlists
 		 * @param pls comma-delimited list of playlists to open
 		 *
 		 * Opens a series of playlists given in a string
 		 */
-		void OpenPlaylists(std::string pls);
+		void OpenSavedPlaylists(std::string pls);
+
+		/**
+		 * @brief Open playlist
+		 * @param pls playlist to open
+		 *
+		 * Opens a single playlist
+		 */
+		bool OpenPlaylist(std::string pls);
 
 		/**
 		 * @brief Add playlist page
