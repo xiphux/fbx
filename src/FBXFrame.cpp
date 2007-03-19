@@ -301,12 +301,12 @@ void fbx::FBXFrame::OnPause(wxCommandEvent& event)
  */
 void fbx::FBXFrame::OnPlay(wxCommandEvent& event)
 {
-	if (!engine->Stopped())
-		return;
 	bool ret;
 	if (engine->Paused())
 		ret = engine->Pause();
 	else {
+		if (!engine->Stopped())
+			return;
 		PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
 		ret = Play(page->Current());
 	}
