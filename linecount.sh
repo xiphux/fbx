@@ -1,0 +1,28 @@
+#!/bin/bash
+
+STRIPCOMMENTS="grep -v '\*'"
+STRIPBLANK="grep -v '^[\ \t]*$'"
+
+COREFILES="src/FBX.h src/FBX.cpp src/FBXUtil.h src/FBXUtil.cpp src/config/ConfigBase.h src/config/ConfigFactory.h src/config/ConfigFactory.cpp src/config/ConfigDotfile.h src/config/ConfigDotfile.cpp"
+ENGINEFILES="src/FBXAudioThread.h src/FBXAudioThread.cpp src/FBXEngine.h src/FBXEngine.cpp"
+AUDIOFACTORYFILES="src/audio/AudioBase.h src/audio/AudioFactory.h src/audio/AudioFactory.cpp"
+AUDIOAOFILES="src/audio/AudioAo.h src/audio/AudioAo.cpp"
+AUDIOFILEFACTORYFILES="src/audiofile/AudioFileBase.h src/audiofile/AudioFileBase.cpp src/audiofile/AudioFileFactory.h src/audiofile/AudioFileFactory.cpp"
+VORBISFILES="src/audiofile/AudioFileVorbis.h src/audiofile/AudioFileVorbis.cpp"
+FLACFILES="src/audiofile/AudioFileFlac.h src/audiofile/AudioFileFlac.cpp"
+MP3FILES="src/audiofile/AudioFileMP3.h src/audiofile/AudioFileMP3.cpp"
+PLAYLISTFACTORYFILES="src/playlist/PlaylistBase.h src/playlist/PlaylistBase.cpp src/playlist/PlaylistFactory.h src/playlist/PlaylistFactory.cpp"
+M3UPLAYLISTFILES="src/playlist/PlaylistM3U.h src/playlist/PlaylistM3U.cpp"
+GUIFILES="src/FBXFrame.h src/FBXFrame.cpp src/PlaylistPanel.h src/PlaylistPanel.cpp"
+
+echo "Core: `cat ${COREFILES} | grep -v '\*' | grep -v '^[\ \t]*$' | wc -l`"
+echo "Audio Engine: `cat ${ENGINEFILES} | grep -v '\*' | grep -v '^[\ \t]*$' | wc -l`"
+echo "Audio Factory: `cat ${AUDIOFACTORYFILES} | grep -v '\*' | grep -v '^[\ \t]*$' | wc -l`"
+echo "Libao Audio: `cat ${AUDIOAOFILES} | grep -v '\*' | grep -v '^[\ \t]*$' | wc -l`"
+echo "Audiofile Factory: `cat ${AUDIOFILEFACTORYFILES} | grep -v '\*' | grep -v '^[\ \t]*$' | wc -l`"
+echo "Vorbis Audiofile: `cat ${VORBISFILES} | grep -v '\*' | grep -v '^[\ \t]*$' | wc -l`"
+echo "FLAC Audiofile: `cat ${FLACFILES} | grep -v '\*' | grep -v '^[\ \t]*$' | wc -l`"
+echo "MP3 Audiofile: `cat ${MP3FILES} | grep -v '\*' | grep -v '^[\ \t]*$' | wc -l`"
+echo "Playlist Factory: `cat ${PLAYLISTFACTORYFILES} | grep -v '\*' | grep -v '^[\ \t]*$' | wc -l`"
+echo "M3U Playlist: `cat ${M3UPLAYLISTFILES} | grep -v '\*' | grep -v '^[\ \t]*$' | wc -l`"
+echo "GUI: `cat ${GUIFILES} | grep -v '\*' | grep -v '^[\ \t]*$' | wc -l`"
