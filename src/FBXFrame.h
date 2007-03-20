@@ -198,6 +198,22 @@ namespace fbx
 		void OnOpenPlaylist(wxCommandEvent& event);
 
 		/**
+		 * @brief Open menu event handler
+		 * @param menu event
+		 *
+		 * Called when a menu is opened
+		 */
+		void OnOpenMenu(wxMenuEvent& event);
+
+		/**
+		 * @brief Close menu event handler
+		 * @param menu event
+		 *
+		 * Called when a menu is closed
+		 */
+		void OnCloseMenu(wxMenuEvent& event);
+
+		/**
 		 * @brief Update status
 		 *
 		 * Updates status bar information
@@ -334,6 +350,13 @@ namespace fbx
 		 * Panel containing all dockable toolbars
 		 */
 		wxPanel *toolbarpanel;
+
+		/**
+		 * @brief updatestatus
+		 *
+		 * Whether or not to update the statusbar info
+		 */
+		bool updatestatus;
 	};
 
 	/**

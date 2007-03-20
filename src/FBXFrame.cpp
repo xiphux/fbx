@@ -67,6 +67,8 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_MENU(FBX_frame_saveplaylist, fbx::FBXFrame::OnSavePlaylist)
 	EVT_MENU(FBX_frame_remfile, fbx::FBXFrame::OnRemFile)
 	EVT_MENU(FBX_frame_openplaylist, fbx::FBXFrame::OnOpenPlaylist)
+	EVT_MENU_OPEN(fbx::FBXFrame::OnMenuOpen)
+	EVT_MENU_CLOSE(fbx::FBXFrame::OnMenuClose)
 	EVT_CHOICE(FBX_frame_order, fbx::FBXFrame::OnOrder)
 	EVT_LISTBOX_DCLICK(FBX_frame_playlist, fbx::FBXFrame::OnPlaylistChoice)
 	EVT_COMMAND_SCROLL(FBX_frame_progress, fbx::FBXFrame::OnSeek)
@@ -79,30 +81,31 @@ END_EVENT_TABLE()
  */
 fbx::FBXFrame::FBXFrame():
 	wxFrame((wxFrame*)NULL, -1, wxEmptyString, wxDefaultPosition, wxSize(640,480)),
-	plidx(0)
+	plidx(0),
+	updatestatus(true)
 {
 	wxString ttl = wxT(PACKAGE_STRING);
 	SetTitle(ttl);
 
 	wxMenuBar *menubar = new wxMenuBar;
 	wxMenu *filemenu = new wxMenu;
-	filemenu->Append(FBX_frame_addfiles, wxT("&Add files"));
-	filemenu->Append(FBX_frame_remfile, wxT("&Remove file"));
+	filemenu->Append(FBX_frame_addfiles, wxT("&Add files"), wxT("Add files to playlist"));
+	filemenu->Append(FBX_frame_remfile, wxT("&Remove file"), wxT("Remove file from playlist"));
 	filemenu->AppendSeparator();
-	filemenu->Append(FBX_frame_openplaylist, wxT("&Open playlist"));
-	filemenu->Append(FBX_frame_saveplaylist, wxT("&Save playlist"));
+	filemenu->Append(FBX_frame_openplaylist, wxT("&Open playlist"), wxT("Open playlist file"));
+	filemenu->Append(FBX_frame_saveplaylist, wxT("&Save playlist"), wxT("Save playlist changes to file"));
 	filemenu->AppendSeparator();
-	filemenu->Append(FBX_frame_quit, wxT("E&xit"));
+	filemenu->Append(FBX_frame_quit, wxT("E&xit"), wxT("Exit FBX"));
 	menubar->Append(filemenu, wxT("&File"));
 	wxMenu *playmenu = new wxMenu;
-	playmenu->Append(FBX_frame_stop, wxT("&Stop"));
-	playmenu->Append(FBX_frame_pause, wxT("P&ause"));
-	playmenu->Append(FBX_frame_play, wxT("P&lay"));
-	playmenu->Append(FBX_frame_prev, wxT("P&rev"));
-	playmenu->Append(FBX_frame_next, wxT("&Next"));
+	playmenu->Append(FBX_frame_stop, wxT("&Stop"), wxT("Stop"));
+	playmenu->Append(FBX_frame_pause, wxT("P&ause"), wxT("Pause"));
+	playmenu->Append(FBX_frame_play, wxT("P&lay"), wxT("Play"));
+	playmenu->Append(FBX_frame_prev, wxT("P&rev"), wxT("Previous"));
+	playmenu->Append(FBX_frame_next, wxT("&Next"), wxT("Next"));
 	menubar->Append(playmenu, wxT("&Playback"));
 	wxMenu *helpmenu = new wxMenu;
-	helpmenu->Append(FBX_frame_about, wxT("&About"));
+	helpmenu->Append(FBX_frame_about, wxT("&About"), wxT("About FBX"));
 	menubar->Append(helpmenu, wxT("&Help"));
 	SetMenuBar(menubar);
 
@@ -435,7 +438,8 @@ bool fbx::FBXFrame::TryAdvance()
 void fbx::FBXFrame::OnTimer(wxTimerEvent& event)
 {
 	//wxWakeUpIdle();
-	UpdateStatus();
+	if (updatestatus)
+		UpdateStatus();
 	if ((engine->Eof()/* || engine->Stopped()*/) && progress->IsEnabled()) {
 		if (!TryAdvance()) {
 			engine->Stop();
@@ -541,4 +545,21 @@ void fbx::FBXFrame::OnOpenPlaylist(wxCommandEvent& event)
 		std::string pl(dlg.GetPath().mb_str());
 		OpenPlaylist(pl);
 	}
+}
+
+/**
+ * Called when a menu is opened
+ */
+void fbx::FBXFrame::OnOpenMenu(wxMenuEvent& event)
+{
+	updatestatus = false;
+	statusbar->SetStatusText(wxT(""));
+}
+
+/**
+ * Called when a menu is closed
+ */
+void fbx::FBXFrame::OnCloseMenu(wxMenuEvent& event)
+{
+	updatestatus = true;
 }
