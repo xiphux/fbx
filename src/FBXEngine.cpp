@@ -96,6 +96,7 @@ bool fbx::engine::FBXEngine::Stop()
 {
 //	if (thread)
 //		thread->Delete();
+	mutex.Lock();	
 	if (audiofile) {
 		delete audiofile;
 		audiofile = 0;
@@ -104,6 +105,7 @@ bool fbx::engine::FBXEngine::Stop()
 		delete audio;
 		audio = 0;
 	}
+	mutex.Unlock();
 	return true;
 }
 
