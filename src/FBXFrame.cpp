@@ -282,11 +282,10 @@ void fbx::FBXFrame::AddPlaylistPage(std::string name, std::string file)
  */
 void fbx::FBXFrame::OnStop(wxCommandEvent& event)
 {
-	bool ret = engine->Stop();
+	bool ret = Stop();
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnStop:" << (ret ? "true" : "false") << std::endl;
 #endif
-	ResetSlider();
 }
 
 /**
@@ -294,6 +293,9 @@ void fbx::FBXFrame::OnStop(wxCommandEvent& event)
  */
 void fbx::FBXFrame::OnPause(wxCommandEvent& event)
 {
+	if (engine->Stopped())
+		return;
+	updatestatus = !updatestatus;
 	bool ret = engine->Pause();
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnPause:" << (ret ? "true" : "false") << std::endl;
@@ -306,9 +308,10 @@ void fbx::FBXFrame::OnPause(wxCommandEvent& event)
 void fbx::FBXFrame::OnPlay(wxCommandEvent& event)
 {
 	bool ret;
-	if (engine->Paused())
+	if (engine->Paused()) {
+		updatestatus = !updatestatus;
 		ret = engine->Pause();
-	else {
+	} else {
 		if (!engine->Stopped())
 			return;
 		PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
@@ -385,6 +388,7 @@ bool fbx::FBXFrame::Play(const std::string& file)
 {
 	//engine->Stop();
 	bool ret = engine->Play(file);
+	updatestatus = true;
 	firstplay = false;
 	progress->Enable(true);
 	progress->SetRange(0,engine->Size());
@@ -445,10 +449,8 @@ void fbx::FBXFrame::OnTimer(wxTimerEvent& event)
 	if (updatestatus)
 		UpdateStatus();
 	if ((engine->Eof()/* || engine->Stopped()*/) && progress->IsEnabled()) {
-		if (!TryAdvance()) {
-			engine->Stop();
-			ResetSlider();
-		}
+		if (!TryAdvance())
+			Stop();
 	}
 }
 
@@ -521,10 +523,8 @@ void fbx::FBXFrame::OnRemFile(wxCommandEvent& event)
 			ret = page->Next((order->GetCurrentSelection() == 1));
 		if (!ret) {
 			page->SetActive(0);
-			if (order->GetCurrentSelection() != 2) {
-				engine->Stop();
-				ResetSlider();
-			}
+			if (order->GetCurrentSelection() != 2)
+				Stop();
 		}
 		if (progress->IsEnabled())
 			Play(page->Current());
@@ -566,4 +566,16 @@ void fbx::FBXFrame::OnOpenMenu(wxMenuEvent& event)
 void fbx::FBXFrame::OnCloseMenu(wxMenuEvent& event)
 {
 	updatestatus = true;
+}
+
+/**
+ * Forwards stop command to audio engine and resets GUI
+ */
+bool fbx::FBXFrame::Stop()
+{
+	bool ret = engine->Stop();
+	updatestatus = false;
+	ResetSlider();
+	UpdateStatus();
+	return ret;
 }

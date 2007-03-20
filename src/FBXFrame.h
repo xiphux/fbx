@@ -237,6 +237,14 @@ namespace fbx
 		bool Play(const std::string& file);
 
 		/**
+		 * @brief Stop
+		 * @return whether stop was successful
+		 *
+		 * Forwards stop command to audio engine and resets GUI
+		 */
+		bool Stop();
+
+		/**
 		 * @brief Try Advance
 		 * @return whether playlist successfully advanced
 		 *
