@@ -357,6 +357,13 @@ namespace fbx
 		 * Whether or not to update the statusbar info
 		 */
 		bool updatestatus;
+
+		/**
+		 * @brief firstplay
+		 *
+		 * Whether or not we've played a song before
+		 */
+		bool firstplay;
 	};
 
 	/**

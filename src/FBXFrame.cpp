@@ -82,7 +82,8 @@ END_EVENT_TABLE()
 fbx::FBXFrame::FBXFrame():
 	wxFrame((wxFrame*)NULL, -1, wxEmptyString, wxDefaultPosition, wxSize(640,480)),
 	plidx(0),
-	updatestatus(true)
+	updatestatus(true),
+	firstplay(true)
 {
 	wxString ttl = wxT(PACKAGE_STRING);
 	SetTitle(ttl);
@@ -311,6 +312,8 @@ void fbx::FBXFrame::OnPlay(wxCommandEvent& event)
 		if (!engine->Stopped())
 			return;
 		PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
+		if (order->GetCurrentSelection() == 1 && firstplay)
+			page->Next(true);
 		ret = Play(page->Current());
 	}
 #ifdef DEBUG
@@ -382,6 +385,7 @@ bool fbx::FBXFrame::Play(const std::string& file)
 {
 	//engine->Stop();
 	bool ret = engine->Play(file);
+	firstplay = false;
 	progress->Enable(true);
 	progress->SetRange(0,engine->Size());
 #ifdef DEBUG
