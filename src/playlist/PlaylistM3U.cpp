@@ -30,11 +30,9 @@ fbx::playlist::PlaylistM3U::PlaylistM3U(const std::string& fname):
 
 /**
  * Destructor
- * Cleans up open file references
  */
 fbx::playlist::PlaylistM3U::~PlaylistM3U()
 {
-	file.close();
 }
 
 /**
@@ -54,4 +52,5 @@ bool fbx::playlist::PlaylistM3U::Write()
 			file << (*iter) << std::endl;
 	}
 	file.flush();
+	file.close();
 }

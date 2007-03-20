@@ -38,8 +38,6 @@ namespace fbx
 
 			/**
 			 * @brief Destructor
-			 *
-			 * Cleans up open file references
 			 */
 			virtual ~PlaylistM3U();
 
