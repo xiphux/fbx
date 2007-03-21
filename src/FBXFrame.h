@@ -199,7 +199,7 @@ namespace fbx
 
 		/**
 		 * @brief Open menu event handler
-		 * @param menu event
+		 * @param event menu event
 		 *
 		 * Called when a menu is opened
 		 */
@@ -207,7 +207,7 @@ namespace fbx
 
 		/**
 		 * @brief Close menu event handler
-		 * @param menu event
+		 * @param event menu event
 		 *
 		 * Called when a menu is closed
 		 */
