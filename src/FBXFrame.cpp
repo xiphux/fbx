@@ -394,7 +394,13 @@ bool fbx::FBXFrame::Play(const std::string& file)
 	progress->SetRange(0,engine->Size());
 #ifdef DEBUG
 	std::cout << "Range [0:" << engine->Size() << "]" << std::endl;
-	std::cout << "Now Playing: " << engine->Metadata() << std::endl;
+	std::string tmp = engine->Metadata();
+	std::cout << "Now Playing: ";
+	if (tmp.length() > 3)
+		std::cout << engine->Metadata();
+	else
+		std::cout << file;
+	std::cout << std::endl;
 #endif
 	return ret;
 }
