@@ -41,7 +41,10 @@ void *fbx::engine::FBXAudioThread::Entry()
 		engine->mutex.Unlock();
 		if (len < 0)
 			std::cerr << "[FBXAudioThread] Error reading audiofile" << std::endl;
-		else if (!engine->audio->Write(buf, len))
+		/*
+		 * HACK to avoid bad audio output descriptors without locking
+		 */
+		else if (engine->audio && !engine->audio->Write(buf, len))
 			std::cerr << "[FBXAudioThread] Error writing " << len << std::endl;
 	}
 	//engine->Stop();
