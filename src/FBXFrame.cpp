@@ -437,9 +437,10 @@ bool fbx::FBXFrame::TryAdvance()
 	bool ret = true;
 	if (order->GetCurrentSelection() != 3)
 		ret = page->Next((order->GetCurrentSelection() == 1));
-	if (order->GetCurrentSelection() == 2 && !ret) {
+	if (!ret) {
 		page->SetActive(0);
-		ret = true;
+		if (order->GetCurrentSelection() == 2)
+			ret = true;
 	}
 	if (ret)
 		return Play(page->Current());
