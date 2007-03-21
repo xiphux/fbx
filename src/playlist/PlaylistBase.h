@@ -35,6 +35,13 @@
  */
 #define FBX_PLAYLIST_PLS 2
 
+/**
+ * @brief playlist history
+ *
+ * Size of playlist history to maintain
+ */
+#define PLAYLISTHISTORYSIZE 5
+
 namespace fbx
 {
 
@@ -166,6 +173,31 @@ namespace fbx
 
 		protected:
 			/**
+			 * @brief Random
+			 * @return random song index
+			 *
+			 * Attempts to generate a random song index
+			 */
+			unsigned int Random();
+
+			/**
+			 * @brief History Find
+			 * @param x index to find
+			 * @return whether item exists in history
+			 *
+			 * Test if a given number is in the playlist history
+			 */
+			bool HistoryFind(const int x);
+
+			/**
+			 * @brief History Push
+			 * @param x index to push
+			 *
+			 * Push an item into the history
+			 */
+			void HistoryPush(const int x);
+
+			/**
 			 * @brief filename
 			 *
 			 * Current filename of the playlist
@@ -185,6 +217,13 @@ namespace fbx
 			 * Vector of strings of playlist songs
 			 */
 			std::vector<std::string> playlist;
+
+			/**
+			 * @brief playlisthistory
+			 *
+			 * History of songs played
+			 */
+			int playlisthistory[PLAYLISTHISTORYSIZE];
 
 			/**
 			 * friend PlaylistFactory so factory can perform

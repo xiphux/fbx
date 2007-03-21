@@ -7,9 +7,17 @@
  * Copyright (C) 2007
  * Licensed under the terms of the GNU GPL v2
  */
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 #include "PlaylistBase.h"
 #include "../FBXUtil.h"
+
+#ifdef DEBUG
+#include <iostream>
+#include <sstream>
+#endif
 
 /**
  * Constructor
@@ -19,6 +27,8 @@ fbx::playlist::PlaylistBase::PlaylistBase(const std::string &fname):
 	idx(0)
 {
 	filename = fname;
+	for (int i = 0; i < PLAYLISTHISTORYSIZE; i++)
+		playlisthistory[i] = -1;
 }
 
 /**
@@ -62,7 +72,7 @@ unsigned int fbx::playlist::PlaylistBase::CurrentIdx() const
 bool fbx::playlist::PlaylistBase::Prev(bool random)
 {
 	if (random) {
-		idx = FBXUtil::Rand(0, playlist.size() - 1);
+		idx = Random();
 	} else {
 		if (idx == 0)
 			return false;
@@ -77,7 +87,7 @@ bool fbx::playlist::PlaylistBase::Prev(bool random)
 bool fbx::playlist::PlaylistBase::Next(bool random)
 {
 	if (random) {
-		idx = FBXUtil::Rand(0, playlist.size() - 1);
+		idx = Random();
 	} else {
 		if (idx >= (playlist.size() - 1))
 			return false;
@@ -158,4 +168,46 @@ bool fbx::playlist::PlaylistBase::Remove(const unsigned int i)
 		return false;
 	playlist.erase(it);
 	return true;
+}
+
+/**
+ * Attempts to generate a random song index
+ */
+unsigned int fbx::playlist::PlaylistBase::Random()
+{
+	int r = FBXUtil::Rand(0, playlist.size() - 1);
+	if (playlist.size() < PLAYLISTHISTORYSIZE)
+		return r;
+	while (HistoryFind(r))
+		r = FBXUtil::Rand(0, playlist.size() - 1);
+	HistoryPush(r);
+#ifdef DEBUG
+	std::stringstream tmp;
+	for (int i = 0; i < PLAYLISTHISTORYSIZE; i++)
+		tmp << playlisthistory[i] << " ";
+	std::cout << "playlisthistory: " << tmp.str() << std::endl;
+#endif
+	return r;
+}
+
+/**
+ * Test if a given number is in the playlist history
+ */
+bool fbx::playlist::PlaylistBase::HistoryFind(const int x)
+{
+	for (int i = 0; i < PLAYLISTHISTORYSIZE; i++) {
+		if (playlisthistory[i] == x)
+			return true;
+	}
+	return false;
+}
+
+/**
+ * Push an item into the history
+ */
+void fbx::playlist::PlaylistBase::HistoryPush(const int x)
+{
+	for (int i = PLAYLISTHISTORYSIZE - 1; i > 0; i--)
+		playlisthistory[i] = playlisthistory[i-1];
+	playlisthistory[0] = x;
 }
