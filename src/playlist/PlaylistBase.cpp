@@ -77,6 +77,7 @@ bool fbx::playlist::PlaylistBase::Prev(bool random)
 		if (idx == 0)
 			return false;
 		idx--;
+		HistoryPush(idx);
 	}
 	return true;
 }
@@ -92,6 +93,7 @@ bool fbx::playlist::PlaylistBase::Next(bool random)
 		if (idx >= (playlist.size() - 1))
 			return false;
 		idx++;
+		HistoryPush(idx);
 	}
 	return true;
 }
@@ -148,6 +150,7 @@ bool fbx::playlist::PlaylistBase::Set(const unsigned int i)
 	if (i >= Size())
 		return false;
 	idx = i;
+	HistoryPush(i);
 	return true;
 }
 
