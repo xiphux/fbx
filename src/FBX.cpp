@@ -82,6 +82,34 @@ bool fbx::FBX::ParseCmdLine()
 		return false;
 	if (cmd.Found(wxT("V"))) {
 		std::cout << PACKAGE_STRING << std::endl;
+		std::cout << std::endl;
+
+		std::cout << "Enabled features:" << std::endl;
+
+		std::cout << "     Audio output: ";
+#ifdef HAVE_AO
+		std::cout << "libao ";
+#endif
+#ifdef HAVE_ALSA
+		std::cout << "ALSA ";
+#endif
+		std::cout << std::endl;
+
+		std::cout << "  Audiofile input: ";
+#ifdef HAVE_VORBIS
+		std::cout << "Vorbis";
+#endif
+#ifdef HAVE_FLAC
+		std::cout << "FLAC ";
+#endif
+		std::cout << std::endl;
+
+		std::cout << "         Features: ";
+#ifdef HAVE_MAGIC
+		std::cout << "magic ";
+#endif
+		std::cout << std::endl;
+
 		return false;
 	}
 	verbose = cmd.Found(wxT("v"));
