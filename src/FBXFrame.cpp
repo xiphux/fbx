@@ -34,6 +34,8 @@
 #include <iostream>
 #endif
 
+#include <sstream>
+
 #include "FBXFrame.h"
 #include "FBXEngine.h"
 #include "playlist/PlaylistFactory.h"
@@ -261,13 +263,37 @@ bool fbx::FBXFrame::OpenPlaylist(std::string pls)
 	if (playlist::PlaylistFactory::IsPlaylist(pls)) {
 		std::string name = pls.substr(0,pls.find_last_of('.'));
 		std::string::size_type tmp = name.find_last_of('/');
-		if (tmp != std::string::npos)
+		if (tmp != std::string::npos) {
 			name = name.substr(tmp + 1);
-//			std::map<std::string,std::string>::iterator tp = playlists.find(name);
-//			while (tp != playlists.end()) {
-//				name += "(1)";
-//				tp = playlists.find(name);
-//			}
+			wxString n(name.c_str(), *wxConvCurrent);
+			int idx = 0;
+			int pagecount = notebook->GetPageCount();
+			bool found = false;
+			for (int i = 0; i < pagecount; i++) {
+				wxString l = notebook->GetPageText(i);
+				if (n == l) {
+					found = true;
+					break;
+				}
+			}
+			while (found) {
+				found = false;
+				wxString n2 = n;
+				n2 << wxT("(") << ++idx << wxT(")");
+				for (int i = 0; i < pagecount; i++) {
+					wxString l = notebook->GetPageText(i);
+					if (n2 == l) {
+						found = true;
+						break;
+					}
+				}
+			}
+			if (idx > 0) {
+				std::stringstream tname;
+				tname << name << "(" << idx << ")";
+				name = tname.str();
+			}
+		}
 #ifdef DEBUG
 		std::cout << "FBXFrame::OpenPlaylist: [ " << name << " : " << pls << " ] " << std::endl;
 #endif
