@@ -28,8 +28,10 @@ unsigned int fbx::playlist::PlaylistFactory::PlaylistType(const std::string& fil
 	std::string ext = filename.substr(pos+1);
 	if (ext == "m3u")
 		return FBX_PLAYLIST_M3U;
+#if 0
 	else if (ext == "pls")
 		return FBX_PLAYLIST_PLS;
+#endif
 	return FBX_PLAYLIST_NONE;
 }
 
