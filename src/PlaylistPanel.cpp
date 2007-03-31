@@ -80,10 +80,12 @@ bool fbx::PlaylistPanel::PopulatePlaylist()
 /**
  * Sets a given song index active (in playlist and in listbox)
  */
-bool fbx::PlaylistPanel::SetActive(int idx)
+bool fbx::PlaylistPanel::SetActive(int idx, bool makevisible)
 {
 	playlist->Set(idx);
 	listbox->SetSelection(idx);
+	if (makevisible)
+		listbox->SetFirstItem(idx);
 }
 
 /**
@@ -94,6 +96,7 @@ bool fbx::PlaylistPanel::Next(bool random)
 	bool ret = playlist->Next(random);
 	if (ret)
 		listbox->SetSelection(playlist->CurrentIdx());
+	listbox->SetFirstItem(playlist->CurrentIdx());
 	return ret;
 }
 
@@ -105,6 +108,7 @@ bool fbx::PlaylistPanel::Prev(bool random)
 	bool ret = playlist->Prev(random);
 	if (ret)
 		listbox->SetSelection(playlist->CurrentIdx());
+	listbox->SetFirstItem(playlist->CurrentIdx());
 	return ret;
 }
 

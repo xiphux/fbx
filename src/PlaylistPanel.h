@@ -51,11 +51,12 @@ namespace fbx
 		/**
 		 * @brief Set active
 		 * @param idx index of song to set active
+		 * @param makevisible whether to move listbox to show active item
 		 * @return whether active song was successfully set
 		 *
 		 * Sets a given song index active (in playlist and in listbox)
 		 */
-		bool SetActive(int idx);
+		bool SetActive(int idx, bool makevisible = false);
 
 		/**
 		 * @brief Next
