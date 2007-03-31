@@ -222,6 +222,7 @@ void fbx::FBXFrame::OnAbout(wxCommandEvent& event)
  */
 void fbx::FBXFrame::OpenSavedPlaylists(std::string pls)
 {
+	bool empty = true;
 	std::string::size_type lastpos = pls.find_first_not_of(",",0);
 	std::string::size_type pos = pls.find_first_of(",",lastpos);
 	while ((pos != std::string::npos) || (lastpos != std::string::npos)) {
@@ -230,11 +231,12 @@ void fbx::FBXFrame::OpenSavedPlaylists(std::string pls)
 		std::cout << "FBXFrame::OpenSavedPlaylists: \"" << pl << "\"" << std::endl;
 #endif
 		OpenPlaylist(pl);
+		empty = false;
 		lastpos = pls.find_first_not_of(",",pos);
 		pos = pls.find_first_of(",",lastpos);
 	}
-	if (playlists.size() < 1) {
-		playlists["Default"] = "";
+	if (empty) {
+		//playlists["Default"] = "";
 		AddPlaylistPage("Default","");
 	}
 }
