@@ -46,13 +46,22 @@ namespace fbx
 		FBXFrame();
 
 		/**
-		 * @brief Quit event handler
-		 * @param event command event
+		 * @brief Open saved playlists
+		 * @param pls comma-delimited list of playlists to open
 		 *
-		 * Called when quit menu option is chosen
+		 * Opens a series of playlists given in a string
 		 */
-		void OnQuit(wxCommandEvent &event);
+		void OpenSavedPlaylists(std::string pls);
 
+		/**
+		 * @brief Open playlist
+		 * @param pls playlist to open
+		 *
+		 * Opens a single playlist
+		 */
+		bool OpenPlaylist(std::string pls);
+
+	protected:
 		/**
 		 * @brief About event handler
 		 * @param event command event
@@ -60,6 +69,14 @@ namespace fbx
 		 * Called when about menu option is chosen
 		 */
 		void OnAbout(wxCommandEvent &event);
+
+		/**
+		 * @brief Quit event handler
+		 * @param event command event
+		 *
+		 * Called when quit menu option is chosen
+		 */
+		void OnQuit(wxCommandEvent &event);
 
 		/**
 		 * @brief Stop event handler
@@ -108,32 +125,6 @@ namespace fbx
 		 * Called when seek bar position is moved
 		 */
 		void OnSeek(wxScrollEvent &event);
-
-		/**
-		 * @brief Open saved playlists
-		 * @param pls comma-delimited list of playlists to open
-		 *
-		 * Opens a series of playlists given in a string
-		 */
-		void OpenSavedPlaylists(std::string pls);
-
-		/**
-		 * @brief Open playlist
-		 * @param pls playlist to open
-		 *
-		 * Opens a single playlist
-		 */
-		bool OpenPlaylist(std::string pls);
-
-		/**
-		 * @brief Add playlist page
-		 * @param name name of playlist to show in tab
-		 * @param file filename of playlist to open
-		 *
-		 * Adds a page to the tabbed playlist interface with the given
-		 * name/file
-		 */
-		void AddPlaylistPage(std::string name, std::string file);
 
 		/**
 		 * @brief Idle event handler
@@ -238,6 +229,16 @@ namespace fbx
 		void ResetSlider();
 
 		/**
+		 * @brief Add playlist page
+		 * @param name name of playlist to show in tab
+		 * @param file filename of playlist to open
+		 *
+		 * Adds a page to the tabbed playlist interface with the given
+		 * name/file
+		 */
+		void AddPlaylistPage(std::string name, std::string file);
+
+		/**
 		 * @brief Play
 		 * @param file filename to play
 		 * @return whether playback successfully initiated
@@ -262,7 +263,15 @@ namespace fbx
 		 */
 		bool TryAdvance();
 
-	protected:
+		/**
+		 * @brief UniquePlaylistName
+		 * @param name playlist name to make unique
+		 * @return a unique playlist name based on given one
+		 *
+		 * Given a playlist name, attempt to append to it to make its name unique
+		 */
+		std::string UniquePlaylistName(const std::string name);
+
 		/**
 		 * @brief engine
 		 *
