@@ -43,11 +43,13 @@ void *fbx::engine::FBXAudioThread::Entry()
 		}
 		if (len < 0)
 			std::cerr << "[FBXAudioThread] Error reading audiofile" << std::endl;
-		/*
-		 * HACK to avoid bad audio output descriptors without locking
-		 */
-		else if (len > 0 && engine->audio && !engine->audio->Write(buf, len))
-			std::cerr << "[FBXAudioThread] Error writing " << len << std::endl;
+		else if (len > 0) {
+			if (engine->mutex.TryLock() == wxMUTEX_NO_ERROR) {
+				if (!engine->audio->Write(buf,len))
+					std::cerr << "[FBXAudioThread] Error writing " << len << std::endl;
+				engine->mutex.Unlock();
+			}
+		}
 	}
 	//engine->Stop();
 	return 0;
