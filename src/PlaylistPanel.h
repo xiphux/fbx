@@ -144,6 +144,14 @@ namespace fbx
 		std::string GetFilename();
 
 		/**
+		 * @brief Set Filename
+		 * @param fname filename to use
+		 *
+		 * Sets the filename of the playlist, transforming its type
+		 */
+		bool SetFilename(const std::string fname);
+
+		/**
 		 * @brief Saved
 		 * @return whether playlist is saved
 		 *

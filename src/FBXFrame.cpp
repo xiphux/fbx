@@ -535,6 +535,10 @@ void fbx::FBXFrame::OnSavePlaylist(wxCommandEvent& event)
 {
 	int idx = notebook->GetSelection();
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(idx);
+	if (page->GetFilename().length() < 1) {
+		OnSavePlaylistAs(event);
+		return;
+	}
 	bool ret = page->Save();
 	if (ret) {
 		wxString l = notebook->GetPageText(idx);
@@ -588,8 +592,7 @@ void fbx::FBXFrame::OnRemFile(wxCommandEvent& event)
  */
 void fbx::FBXFrame::OnOpenPlaylist(wxCommandEvent& event)
 {
-	std::string ext = "Playlists|";
-	ext += playlist::PlaylistFactory::Extensions();
+	std::string ext = playlist::PlaylistFactory::Extensions();
 	ext += "|All files|*.*";
 	wxString e(ext.c_str(), *wxConvCurrent);
 	wxFileDialog dlg(this,wxT("Open playlist"),wxT(""),wxT(""),e,wxFD_OPEN|wxFD_FILE_MUST_EXIST);
@@ -698,7 +701,36 @@ void fbx::FBXFrame::OnNewPlaylist(wxCommandEvent& event)
  */
 void fbx::FBXFrame::OnSavePlaylistAs(wxCommandEvent& event)
 {
+	std::string ext = playlist::PlaylistFactory::Extensions();
+	ext += "|All files|*.*";
+	wxString e(ext.c_str(), *wxConvCurrent);
+	wxFileDialog dlg(this,wxT("Save playlist as"),wxT(""),wxT(""),e,wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+	if (dlg.ShowModal() == wxID_OK) {
 #ifdef DEBUG
-	std::cout << "FBXFrame::OnSavePlaylistAs" << std::endl;
+		std::cout << "FBXFrame::OnSavePlaylistAs: " << dlg.GetPath().mb_str() << std::endl;
 #endif
+		std::string pl(dlg.GetPath().mb_str());
+		if (!playlist::PlaylistFactory::IsPlaylist(pl)) {
+			wxMessageBox(wxT("Playlist does not end in a recognized extension"),wxT("Unrecognized playlist type"), wxOK|wxICON_ERROR);
+			return;
+		}
+		int idx = notebook->GetSelection();
+		PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(idx);
+		bool ret = page->SetFilename(pl);
+#ifdef DEBUG
+		std::cout << "FBXFrame::OnSavePlaylistAs:SetFilename: " << (ret ? "true" : "false") << std::endl;
+#endif
+		ret = page->Save();
+#ifdef DEBUG
+		std::cout << "FBXFrame::OnSavePlaylistAs:Save: " << (ret ? "true" : "false") << std::endl;
+#endif
+		if (ret) {
+			std::string name = pl.substr(0,pl.find_last_of('.'));
+			std::string::size_type tmp = name.find_last_of('/');
+			if (tmp != std::string::npos)
+				name = UniquePlaylistName(name.substr(tmp + 1));
+			wxString n(name.c_str(), *wxConvCurrent);
+			notebook->SetPageText(idx,n);
+		}
+	}
 }

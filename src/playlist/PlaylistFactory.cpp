@@ -67,6 +67,10 @@ fbx::playlist::PlaylistBase* fbx::playlist::PlaylistFactory::ChangePlaylistType(
 	if (!newpls)
 		return 0;
 	newpls->playlist = orig->playlist;
+	newpls->idx = orig->idx;
+	newpls->saved = orig->saved;
+	for (int i = 0; i < PLAYLISTHISTORYSIZE; i++)
+		newpls->playlisthistory[i] = orig->playlisthistory[i];
 	return newpls;
 }
 
@@ -77,6 +81,6 @@ fbx::playlist::PlaylistBase* fbx::playlist::PlaylistFactory::ChangePlaylistType(
 std::string fbx::playlist::PlaylistFactory::Extensions()
 {
 	std::string tmp;
-	tmp += "*.m3u";
+	tmp += "M3U Playlists|*.m3u";
 	return tmp;
 }

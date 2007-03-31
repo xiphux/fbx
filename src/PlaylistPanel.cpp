@@ -212,3 +212,17 @@ bool fbx::PlaylistPanel::Saved()
 {
 	return playlist->Saved();
 }
+
+/**
+ * Sets the filename of the playlist, transforming its type
+ */
+bool fbx::PlaylistPanel::SetFilename(const std::string fname)
+{
+	playlist::PlaylistBase *tmp = playlist::PlaylistFactory::ChangePlaylistType(playlist, fname);
+	if (!tmp)
+		return false;
+	playlist::PlaylistBase *tmp2 = playlist;
+	playlist = tmp;
+	delete tmp2;
+	return true;
+}
