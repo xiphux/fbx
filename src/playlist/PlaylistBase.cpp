@@ -24,7 +24,8 @@
  * Typed playlists should parse/load playlist files here
  */
 fbx::playlist::PlaylistBase::PlaylistBase(const std::string &fname):
-	idx(0)
+	idx(0),
+	saved(true)
 {
 	filename = fname;
 	for (int i = 0; i < PLAYLISTHISTORYSIZE; i++)
@@ -128,6 +129,7 @@ void fbx::playlist::PlaylistBase::SetFilename(const std::string& name)
 void fbx::playlist::PlaylistBase::Append(const std::string& f)
 {
 	playlist.push_back(f);
+	saved = false;
 }
 
 /**
@@ -170,6 +172,7 @@ bool fbx::playlist::PlaylistBase::Remove(const unsigned int i)
 	if (it == playlist.end())
 		return false;
 	playlist.erase(it);
+	saved = false;
 	return true;
 }
 
@@ -213,4 +216,12 @@ void fbx::playlist::PlaylistBase::HistoryPush(const int x)
 	for (int i = PLAYLISTHISTORYSIZE - 1; i > 0; i--)
 		playlisthistory[i] = playlisthistory[i-1];
 	playlisthistory[0] = x;
+}
+
+/**
+ * Tests whether playlist changes have been saved
+ */
+bool fbx::playlist::PlaylistBase::Saved() const
+{
+	return saved;
 }

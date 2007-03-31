@@ -200,3 +200,11 @@ std::string fbx::PlaylistPanel::GetFilename()
 {
 	return playlist->GetFilename();
 }
+
+/**
+ * Tests whether playlist changes have been saved
+ */
+bool fbx::PlaylistPanel::Saved()
+{
+	return playlist->Saved();
+}

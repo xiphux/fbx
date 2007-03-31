@@ -171,6 +171,14 @@ namespace fbx
 			 */
 			bool Remove(const unsigned int i);
 
+			/**
+			 * @brief Saved
+			 * @return whether playlist is saved
+			 *
+			 * Tests whether playlist changes have been saved
+			 */
+			bool Saved() const;
+
 		protected:
 			/**
 			 * @brief Random
@@ -224,6 +232,13 @@ namespace fbx
 			 * History of songs played
 			 */
 			int playlisthistory[PLAYLISTHISTORYSIZE];
+
+			/**
+			 * @brief saved
+			 *
+			 * Whether playlist changes have been saved
+			 */
+			bool saved;
 
 			/**
 			 * friend PlaylistFactory so factory can perform

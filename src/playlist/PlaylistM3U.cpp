@@ -53,4 +53,6 @@ bool fbx::playlist::PlaylistM3U::Write()
 	}
 	file.flush();
 	file.close();
+	saved = true;
+	return true;
 }

@@ -186,6 +186,16 @@ fbx::FBXFrame::FBXFrame():
  */
 void fbx::FBXFrame::OnQuit(wxCommandEvent& event)
 {
+	PlaylistPanel *page;
+	size_t pagecount = notebook->GetPageCount();
+	for (int i = 0; i < pagecount; i++) {
+		page = (PlaylistPanel*)notebook->GetPage(i);
+		if (!page->Saved()) {
+			wxMessageDialog prompt(this, wxT("You have unsaved playlists.  Are you sure you want to quit?"), wxT("Unsaved playlists"), wxOK|wxCANCEL|wxICON_INFORMATION);
+			if (prompt.ShowModal() == wxID_CANCEL)
+				return;
+		}
+	}
 	timer->Stop();
 	if (engine)
 		engine->Stop();
@@ -193,9 +203,9 @@ void fbx::FBXFrame::OnQuit(wxCommandEvent& event)
 
 	bool first = true;
 	std::string pls;
-	size_t pagecount = notebook->GetPageCount();
+	pagecount = notebook->GetPageCount();
 	for (int i = 0; i < pagecount; i++) {
-		PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(i);
+		page = (PlaylistPanel*)notebook->GetPage(i);
 		if (page) {
 			if (!first)
 				pls += ",";

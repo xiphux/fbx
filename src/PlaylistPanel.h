@@ -142,6 +142,14 @@ namespace fbx
 		 */
 		std::string GetFilename();
 
+		/**
+		 * @brief Saved
+		 * @return whether playlist is saved
+		 *
+		 * Tests whether playlist changes have been saved
+		 */
+		bool Saved();
+
 	protected:
 		/**
 		 * @brief playlist
