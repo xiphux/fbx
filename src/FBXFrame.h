@@ -200,7 +200,7 @@ namespace fbx
 
 		/**
 		 * @brief Close playlist event handler
-		 * @parame event command event
+		 * @param event command event
 		 *
 		 * Called when Close playlist menu option is chosen
 		 */
