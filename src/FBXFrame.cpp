@@ -67,6 +67,7 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_MENU(FBX_frame_next, fbx::FBXFrame::OnNext)
 	EVT_MENU(FBX_frame_addfiles, fbx::FBXFrame::OnAddFiles)
 	EVT_MENU(FBX_frame_saveplaylist, fbx::FBXFrame::OnSavePlaylist)
+	EVT_MENU(FBX_frame_saveplaylistas, fbx::FBXFrame::OnSavePlaylistAs)
 	EVT_MENU(FBX_frame_remfile, fbx::FBXFrame::OnRemFile)
 	EVT_MENU(FBX_frame_openplaylist, fbx::FBXFrame::OnOpenPlaylist)
 	EVT_MENU(FBX_frame_closeplaylist, fbx::FBXFrame::OnClosePlaylist)
@@ -98,7 +99,8 @@ fbx::FBXFrame::FBXFrame():
 	filemenu->AppendSeparator();
 	filemenu->Append(FBX_frame_newplaylist, wxT("&New playlist"), wxT("Create new playlist"));
 	filemenu->Append(FBX_frame_openplaylist, wxT("&Open playlist"), wxT("Open playlist file"));
-	filemenu->Append(FBX_frame_saveplaylist, wxT("&Save playlist"), wxT("Save playlist changes to file"));
+	filemenu->Append(FBX_frame_saveplaylist, wxT("&Save playlist"), wxT("Save playlist changes"));
+	filemenu->Append(FBX_frame_saveplaylistas, wxT("Sa&ve playlist as..."), wxT("Save playlist changes to specific file"));
 	filemenu->Append(FBX_frame_closeplaylist, wxT("&Close playlist"), wxT("Close playlist"));
 	filemenu->AppendSeparator();
 	filemenu->Append(FBX_frame_quit, wxT("E&xit"), wxT("Exit FBX"));
@@ -689,4 +691,14 @@ std::string fbx::FBXFrame::UniquePlaylistName(const std::string name)
 void fbx::FBXFrame::OnNewPlaylist(wxCommandEvent& event)
 {
 	AddPlaylistPage(UniquePlaylistName("New Playlist"),"");
+}
+
+/**
+ * Called when Save playlist as menu option is chosen
+ */
+void fbx::FBXFrame::OnSavePlaylistAs(wxCommandEvent& event)
+{
+#ifdef DEBUG
+	std::cout << "FBXFrame::OnSavePlaylistAs" << std::endl;
+#endif
 }
