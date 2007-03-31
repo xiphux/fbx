@@ -30,6 +30,8 @@ namespace fbx
 		class FBXEngine;
 	}
 
+	class PlaylistPanel;
+
 	/**
 	 * @brief FBX frame class
 	 *
@@ -380,6 +382,13 @@ namespace fbx
 		 * Whether or not we've played a song before
 		 */
 		bool firstplay;
+
+		/**
+		 * @brief activeplaylist
+		 *
+		 * Pointer to active playlist page
+		 */
+		PlaylistPanel *activeplaylist;
 	};
 
 	/**

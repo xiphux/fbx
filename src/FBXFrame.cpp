@@ -240,6 +240,7 @@ void fbx::FBXFrame::OpenSavedPlaylists(std::string pls)
 		//playlists["Default"] = "";
 		AddPlaylistPage("Default","");
 	}
+	activeplaylist = (PlaylistPanel*)notebook->GetPage(0);
 }
 
 /**
@@ -278,6 +279,7 @@ void fbx::FBXFrame::AddPlaylistPage(std::string name, std::string file)
 #endif
 	wxString n(name.c_str(), *wxConvCurrent);
 	notebook->AddPage(new PlaylistPanel(notebook,FBX_frame_playlist,file), n);
+
 }
 
 /**
@@ -317,10 +319,9 @@ void fbx::FBXFrame::OnPlay(wxCommandEvent& event)
 	} else {
 		if (!engine->Stopped())
 			return;
-		PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
 		if (order->GetCurrentSelection() == 1 && firstplay)
-			page->Next(true);
-		ret = Play(page->Current());
+			activeplaylist->Next(true);
+		ret = Play(activeplaylist->Current());
 	}
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnPlay:" << (ret ? "true" : "false") << std::endl;
@@ -332,14 +333,13 @@ void fbx::FBXFrame::OnPlay(wxCommandEvent& event)
  */
 void fbx::FBXFrame::OnPrev(wxCommandEvent& event)
 {
-	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
-	bool ret = page->Prev((order->GetCurrentSelection() == 1));
+	bool ret = activeplaylist->Prev((order->GetCurrentSelection() == 1));
 	if (order->GetCurrentSelection() == 2 && !ret) {
-		page->SetActive(page->Size()-1);
+		activeplaylist->SetActive(activeplaylist->Size()-1);
 		ret = true;
 	}
 	if (ret && !engine->Stopped())
-		Play(page->Current());
+		Play(activeplaylist->Current());
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnPrev" << std::endl;
 #endif
@@ -350,14 +350,13 @@ void fbx::FBXFrame::OnPrev(wxCommandEvent& event)
  */
 void fbx::FBXFrame::OnNext(wxCommandEvent& event)
 {
-	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
-	bool ret = page->Next((order->GetCurrentSelection() == 1));
+	bool ret = activeplaylist->Next((order->GetCurrentSelection() == 1));
 	if (order->GetCurrentSelection() == 2 && !ret) {
-		page->SetActive(0);
+		activeplaylist->SetActive(0);
 		ret = true;
 	}
 	if (ret && !engine->Stopped())
-		Play(page->Current());
+		Play(activeplaylist->Current());
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnNext" << std::endl;
 #endif
@@ -426,8 +425,8 @@ void fbx::FBXFrame::OnPlaylistChoice(wxCommandEvent& event)
 {
 	int idx = event.GetSelection();
 	char *str = (char*)event.GetClientData();
-	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
-	page->SetActive(idx);
+	activeplaylist = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
+	activeplaylist->SetActive(idx);
 	Play(std::string(str));
 }
 
@@ -436,17 +435,16 @@ void fbx::FBXFrame::OnPlaylistChoice(wxCommandEvent& event)
  */
 bool fbx::FBXFrame::TryAdvance()
 {
-	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
 	bool ret = true;
 	if (order->GetCurrentSelection() != 3)
-		ret = page->Next((order->GetCurrentSelection() == 1));
+		ret = activeplaylist->Next((order->GetCurrentSelection() == 1));
 	if (!ret) {
-		page->SetActive(0);
+		activeplaylist->SetActive(0);
 		if (order->GetCurrentSelection() == 2)
 			ret = true;
 	}
 	if (ret)
-		return Play(page->Current());
+		return Play(activeplaylist->Current());
 	return false;
 }
 
@@ -595,5 +593,18 @@ bool fbx::FBXFrame::Stop()
  */
 void fbx::FBXFrame::OnClosePlaylist(wxCommandEvent& event)
 {
-	notebook->DeletePage(notebook->GetSelection());
+	size_t idx = notebook->GetSelection();
+	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(idx);
+	notebook->DeletePage(idx);
+	if (page == activeplaylist) {
+		size_t sz = notebook->GetPageCount();
+		if (sz > 0) {
+			if (idx > 0)
+				idx--;
+			activeplaylist = (PlaylistPanel*)notebook->GetPage(idx);
+		} else {
+			AddPlaylistPage("Default","");
+			activeplaylist = (PlaylistPanel*)notebook->GetPage(0);
+		}
+	}
 }
