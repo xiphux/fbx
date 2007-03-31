@@ -505,16 +505,27 @@ void fbx::FBXFrame::OnAddFiles(wxCommandEvent& event)
 	wxString e(ext.c_str(), *wxConvCurrent);
 	wxFileDialog dlg(this,wxT("Add files"),wxT(""),wxT(""),e,wxFD_OPEN|wxFD_FILE_MUST_EXIST|wxFD_MULTIPLE);
 	if (dlg.ShowModal() == wxID_OK) {
-		PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
+		int idx = notebook->GetSelection();
+		PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(idx);
 		wxArrayString ret;
 		dlg.GetPaths(ret);
 		size_t count = ret.GetCount();
+		bool added = false;
 		for (int i = 0; i < count; i++) {
 #ifdef DEBUG
 			std::cout << "Item " << i << ": " << ret[i].mb_str() << std::endl;
 #endif
 			std::string tmp(ret[i].mb_str());
 			page->Add(tmp,true);
+			added = true;
+		}
+		if (added) {
+			wxString l = notebook->GetPageText(idx);
+			size_t len = l.Len();
+			if (l.GetChar(len-1) != '*') {
+				l += wxT("*");
+				notebook->SetPageText(idx,l);
+			}
 		}
 	}
 }
@@ -524,8 +535,17 @@ void fbx::FBXFrame::OnAddFiles(wxCommandEvent& event)
  */
 void fbx::FBXFrame::OnSavePlaylist(wxCommandEvent& event)
 {
-	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
+	int idx = notebook->GetSelection();
+	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(idx);
 	bool ret = page->Save();
+	if (ret) {
+		wxString l = notebook->GetPageText(idx);
+		size_t len = l.Len();
+		if (l.GetChar(len-1) == '*') {
+			l = l.Left(len-1);
+			notebook->SetPageText(idx,l);
+		}
+	}
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnSavePlaylist: " << (ret ? "true" : "false") << std::endl;
 #endif
@@ -536,7 +556,8 @@ void fbx::FBXFrame::OnSavePlaylist(wxCommandEvent& event)
  */
 void fbx::FBXFrame::OnRemFile(wxCommandEvent& event)
 {
-	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
+	int idx = notebook->GetSelection();
+	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(idx);
 	unsigned int selected = page->SelectedIdx();
 	while (selected == page->CurrentIdx()) {
 		bool ret = true;
@@ -551,6 +572,14 @@ void fbx::FBXFrame::OnRemFile(wxCommandEvent& event)
 			Play(page->Current());
 	}
 	bool r = page->Remove(selected);
+	if (r) {
+		wxString l = notebook->GetPageText(idx);
+		size_t len = l.Len();
+		if (l.GetChar(len-1) != '*') {
+			l += wxT("*");
+			notebook->SetPageText(idx,l);
+		}
+	}
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnRemFile: " << (r ? "true" : "false") << std::endl;
 #endif
