@@ -26,7 +26,7 @@
  *
  * Defines the internal audio buffer size
  */
-#define BUFSIZE 2048
+#define BUFSIZE 4
 
 /**
  * Entry point for thread execution
