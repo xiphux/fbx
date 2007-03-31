@@ -19,6 +19,7 @@
 
 #include "audio/AudioBase.h"
 #include "audiofile/AudioFileBase.h"
+#include "config/ConfigFactory.h"
 #include "FBXEngine.h"
 
 /**
@@ -34,11 +35,12 @@
 void *fbx::engine::FBXAudioThread::Entry()
 {
 	int len = 0;
-	char buf[BUFSIZE];
+	int bufsize = config::ConfigFactory::GetConfig().GetInt("buffer",BUFSIZE);
+	char buf[bufsize];
 	while (!TestDestroy() && engine && engine->audio && engine->audiofile && !engine->audiofile->Eof()) {
 		len = 0;
 		if (engine->mutex.TryLock() == wxMUTEX_NO_ERROR) {
-			len = engine->audiofile->Read(buf, BUFSIZE);
+			len = engine->audiofile->Read(buf, bufsize);
 			engine->mutex.Unlock();
 		}
 		if (len < 0)
