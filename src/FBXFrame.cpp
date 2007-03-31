@@ -67,6 +67,7 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_MENU(FBX_frame_saveplaylist, fbx::FBXFrame::OnSavePlaylist)
 	EVT_MENU(FBX_frame_remfile, fbx::FBXFrame::OnRemFile)
 	EVT_MENU(FBX_frame_openplaylist, fbx::FBXFrame::OnOpenPlaylist)
+	EVT_MENU(FBX_frame_closeplaylist, fbx::FBXFrame::OnClosePlaylist)
 	EVT_MENU_OPEN(fbx::FBXFrame::OnMenuOpen)
 	EVT_MENU_CLOSE(fbx::FBXFrame::OnMenuClose)
 	EVT_CHOICE(FBX_frame_order, fbx::FBXFrame::OnOrder)
@@ -95,6 +96,7 @@ fbx::FBXFrame::FBXFrame():
 	filemenu->AppendSeparator();
 	filemenu->Append(FBX_frame_openplaylist, wxT("&Open playlist"), wxT("Open playlist file"));
 	filemenu->Append(FBX_frame_saveplaylist, wxT("&Save playlist"), wxT("Save playlist changes to file"));
+	filemenu->Append(FBX_frame_closeplaylist, wxT("&Close playlist"), wxT("Close playlist"));
 	filemenu->AppendSeparator();
 	filemenu->Append(FBX_frame_quit, wxT("E&xit"), wxT("Exit FBX"));
 	menubar->Append(filemenu, wxT("&File"));
@@ -165,7 +167,7 @@ fbx::FBXFrame::FBXFrame():
 	//progresstoolbar->AddControl(progress);
 	//progresstoolbar->Realize();
 
-	notebook = new wxAuiNotebook(this);
+	notebook = new wxAuiNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxAUI_NB_DEFAULT_STYLE & ~wxAUI_NB_CLOSE_ON_ACTIVE_TAB );
 	topsizer->Add(notebook, 3, wxEXPAND|wxALL);
 
 	statusbar = CreateStatusBar();
@@ -587,4 +589,12 @@ bool fbx::FBXFrame::Stop()
 	ResetSlider();
 	UpdateStatus();
 	return ret;
+}
+
+/**
+ * Called when Close playlist menu option is chosen
+ */
+void fbx::FBXFrame::OnClosePlaylist(wxCommandEvent& event)
+{
+	notebook->DeletePage(notebook->GetSelection());
 }

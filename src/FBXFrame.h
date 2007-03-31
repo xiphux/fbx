@@ -198,6 +198,14 @@ namespace fbx
 		void OnOpenPlaylist(wxCommandEvent& event);
 
 		/**
+		 * @brief Close playlist event handler
+		 * @parame event command event
+		 *
+		 * Called when Close playlist menu option is chosen
+		 */
+		void OnClosePlaylist(wxCommandEvent& event);
+
+		/**
 		 * @brief Open menu event handler
 		 * @param event menu event
 		 *
@@ -449,6 +457,11 @@ namespace fbx
 		 * @brief open playlist event
 		 */
 		FBX_frame_openplaylist,
+
+		/**
+		 * @brief close playlist event
+		 */
+		FBX_frame_closeplaylist,
 
 		/**
 		 * @brief playlist event
