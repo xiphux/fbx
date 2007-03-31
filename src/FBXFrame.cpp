@@ -84,7 +84,6 @@ END_EVENT_TABLE()
  */
 fbx::FBXFrame::FBXFrame():
 	wxFrame((wxFrame*)NULL, -1, wxEmptyString, wxDefaultPosition, wxSize(640,480)),
-	plidx(0),
 	updatestatus(true),
 	firstplay(true)
 {
@@ -248,10 +247,8 @@ void fbx::FBXFrame::OpenSavedPlaylists(std::string pls)
 		lastpos = pls.find_first_not_of(",",pos);
 		pos = pls.find_first_of(",",lastpos);
 	}
-	if (empty) {
-		//playlists["Default"] = "";
+	if (empty)
 		AddPlaylistPage("Default","");
-	}
 	activeplaylist = (PlaylistPanel*)notebook->GetPage(0);
 }
 
@@ -297,7 +294,6 @@ bool fbx::FBXFrame::OpenPlaylist(std::string pls)
 #ifdef DEBUG
 		std::cout << "FBXFrame::OpenPlaylist: [ " << name << " : " << pls << " ] " << std::endl;
 #endif
-		playlists[name] = pls;
 		AddPlaylistPage(name,pls);
 		return true;
 	}

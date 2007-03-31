@@ -286,13 +286,6 @@ namespace fbx
 		wxStatusBar *statusbar;
 
 		/**
-		 * @brief playlists
-		 *
-		 * Map of open playlists
-		 */
-		std::map<std::string, std::string> playlists;
-
-		/**
 		 * @brief notebook
 		 *
 		 * Notebook (tabbed window) interface
@@ -347,13 +340,6 @@ namespace fbx
 		 * Update timer
 		 */
 		wxTimer *timer;
-
-		/**
-		 * @brief playlist index
-		 *
-		 * Count of open playlists
-		 */
-		unsigned int plidx;
 
 		/**
 		 * @brief manager
