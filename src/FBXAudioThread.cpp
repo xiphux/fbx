@@ -7,6 +7,9 @@
  * Copyright (C) 2007
  * Licensed under the terms of the GNU GPL v2
  */
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 #include <wx/wxprec.h>
 #ifndef WX_PRECOMP
@@ -37,6 +40,9 @@ void *fbx::engine::FBXAudioThread::Entry()
 	int len = 0;
 	int bufsize = config::ConfigFactory::GetConfig().GetInt("buffer",BUFSIZE);
 	char buf[bufsize];
+#ifdef DEBUG
+	std::cout << "AudioThread using bufsize: " << bufsize << std::endl;
+#endif
 	while (!TestDestroy() && engine && engine->audio && engine->audiofile && !engine->audiofile->Eof()) {
 		len = 0;
 		if (engine->mutex.TryLock() == wxMUTEX_NO_ERROR) {
