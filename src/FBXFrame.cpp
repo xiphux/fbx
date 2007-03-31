@@ -469,6 +469,9 @@ void fbx::FBXFrame::UpdateStatus()
 {
 	std::string st = engine->StatusString();
 	wxString s(st.c_str(), *wxConvCurrent);
+	int pg = notebook->GetPageIndex(activeplaylist);
+	if (pg != wxNOT_FOUND)
+		s += wxT(" | ") + notebook->GetPageText(pg);
 	statusbar->SetStatusText(s);
 	progress->SetValue(engine->Current());
 }
