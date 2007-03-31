@@ -70,6 +70,7 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_MENU(FBX_frame_remfile, fbx::FBXFrame::OnRemFile)
 	EVT_MENU(FBX_frame_openplaylist, fbx::FBXFrame::OnOpenPlaylist)
 	EVT_MENU(FBX_frame_closeplaylist, fbx::FBXFrame::OnClosePlaylist)
+	EVT_MENU(FBX_frame_newplaylist, fbx::FBXFrame::OnNewPlaylist)
 	EVT_MENU_OPEN(fbx::FBXFrame::OnMenuOpen)
 	EVT_MENU_CLOSE(fbx::FBXFrame::OnMenuClose)
 	EVT_CHOICE(FBX_frame_order, fbx::FBXFrame::OnOrder)
@@ -95,6 +96,7 @@ fbx::FBXFrame::FBXFrame():
 	filemenu->Append(FBX_frame_addfiles, wxT("&Add files"), wxT("Add files to playlist"));
 	filemenu->Append(FBX_frame_remfile, wxT("&Remove file"), wxT("Remove file from playlist"));
 	filemenu->AppendSeparator();
+	filemenu->Append(FBX_frame_newplaylist, wxT("&New playlist"), wxT("Create new playlist"));
 	filemenu->Append(FBX_frame_openplaylist, wxT("&Open playlist"), wxT("Open playlist file"));
 	filemenu->Append(FBX_frame_saveplaylist, wxT("&Save playlist"), wxT("Save playlist changes to file"));
 	filemenu->Append(FBX_frame_closeplaylist, wxT("&Close playlist"), wxT("Close playlist"));
@@ -677,4 +679,12 @@ std::string fbx::FBXFrame::UniquePlaylistName(const std::string name)
 	if (idx > 0)
 		tname << "(" << idx << ")";
 	return tname.str();
+}
+
+/**
+ * Called when New playlist menu option is chosen
+ */
+void fbx::FBXFrame::OnNewPlaylist(wxCommandEvent& event)
+{
+	AddPlaylistPage(UniquePlaylistName("New Playlist"),"");
 }

@@ -173,6 +173,14 @@ namespace fbx
 		 * Called when Remove file menu option is chosen
 		 */
 		void OnRemFile(wxCommandEvent& event);
+		
+		/**
+		 * @brief New playlist event handler
+		 * @param event command event
+		 *
+		 * Called when New playlist menu option is chosen
+		 */
+		void OnNewPlaylist(wxCommandEvent& event);
 
 		/**
 		 * @brief Save playlist event handler
@@ -466,6 +474,11 @@ namespace fbx
 		 * @brief close playlist event
 		 */
 		FBX_frame_closeplaylist,
+
+		/**
+		 * @brief new playlist event
+		 */
+		FBX_frame_newplaylist,
 
 		/**
 		 * @brief playlist event
