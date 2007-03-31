@@ -324,6 +324,7 @@ void fbx::FBXFrame::OnPlay(wxCommandEvent& event)
 	} else {
 		if (!engine->Stopped())
 			return;
+		activeplaylist = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
 		if (order->GetCurrentSelection() == 1 && firstplay)
 			activeplaylist->Next(true);
 		ret = Play(activeplaylist->Current());
