@@ -71,6 +71,7 @@ bool fbx::engine::FBXEngine::Play(const std::string& filename)
 	}
 	thread->engine = this;
 	thread->Create();
+	thread->SetPriority(WXTHREAD_MAX_PRIORITY);
 	thread->Run();
 	return true;
 }
