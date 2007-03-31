@@ -634,6 +634,7 @@ void fbx::FBXFrame::OnClosePlaylist(wxCommandEvent& event)
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(idx);
 	notebook->DeletePage(idx);
 	if (page == activeplaylist) {
+		Stop();
 		size_t sz = notebook->GetPageCount();
 		if (sz > 0) {
 			if (idx > 0)
