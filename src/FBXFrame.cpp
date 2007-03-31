@@ -203,8 +203,7 @@ void fbx::FBXFrame::OnQuit(wxCommandEvent& event)
 			first = false;
 		}
 	}
-	if (pls.length() > 1)
-		config::ConfigFactory::GetConfig().SetString("playlists",pls);
+	config::ConfigFactory::GetConfig().SetString("playlists",pls);
 
 	Close(true);
 }
