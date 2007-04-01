@@ -196,8 +196,8 @@ void fbx::FBXFrame::OnQuit(wxCommandEvent& event)
 	for (int i = 0; i < pagecount; i++) {
 		page = (PlaylistPanel*)notebook->GetPage(i);
 		if (!page->Saved()) {
-			wxMessageDialog prompt(this, wxT("You have unsaved playlists.  Are you sure you want to quit?"), wxT("Unsaved playlists"), wxOK|wxCANCEL|wxICON_INFORMATION);
-			if (prompt.ShowModal() == wxID_CANCEL)
+			wxMessageDialog prompt(this, wxT("You have unsaved playlists.  Are you sure you want to quit?"), wxT("Unsaved playlists"), wxYES_NO|wxNO_DEFAULT|wxICON_INFORMATION);
+			if (prompt.ShowModal() == wxID_NO)
 				return;
 		}
 	}
