@@ -638,6 +638,22 @@ void fbx::FBXFrame::OnClosePlaylist(wxCommandEvent& event)
 {
 	size_t idx = notebook->GetSelection();
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(idx);
+	if (!page->Saved()) {
+		wxString n = notebook->GetPageText(idx);
+		size_t len = n.Len();
+		if (n.GetChar(len-1) == '*')
+			n = n.Left(len-1);
+		wxString str = wxT("Playlist \"") + n + wxT("\"");
+		std::string fname = page->GetFilename();
+		if (fname.length() > 0) {
+			wxString f(fname.c_str(), *wxConvCurrent);
+			str += wxT(" [") + f + wxT("]");
+		}
+		str += wxT(" is unsaved.  Are you sure you want to close?");
+		wxMessageDialog prompt(this,str, wxT("Unsaved playlist"), wxYES_NO|wxNO_DEFAULT|wxICON_INFORMATION);
+		if (prompt.ShowModal() == wxID_NO)
+			return;
+	}
 	notebook->DeletePage(idx);
 	if (page == activeplaylist) {
 		Stop();
