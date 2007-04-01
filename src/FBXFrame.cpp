@@ -100,7 +100,7 @@ fbx::FBXFrame::FBXFrame():
 	filemenu->Append(FBX_frame_newplaylist, wxT("&New playlist"), wxT("Create new playlist"));
 	filemenu->Append(FBX_frame_openplaylist, wxT("&Open playlist"), wxT("Open playlist file"));
 	filemenu->Append(FBX_frame_saveplaylist, wxT("&Save playlist"), wxT("Save playlist changes"));
-	filemenu->Append(FBX_frame_saveplaylistas, wxT("Sa&ve playlist as..."), wxT("Save playlist changes to specific file"));
+	filemenu->Append(FBX_frame_saveplaylistas, wxT("Sa&ve playlist as..."), wxT("Save playlist to specific file"));
 	filemenu->Append(FBX_frame_closeplaylist, wxT("&Close playlist"), wxT("Close playlist"));
 	filemenu->AppendSeparator();
 	filemenu->Append(FBX_frame_quit, wxT("E&xit"), wxT("Exit FBX"));
