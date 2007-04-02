@@ -43,7 +43,13 @@ void *fbx::engine::FBXAudioThread::Entry()
 #ifdef DEBUG
 	std::cout << "AudioThread using bufsize: " << bufsize << std::endl;
 #endif
-	while (!TestDestroy() && engine && engine->audio && engine->audiofile && !engine->audiofile->Eof()) {
+	while (!TestDestroy() && engine) {
+		engine->mutex.Lock();
+		if (!engine->audio || !engine->audiofile || engine->audiofile->Eof()) {
+			engine->mutex.Unlock();
+			break;
+		}
+		engine->mutex.Unlock();
 		len = 0;
 		if (engine->mutex.TryLock() == wxMUTEX_NO_ERROR) {
 			len = engine->audiofile->Read(buf, bufsize);
