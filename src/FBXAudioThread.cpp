@@ -37,15 +37,19 @@
  */
 void *fbx::engine::FBXAudioThread::Entry()
 {
+	if (!engine)
+		return 0;
 	int len = 0;
 	int bufsize = config::ConfigFactory::GetConfig().GetInt("buffer",BUFSIZE);
 	char buf[bufsize];
 #ifdef DEBUG
 	std::cout << "AudioThread using bufsize: " << bufsize << std::endl;
 #endif
-	while (!TestDestroy() && engine) {
-		if (engine->mutex.TryLock() == wxMUTEX_NO_ERROR) {
-			if (!engine->audio || !engine->audiofile || engine->audiofile->Eof()) {
+	while (!TestDestroy() && engine->audio && engine->audiofile) {
+//		engine->mutex.Lock();
+		if (engine->mutex.TryLock() == wxMUTEX_NO_ERROR)
+		{
+			if (engine->audiofile->Eof()) {
 				engine->mutex.Unlock();
 				break;
 			}
