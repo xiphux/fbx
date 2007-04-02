@@ -67,7 +67,7 @@ bool fbx::engine::FBXEngine::Play(const std::string& filename)
 	if (!thread) {
 		std::cerr << "[FBXEngine] Error instantiating FBXAudioThread" << std::endl;
 		Stop();
-		return false;;
+		return false;
 	}
 	thread->engine = this;
 	thread->Create();
