@@ -44,25 +44,20 @@ void *fbx::engine::FBXAudioThread::Entry()
 	std::cout << "AudioThread using bufsize: " << bufsize << std::endl;
 #endif
 	while (!TestDestroy() && engine) {
-		engine->mutex.Lock();
-		if (!engine->audio || !engine->audiofile || engine->audiofile->Eof()) {
-			engine->mutex.Unlock();
-			break;
-		}
-		engine->mutex.Unlock();
-		len = 0;
 		if (engine->mutex.TryLock() == wxMUTEX_NO_ERROR) {
+			if (!engine->audio || !engine->audiofile || engine->audiofile->Eof()) {
+				engine->mutex.Unlock();
+				break;
+			}
+			len = 0;
 			len = engine->audiofile->Read(buf, bufsize);
-			engine->mutex.Unlock();
-		}
-		if (len < 0)
-			std::cerr << "[FBXAudioThread] Error reading audiofile" << std::endl;
-		else if (len > 0) {
-			if (engine->mutex.TryLock() == wxMUTEX_NO_ERROR) {
+			if (len < 0)
+				std::cerr << "[FBXAudioThread] Error reading audiofile" << std::endl;
+			else if (len > 0) {
 				if (!engine->audio->Write(buf,len))
 					std::cerr << "[FBXAudioThread] Error writing " << len << std::endl;
-				engine->mutex.Unlock();
 			}
+			engine->mutex.Unlock();
 		}
 	}
 	//engine->Stop();
