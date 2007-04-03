@@ -305,6 +305,22 @@ namespace fbx
 		std::string UniquePlaylistName(const std::string name);
 
 		/**
+		 * @brief Add Star
+		 * @param i index of page to change
+		 *
+		 * Adds a star to a notebook page's name if one is not there already
+		 */
+		void AddStar(const unsigned int i);
+
+		/**
+		 * @brief Remove Star
+		 * @param i index of page to change
+		 *
+		 * Removes a star from a notebook's page name if one is not there already
+		 */
+		void RemoveStar(const unsigned int i);
+
+		/**
 		 * @brief engine
 		 *
 		 * Pointer to audio engine instance

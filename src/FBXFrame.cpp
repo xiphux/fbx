@@ -521,14 +521,8 @@ void fbx::FBXFrame::OnAddFiles(wxCommandEvent& event)
 			page->Add(tmp,true);
 			added = true;
 		}
-		if (added) {
-			wxString l = notebook->GetPageText(idx);
-			size_t len = l.Len();
-			if (l.GetChar(len-1) != '*') {
-				l += wxT("*");
-				notebook->SetPageText(idx,l);
-			}
-		}
+		if (added)
+			AddStar(idx);
 	}
 }
 
@@ -544,14 +538,8 @@ void fbx::FBXFrame::OnSavePlaylist(wxCommandEvent& event)
 		return;
 	}
 	bool ret = page->Save();
-	if (ret) {
-		wxString l = notebook->GetPageText(idx);
-		size_t len = l.Len();
-		if (l.GetChar(len-1) == '*') {
-			l = l.Left(len-1);
-			notebook->SetPageText(idx,l);
-		}
-	}
+	if (ret)
+		RemoveStar(idx);
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnSavePlaylist: " << (ret ? "true" : "false") << std::endl;
 #endif
@@ -578,14 +566,8 @@ void fbx::FBXFrame::OnRemFile(wxCommandEvent& event)
 			Play(page->Current());
 	}
 	bool r = page->Remove(selected);
-	if (r) {
-		wxString l = notebook->GetPageText(idx);
-		size_t len = l.Len();
-		if (l.GetChar(len-1) != '*') {
-			l += wxT("*");
-			notebook->SetPageText(idx,l);
-		}
-	}
+	if (r)
+		AddStar(idx);
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnRemFile: " << (r ? "true" : "false") << std::endl;
 #endif
@@ -763,6 +745,8 @@ void fbx::FBXFrame::OnMoveUp(wxCommandEvent& event)
 	size_t idx = notebook->GetSelection();
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(idx);
 	bool ret = page->MoveUp(page->SelectedIdx());
+	if (ret)
+		AddStar(idx);
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnMoveUp: " << (ret ? "true" : "false") << std::endl;
 #endif
@@ -776,7 +760,35 @@ void fbx::FBXFrame::OnMoveDown(wxCommandEvent& event)
 	size_t idx = notebook->GetSelection();
 	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(idx);
 	bool ret = page->MoveDown(page->SelectedIdx());
+	if (ret)
+		AddStar(idx);
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnMoveDown: " << (ret ? "true" : "false") << std::endl;
 #endif
+}
+
+/**
+ * Adds a star to a notebook page's name if one is not there already
+ */
+void fbx::FBXFrame::AddStar(const unsigned int i)
+{
+	wxString l = notebook->GetPageText(i);
+	size_t len = l.Len();
+	if (l.GetChar(len-1) != '*') {
+		l += wxT("*");
+		notebook->SetPageText(i,l);
+	}
+}
+
+/**
+ * Removes a star from a notebook's page name if one is not there already
+ */
+void fbx::FBXFrame::RemoveStar(const unsigned int i)
+{
+	wxString l = notebook->GetPageText(i);
+	size_t len = l.Len();
+	if (l.GetChar(len-1) == '*') {
+		l = l.Left(len-1);
+		notebook->SetPageText(i,l);
+	}
 }
