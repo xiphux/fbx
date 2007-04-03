@@ -27,6 +27,7 @@
 #include <wx/stattext.h>
 #include <wx/choice.h>
 #include <wx/filedlg.h>
+#include <wx/accel.h>
 
 #ifdef AUI_TOOLBAR
 #include <wx/aui/aui.h>
@@ -114,11 +115,11 @@ fbx::FBXFrame::FBXFrame():
 	filemenu->Append(FBX_frame_quit, wxT("E&xit"), wxT("Exit FBX"));
 	menubar->Append(filemenu, wxT("&File"));
 	wxMenu *playmenu = new wxMenu;
-	playmenu->Append(FBX_frame_stop, wxT("&Stop"), wxT("Stop"));
-	playmenu->Append(FBX_frame_pause, wxT("P&ause"), wxT("Pause"));
-	playmenu->Append(FBX_frame_play, wxT("P&lay"), wxT("Play"));
-	playmenu->Append(FBX_frame_prev, wxT("P&rev"), wxT("Previous"));
-	playmenu->Append(FBX_frame_next, wxT("&Next"), wxT("Next"));
+	playmenu->Append(FBX_frame_stop, wxT("&Stop\tZ"), wxT("Stop"));
+	playmenu->Append(FBX_frame_pause, wxT("P&ause\tX"), wxT("Pause"));
+	playmenu->Append(FBX_frame_play, wxT("P&lay\tC"), wxT("Play"));
+	playmenu->Append(FBX_frame_prev, wxT("P&rev\tShift+V"), wxT("Previous"));
+	playmenu->Append(FBX_frame_next, wxT("&Next\tV"), wxT("Next"));
 	menubar->Append(playmenu, wxT("&Playback"));
 	wxMenu *helpmenu = new wxMenu;
 	helpmenu->Append(FBX_frame_about, wxT("&About"), wxT("About FBX"));
@@ -138,6 +139,15 @@ fbx::FBXFrame::FBXFrame():
 	statusbar = CreateStatusBar();
 
 	SetSizer(topsizer);
+
+	wxAcceleratorEntry entries[5];
+	entries[0].Set(wxACCEL_NORMAL, (int) 'Z', FBX_frame_stop);
+	entries[1].Set(wxACCEL_NORMAL, (int) 'X', FBX_frame_pause);
+	entries[2].Set(wxACCEL_NORMAL, (int) 'C', FBX_frame_play);
+	entries[3].Set(wxACCEL_SHIFT, (int) 'V', FBX_frame_prev);
+	entries[4].Set(wxACCEL_NORMAL, (int) 'V', FBX_frame_next);
+	wxAcceleratorTable accel(5, entries);
+	SetAcceleratorTable(accel);
 
 	SetExtraStyle(wxWS_EX_PROCESS_IDLE);
 	wxIdleEvent::SetMode(wxIDLE_PROCESS_SPECIFIED);
