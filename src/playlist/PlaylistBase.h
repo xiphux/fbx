@@ -179,6 +179,24 @@ namespace fbx
 			 */
 			bool Saved() const;
 
+			/**
+			 * @brief Move Up
+			 * @param i index of track to move up
+			 * @return whether move was successful
+			 *
+			 * Moves the given index up one
+			 */
+			bool MoveUp(const unsigned int i);
+
+			/**
+			 * @brief Move Down
+			 * @param i index of track to move down
+			 * @return whether move was successful
+			 *
+			 * Moves the given index down one
+			 */
+			bool MoveDown(const unsigned int i);
+
 		protected:
 			/**
 			 * @brief Random

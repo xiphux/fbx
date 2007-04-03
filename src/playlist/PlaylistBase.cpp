@@ -225,3 +225,67 @@ bool fbx::playlist::PlaylistBase::Saved() const
 {
 	return saved;
 }
+
+/**
+ * Moves the given index up one
+ */
+bool fbx::playlist::PlaylistBase::MoveUp(const unsigned int i)
+{
+	if ((i >= Size()) || (i == 0))
+		return false;
+	std::vector<std::string>::iterator it = playlist.begin();
+	int j = 0;
+	while (j < i) {
+		it++;
+		j++;
+	}
+	if (it == playlist.end())
+		return false;
+	std::string val = *it;
+	playlist.erase(it);
+	it = playlist.begin();
+	j = 0;
+	while (j < (i - 1)) {
+		it++;
+		j++;
+	}
+	playlist.insert(it,val);
+	if (i == idx)
+		idx--;
+	saved = false;
+	return true;
+}
+
+/**
+ * Moves the given index down one
+ */
+bool fbx::playlist::PlaylistBase::MoveDown(const unsigned int i)
+{
+	if (i >= (Size() - 1))
+		return false;
+	std::vector<std::string>::iterator it = playlist.begin();
+	int j = 0;
+	while (j < i) {
+		it++;
+		j++;
+	}
+	if (it == playlist.end())
+		return false;
+	std::string val = *it;
+	playlist.erase(it);
+	if (i == (Size() - 1))
+		playlist.push_back(val);
+	else {
+		it = playlist.begin();
+		j = 0;
+		while (j <= i) {
+			it++;
+			j++;
+		}
+		playlist.insert(it,val);
+	}
+	if (i == idx)
+		idx++;
+	saved = false;
+	return true;
+}

@@ -72,6 +72,8 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_MENU(FBX_frame_openplaylist, fbx::FBXFrame::OnOpenPlaylist)
 	EVT_MENU(FBX_frame_closeplaylist, fbx::FBXFrame::OnClosePlaylist)
 	EVT_MENU(FBX_frame_newplaylist, fbx::FBXFrame::OnNewPlaylist)
+	EVT_MENU(FBX_frame_moveup, fbx::FBXFrame::OnMoveUp)
+	EVT_MENU(FBX_frame_movedown, fbx::FBXFrame::OnMoveDown)
 	EVT_MENU_OPEN(fbx::FBXFrame::OnMenuOpen)
 	EVT_MENU_CLOSE(fbx::FBXFrame::OnMenuClose)
 	EVT_CHOICE(FBX_frame_order, fbx::FBXFrame::OnOrder)
@@ -96,6 +98,8 @@ fbx::FBXFrame::FBXFrame():
 	wxMenu *filemenu = new wxMenu;
 	filemenu->Append(FBX_frame_addfiles, wxT("&Add files"), wxT("Add files to playlist"));
 	filemenu->Append(FBX_frame_remfile, wxT("&Remove file"), wxT("Remove file from playlist"));
+	filemenu->Append(FBX_frame_moveup, wxT("Move &up"), wxT("Move track up"));
+	filemenu->Append(FBX_frame_movedown, wxT("Move &down"), wxT("Move track down"));
 	filemenu->AppendSeparator();
 	filemenu->Append(FBX_frame_newplaylist, wxT("&New playlist"), wxT("Create new playlist"));
 	filemenu->Append(FBX_frame_openplaylist, wxT("&Open playlist"), wxT("Open playlist file"));
@@ -749,4 +753,30 @@ void fbx::FBXFrame::OnSavePlaylistAs(wxCommandEvent& event)
 			notebook->SetPageText(idx,n);
 		}
 	}
+}
+
+/**
+ * Called when Move Up menu option is chosen
+ */
+void fbx::FBXFrame::OnMoveUp(wxCommandEvent& event)
+{
+	size_t idx = notebook->GetSelection();
+	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(idx);
+	bool ret = page->MoveUp(page->SelectedIdx());
+#ifdef DEBUG
+	std::cout << "FBXFrame::OnMoveUp: " << (ret ? "true" : "false") << std::endl;
+#endif
+}
+
+/**
+ * Called when Move Down menu option is chosen
+ */
+void fbx::FBXFrame::OnMoveDown(wxCommandEvent& event)
+{
+	size_t idx = notebook->GetSelection();
+	PlaylistPanel *page = (PlaylistPanel*)notebook->GetPage(idx);
+	bool ret = page->MoveDown(page->SelectedIdx());
+#ifdef DEBUG
+	std::cout << "FBXFrame::OnMoveDown: " << (ret ? "true" : "false") << std::endl;
+#endif
 }

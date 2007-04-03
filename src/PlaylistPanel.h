@@ -159,6 +159,24 @@ namespace fbx
 		 */
 		bool Saved();
 
+		/**
+		 * @brief Move Up
+		 * @param idx index to move up
+		 * @return whether move succeeded
+		 *
+		 * Move specified item up
+		 */
+		bool MoveUp(const unsigned int idx);
+
+		/**
+		 * @brief Move Down
+		 * @param idx index to move down
+		 * @return whether move succeeded
+		 *
+		 * Move specified item down
+		 */
+		bool MoveDown(const unsigned int idx);
+
 	protected:
 		/**
 		 * @brief playlist

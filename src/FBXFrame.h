@@ -173,6 +173,22 @@ namespace fbx
 		 * Called when Remove file menu option is chosen
 		 */
 		void OnRemFile(wxCommandEvent& event);
+
+		/**
+		 * @brief Move up event handler
+		 * @param event command event
+		 *
+		 * Called when Move Up menu option is chosen
+		 */
+		void OnMoveUp(wxCommandEvent& event);
+
+		/**
+		 * @brief Move down event handler
+		 * @param event command event
+		 *
+		 * Called when Move Down menu option is chosen
+		 */
+		void OnMoveDown(wxCommandEvent& event);
 		
 		/**
 		 * @brief New playlist event handler
@@ -467,6 +483,16 @@ namespace fbx
 		 * @brief remove file event
 		 */
 		FBX_frame_remfile,
+
+		/**
+		 * @brief Move up event
+		 */
+		FBX_frame_moveup,
+
+		/**
+		 * @brief Move down event
+		 */
+		FBX_frame_movedown,
 
 		/**
 		 * @brief save playlist event

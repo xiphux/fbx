@@ -68,13 +68,15 @@ bool fbx::PlaylistPanel::PopulatePlaylist()
 	std::cout << "PlaylistPanel::PopulatePlaylist" << std::endl;
 #endif
 	listbox->Clear();
+	unsigned int oldidx = playlist->CurrentIdx();
+	playlist->Set(0);
 	int idx = 0;
 	while (idx < playlist->Size()) {
 		Add(playlist->Current(),false);
 		playlist->Next(false);
 		idx++;
 	}
-	playlist->Set(0);
+	playlist->Set(oldidx);
 }
 
 /**
@@ -225,4 +227,30 @@ bool fbx::PlaylistPanel::SetFilename(const std::string fname)
 	playlist = tmp;
 	delete tmp2;
 	return true;
+}
+
+/**
+ * Move specified item up
+ */
+bool fbx::PlaylistPanel::MoveUp(const unsigned int idx)
+{
+	bool ret = playlist->MoveUp(idx);
+	if (ret) {
+		PopulatePlaylist();
+		listbox->SetSelection(idx - 1);
+	}
+	return ret;
+}
+
+/**
+ * Move specified item down
+ */
+bool fbx::PlaylistPanel::MoveDown(const unsigned int idx)
+{
+	bool ret = playlist->MoveDown(idx);
+	if (ret) {
+		PopulatePlaylist();
+		listbox->SetSelection(idx + 1);
+	}
+	return ret;
 }
