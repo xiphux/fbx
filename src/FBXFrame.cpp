@@ -126,9 +126,9 @@ fbx::FBXFrame::FBXFrame():
 	wxMenuBar *menubar = new wxMenuBar;
 	wxMenu *filemenu = new wxMenu;
 	filemenu->Append(FBX_frame_addfiles, wxT("&Add files"), wxT("Add files to playlist"));
-	filemenu->Append(FBX_frame_remfile, wxT("&Remove file"), wxT("Remove file from playlist"));
-	filemenu->Append(FBX_frame_moveup, wxT("Move &up"), wxT("Move track up"));
-	filemenu->Append(FBX_frame_movedown, wxT("Move &down"), wxT("Move track down"));
+	filemenu->Append(FBX_frame_remfile, wxT("&Remove file\tDel"), wxT("Remove file from playlist"));
+	filemenu->Append(FBX_frame_moveup, wxT("Move &up\tShift+Up"), wxT("Move track up"));
+	filemenu->Append(FBX_frame_movedown, wxT("Move &down\tShift+Down"), wxT("Move track down"));
 	filemenu->AppendSeparator();
 	filemenu->Append(FBX_frame_newplaylist, wxT("&New playlist"), wxT("Create new playlist"));
 	filemenu->Append(FBX_frame_openplaylist, wxT("&Open playlist"), wxT("Open playlist file"));
@@ -189,13 +189,16 @@ fbx::FBXFrame::FBXFrame():
 
 	SetSizer(topsizer);
 
-	wxAcceleratorEntry entries[5];
+	wxAcceleratorEntry entries[8];
 	entries[0].Set(wxACCEL_NORMAL, (int) 'Z', FBX_frame_stop);
 	entries[1].Set(wxACCEL_NORMAL, (int) 'X', FBX_frame_pause);
 	entries[2].Set(wxACCEL_NORMAL, (int) 'C', FBX_frame_play);
 	entries[3].Set(wxACCEL_SHIFT, (int) 'V', FBX_frame_prev);
 	entries[4].Set(wxACCEL_NORMAL, (int) 'V', FBX_frame_next);
-	wxAcceleratorTable accel(5, entries);
+	entries[5].Set(wxACCEL_NORMAL, WXK_DELETE, FBX_frame_remfile);
+	entries[6].Set(wxACCEL_SHIFT, WXK_UP, FBX_frame_moveup);
+	entries[7].Set(wxACCEL_SHIFT, WXK_DOWN, FBX_frame_movedown);
+	wxAcceleratorTable accel(8, entries);
 	SetAcceleratorTable(accel);
 
 	SetExtraStyle(wxWS_EX_PROCESS_IDLE);
