@@ -411,6 +411,13 @@ namespace fbx
 		 */
 		wxTimer *timer;
 
+		/**
+		 * @brief playorder
+		 *
+		 * Playback order value
+		 */
+		unsigned int playorder;
+
 #ifdef AUI_TOOLBAR
 		/**
 		 * @brief manager

@@ -60,6 +60,26 @@
 #define GUIUPDATE 500
 
 /**
+ * @brief Default playback order
+ */
+#define FBX_ORDER_DEFAULT 0
+
+/**
+ * @brief Random playback order
+ */
+#define FBX_ORDER_RANDOM 1
+
+/**
+ * @brief Repeat playlist playback order
+ */
+#define FBX_ORDER_REPEAT_PLAYLIST 2
+
+/**
+ * @brief Repeat track playback order
+ */
+#define FBX_ORDER_REPEAT_TRACK 3
+
+/**
  * Event handler table
  */
 BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
@@ -120,6 +140,7 @@ fbx::FBXFrame::FBXFrame():
 	playmenu->Append(FBX_frame_play, wxT("P&lay\tC"), wxT("Play"));
 	playmenu->Append(FBX_frame_prev, wxT("P&rev\tShift+V"), wxT("Previous"));
 	playmenu->Append(FBX_frame_next, wxT("&Next\tV"), wxT("Next"));
+
 	menubar->Append(playmenu, wxT("&Playback"));
 	wxMenu *helpmenu = new wxMenu;
 	helpmenu->Append(FBX_frame_about, wxT("&About"), wxT("About FBX"));
@@ -131,6 +152,7 @@ fbx::FBXFrame::FBXFrame():
 	toolbarpanel = new wxPanel(this,-1);
 	topsizer->Add(toolbarpanel,0,wxEXPAND|wxALL);
 
+	playorder = config::ConfigFactory::GetConfig().GetInt("order",FBX_ORDER_DEFAULT);
 	InitToolbars();
 
 	notebook = new wxAuiNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxAUI_NB_DEFAULT_STYLE & ~wxAUI_NB_CLOSE_ON_ACTIVE_TAB );
@@ -299,7 +321,7 @@ void fbx::FBXFrame::OnPlay(wxCommandEvent& event)
 		if (!engine->Stopped())
 			return;
 		activeplaylist = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
-		if (order->GetCurrentSelection() == 1 && firstplay)
+		if (playorder == FBX_ORDER_RANDOM && firstplay)
 			activeplaylist->Next(true);
 		ret = Play(activeplaylist->Current());
 	}
@@ -313,8 +335,8 @@ void fbx::FBXFrame::OnPlay(wxCommandEvent& event)
  */
 void fbx::FBXFrame::OnPrev(wxCommandEvent& event)
 {
-	bool ret = activeplaylist->Prev((order->GetCurrentSelection() == 1));
-	if (order->GetCurrentSelection() == 2 && !ret) {
+	bool ret = activeplaylist->Prev((playorder == FBX_ORDER_RANDOM));
+	if (playorder == FBX_ORDER_REPEAT_PLAYLIST && !ret) {
 		activeplaylist->SetActive(activeplaylist->Size()-1, true);
 		ret = true;
 	}
@@ -330,8 +352,8 @@ void fbx::FBXFrame::OnPrev(wxCommandEvent& event)
  */
 void fbx::FBXFrame::OnNext(wxCommandEvent& event)
 {
-	bool ret = activeplaylist->Next((order->GetCurrentSelection() == 1));
-	if (order->GetCurrentSelection() == 2 && !ret) {
+	bool ret = activeplaylist->Next((playorder == FBX_ORDER_RANDOM));
+	if (playorder == FBX_ORDER_REPEAT_PLAYLIST && !ret) {
 		activeplaylist->SetActive(0, true);
 		ret = true;
 	}
@@ -416,11 +438,11 @@ void fbx::FBXFrame::OnPlaylistChoice(wxCommandEvent& event)
 bool fbx::FBXFrame::TryAdvance()
 {
 	bool ret = true;
-	if (order->GetCurrentSelection() != 3)
-		ret = activeplaylist->Next((order->GetCurrentSelection() == 1));
+	if (playorder != FBX_ORDER_REPEAT_TRACK)
+		ret = activeplaylist->Next((playorder == FBX_ORDER_RANDOM));
 	if (!ret) {
 		activeplaylist->SetActive(0, true);
-		if (order->GetCurrentSelection() == 2)
+		if (playorder == FBX_ORDER_REPEAT_PLAYLIST)
 			ret = true;
 	}
 	if (ret)
@@ -461,7 +483,8 @@ void fbx::FBXFrame::UpdateStatus()
  */
 void fbx::FBXFrame::OnOrder(wxCommandEvent& event)
 {
-	config::ConfigFactory::GetConfig().SetInt("order",order->GetCurrentSelection());
+	playorder = order->GetCurrentSelection();
+	config::ConfigFactory::GetConfig().SetInt("order",playorder);
 }
 
 /**
@@ -523,11 +546,11 @@ void fbx::FBXFrame::OnRemFile(wxCommandEvent& event)
 	unsigned int selected = page->SelectedIdx();
 	while (selected == page->CurrentIdx()) {
 		bool ret = true;
-		if (order->GetCurrentSelection() != 3)
-			ret = page->Next((order->GetCurrentSelection() == 1));
+		if (playorder != FBX_ORDER_REPEAT_TRACK)
+			ret = page->Next((playorder == FBX_ORDER_RANDOM));
 		if (!ret) {
 			page->SetActive(0, false);
-			if (order->GetCurrentSelection() != 2)
+			if (playorder != FBX_ORDER_REPEAT_PLAYLIST)
 				Stop();
 		}
 		if (progress->IsEnabled())
@@ -799,7 +822,7 @@ void fbx::FBXFrame::InitToolbars()
 	tmp.Add(wxT("Repeat (playlist)"));
 	tmp.Add(wxT("Repeat (track)"));
 	order = new wxChoice(playbacktoolbar,FBX_frame_order,wxDefaultPosition,wxDefaultSize,tmp);
-	order->SetSelection(config::ConfigFactory::GetConfig().GetInt("order",0));
+	order->SetSelection(playorder);
 	pti.Caption(wxT("Order"));
 	manager->AddPane(order,pti);
 
@@ -841,7 +864,7 @@ void fbx::FBXFrame::InitToolbars()
 	tmp.Add(wxT("Repeat (playlist)"));
 	tmp.Add(wxT("Repeat (track)"));
 	order = new wxChoice(toolbarpanel,FBX_frame_order,wxDefaultPosition,wxDefaultSize,tmp);
-	order->SetSelection(config::ConfigFactory::GetConfig().GetInt("order",0));
+	order->SetSelection(playorder);
 	toolbarsizer->Add(order,0,wxEXPAND|wxALL);
 
 	toolbarsizer->AddSpacer(10);
