@@ -198,6 +198,10 @@ bool fbx::PlaylistPanel::Remove(const unsigned int idx)
 		return false;
 	playlist->Remove(idx);
 	listbox->Delete(idx);
+	if (idx >= listbox->GetCount())
+		listbox->SetSelection(listbox->GetCount() - 1);
+	else
+		listbox->SetSelection(idx);
 	return true;
 }
 
