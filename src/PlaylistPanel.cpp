@@ -98,7 +98,8 @@ bool fbx::PlaylistPanel::Next(bool random)
 	bool ret = playlist->Next(random);
 	if (ret)
 		listbox->SetSelection(playlist->CurrentIdx());
-	listbox->SetFirstItem(playlist->CurrentIdx());
+	if (random)
+		listbox->SetFirstItem(playlist->CurrentIdx());
 	return ret;
 }
 
@@ -110,7 +111,8 @@ bool fbx::PlaylistPanel::Prev(bool random)
 	bool ret = playlist->Prev(random);
 	if (ret)
 		listbox->SetSelection(playlist->CurrentIdx());
-	listbox->SetFirstItem(playlist->CurrentIdx());
+	if (random)
+		listbox->SetFirstItem(playlist->CurrentIdx());
 	return ret;
 }
 
