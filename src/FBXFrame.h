@@ -253,6 +253,38 @@ namespace fbx
 		void OnCloseMenu(wxMenuEvent& event);
 
 		/**
+		 * @brief Default order event handler
+		 * @param event menu event
+		 *
+		 * Called when Default order is chosen
+		 */
+		void OnOrderDefault(wxCommandEvent& event);
+
+		/**
+		 * @brief Random order event handler
+		 * @param event menu event
+		 *
+		 * Called when Random order is chosen
+		 */
+		void OnOrderRandom(wxCommandEvent& event);
+
+		/**
+		 * @brief Repeat playlist order event handler
+		 * @param event menu event
+		 *
+		 * Called when Repeat (playlist) order is chosen
+		 */
+		void OnOrderRepeatPlaylist(wxCommandEvent& event);
+
+		/**
+		 * @brief Repeat track order event handler
+		 * @param event menu event
+		 *
+		 * Called when Repeat (track) order is chosen
+		 */
+		void OnOrderRepeatTrack(wxCommandEvent& event);
+
+		/**
 		 * @brief Update status
 		 *
 		 * Updates status bar information
@@ -403,6 +435,13 @@ namespace fbx
 		 * Playback order choice
 		 */
 		wxChoice *order;
+
+		/**
+		 * @brief ordermenu
+		 *
+		 * Order submenu
+		 */
+		wxMenu *ordermenu;
 
 		/**
 		 * @brief timer
@@ -556,6 +595,26 @@ namespace fbx
 		 * @brief new playlist event
 		 */
 		FBX_frame_newplaylist,
+
+		/**
+		 * @brief default order event
+		 */
+		FBX_frame_order_default,
+
+		/**
+		 * @brief random order event
+		 */
+		FBX_frame_order_random,
+
+		/**
+		 * @brief repeat playlist order event
+		 */
+		FBX_frame_order_repeat_playlist,
+
+		/**
+		 * @brief repeat track order event
+		 */
+		FBX_frame_order_repeat_track,
 
 		/**
 		 * @brief playlist event

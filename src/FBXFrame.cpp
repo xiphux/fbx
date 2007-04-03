@@ -99,6 +99,10 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_MENU(FBX_frame_newplaylist, fbx::FBXFrame::OnNewPlaylist)
 	EVT_MENU(FBX_frame_moveup, fbx::FBXFrame::OnMoveUp)
 	EVT_MENU(FBX_frame_movedown, fbx::FBXFrame::OnMoveDown)
+	EVT_MENU(FBX_frame_order_default, fbx::FBXFrame::OnOrderDefault)
+	EVT_MENU(FBX_frame_order_random, fbx::FBXFrame::OnOrderRandom)
+	EVT_MENU(FBX_frame_order_repeat_playlist, fbx::FBXFrame::OnOrderRepeatPlaylist)
+	EVT_MENU(FBX_frame_order_repeat_track, fbx::FBXFrame::OnOrderRepeatTrack)
 	EVT_MENU_OPEN(fbx::FBXFrame::OnMenuOpen)
 	EVT_MENU_CLOSE(fbx::FBXFrame::OnMenuClose)
 	EVT_CHOICE(FBX_frame_order, fbx::FBXFrame::OnOrder)
@@ -140,6 +144,15 @@ fbx::FBXFrame::FBXFrame():
 	playmenu->Append(FBX_frame_play, wxT("P&lay\tC"), wxT("Play"));
 	playmenu->Append(FBX_frame_prev, wxT("P&rev\tShift+V"), wxT("Previous"));
 	playmenu->Append(FBX_frame_next, wxT("&Next\tV"), wxT("Next"));
+	playmenu->AppendSeparator();
+
+	ordermenu = new wxMenu;
+
+	ordermenu->AppendRadioItem(FBX_frame_order_default, wxT("Default"), wxT("Default order"));
+	ordermenu->AppendRadioItem(FBX_frame_order_random, wxT("Random"), wxT("Random order"));
+	ordermenu->AppendRadioItem(FBX_frame_order_repeat_playlist, wxT("Repeat (playlist)"), wxT("Repeat (playlist) order"));
+	ordermenu->AppendRadioItem(FBX_frame_order_repeat_track, wxT("Repeat (track)"), wxT("Repeat (track) order"));
+	playmenu->AppendSubMenu(ordermenu, wxT("Order"), wxT("Playback order"));
 
 	menubar->Append(playmenu, wxT("&Playback"));
 	wxMenu *helpmenu = new wxMenu;
@@ -153,6 +166,20 @@ fbx::FBXFrame::FBXFrame():
 	topsizer->Add(toolbarpanel,0,wxEXPAND|wxALL);
 
 	playorder = config::ConfigFactory::GetConfig().GetInt("order",FBX_ORDER_DEFAULT);
+	switch (playorder) {
+		case FBX_ORDER_DEFAULT:
+			ordermenu->Check(FBX_frame_order_default, true);
+			break;
+		case FBX_ORDER_RANDOM:
+			ordermenu->Check(FBX_frame_order_random, true);
+			break;
+		case FBX_ORDER_REPEAT_PLAYLIST:
+			ordermenu->Check(FBX_frame_order_repeat_playlist, true);
+			break;
+		case FBX_ORDER_REPEAT_TRACK:
+			ordermenu->Check(FBX_frame_order_repeat_track, true);
+			break;
+	}
 	InitToolbars();
 
 	notebook = new wxAuiNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxAUI_NB_DEFAULT_STYLE & ~wxAUI_NB_CLOSE_ON_ACTIVE_TAB );
@@ -485,6 +512,20 @@ void fbx::FBXFrame::OnOrder(wxCommandEvent& event)
 {
 	playorder = order->GetCurrentSelection();
 	config::ConfigFactory::GetConfig().SetInt("order",playorder);
+	switch (playorder) {
+		case FBX_ORDER_DEFAULT:
+			ordermenu->Check(FBX_frame_order_default, true);
+			break;
+		case FBX_ORDER_RANDOM:
+			ordermenu->Check(FBX_frame_order_random, true);
+			break;
+		case FBX_ORDER_REPEAT_PLAYLIST:
+			ordermenu->Check(FBX_frame_order_repeat_playlist, true);
+			break;
+		case FBX_ORDER_REPEAT_TRACK:
+			ordermenu->Check(FBX_frame_order_repeat_track, true);
+			break;
+	}
 }
 
 /**
@@ -876,4 +917,44 @@ void fbx::FBXFrame::InitToolbars()
 	toolbarpanel->SetSizer(toolbarsizer);
 
 #endif
+}
+
+/**
+ * Called when Default order is chosen
+ */
+void fbx::FBXFrame::OnOrderDefault(wxCommandEvent& event)
+{
+	playorder = FBX_ORDER_DEFAULT;
+	config::ConfigFactory::GetConfig().SetInt("order",playorder);
+	order->SetSelection(playorder);
+}
+
+/**
+ * Called when Random order is chosen
+ */
+void fbx::FBXFrame::OnOrderRandom(wxCommandEvent& event)
+{
+	playorder = FBX_ORDER_RANDOM;
+	config::ConfigFactory::GetConfig().SetInt("order",playorder);
+	order->SetSelection(playorder);
+}
+
+/**
+ * Called when Repeat (playlist) order is chosen
+ */
+void fbx::FBXFrame::OnOrderRepeatPlaylist(wxCommandEvent& event)
+{
+	playorder = FBX_ORDER_REPEAT_PLAYLIST;
+	config::ConfigFactory::GetConfig().SetInt("order",playorder);
+	order->SetSelection(playorder);
+}
+
+/**
+ * Called when Repeat (track) order is chosen
+ */
+void fbx::FBXFrame::OnOrderRepeatTrack(wxCommandEvent& event)
+{
+	playorder = FBX_ORDER_REPEAT_TRACK;
+	config::ConfigFactory::GetConfig().SetInt("order",playorder);
+	order->SetSelection(playorder);
 }
