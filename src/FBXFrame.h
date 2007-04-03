@@ -10,6 +10,10 @@
 #ifndef FBX_FBXFRAME_H
 #define FBX_FBXFRAME_H
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <map>
 
 class wxAuiNotebook;
@@ -19,8 +23,10 @@ class wxSlider;
 class wxTimer;
 class wxTimerEvent;
 class wxChoice;
-class wxAuiManager;
 class wxPanel;
+#ifdef AUI_TOOLBAR
+class wxAuiManager;
+#endif
 
 namespace fbx
 {
@@ -261,6 +267,13 @@ namespace fbx
 		void ResetSlider();
 
 		/**
+		 * @brief Init Toolbars
+		 *
+		 * Creates toolbar panels
+		 */
+		void InitToolbars();
+
+		/**
 		 * @brief Add playlist page
 		 * @param name name of playlist to show in tab
 		 * @param file filename of playlist to open
@@ -398,12 +411,14 @@ namespace fbx
 		 */
 		wxTimer *timer;
 
+#ifdef AUI_TOOLBAR
 		/**
 		 * @brief manager
 		 *
 		 * Dockable toolbar manager
 		 */
 		wxAuiManager *manager;
+#endif
 
 		/**
 		 * @brief toolbarpanel

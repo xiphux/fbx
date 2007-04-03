@@ -27,7 +27,11 @@
 #include <wx/stattext.h>
 #include <wx/choice.h>
 #include <wx/filedlg.h>
+
+#ifdef AUI_TOOLBAR
 #include <wx/aui/aui.h>
+#endif
+
 #endif
 
 #ifdef DEBUG
@@ -125,56 +129,8 @@ fbx::FBXFrame::FBXFrame():
 
 	toolbarpanel = new wxPanel(this,-1);
 	topsizer->Add(toolbarpanel,0,wxEXPAND|wxALL);
-	manager = new wxAuiManager(toolbarpanel, wxAUI_MGR_DEFAULT | wxAUI_MGR_TRANSPARENT_DRAG );
 
-	playbacktoolbar = new wxToolBar(toolbarpanel,-1);
-	//playbacktoolbar = CreateToolBar();
-	wxBitmap stopbitmap(stop_xpm);
-	playbacktoolbar->AddTool(FBX_frame_stop, wxT("Stop"), stopbitmap, wxT("Stop"));
-	wxBitmap pausebitmap(pause_xpm);
-	playbacktoolbar->AddTool(FBX_frame_pause, wxT("Pause"), pausebitmap, wxT("Pause"));
-	wxBitmap playbitmap(play_xpm);
-	playbacktoolbar->AddTool(FBX_frame_play, wxT("Play"), playbitmap, wxT("Play"));
-	wxBitmap prevbitmap(prev_xpm);
-	playbacktoolbar->AddTool(FBX_frame_prev, wxT("Previous"), prevbitmap, wxT("Previous"));
-	wxBitmap nextbitmap(next_xpm);
-	playbacktoolbar->AddTool(FBX_frame_next, wxT("Next"), nextbitmap, wxT("Next"));
-	playbacktoolbar->Realize();
-//	playbacktoolbar->AddSeparator();
-//	playbacktoolbar->AddControl(new wxStaticText(playbacktoolbar,-1,wxT("Order")));
-//	playbacktoolbar->AddControl(order);
-	wxAuiPaneInfo pti;
-	pti.CloseButton(false);
-	pti.Top();
-	pti.Resizable(false);
-	pti.Gripper(true);
-	pti.GripperTop(false);
-	pti.MaxSize(128,20);
-	pti.Caption(wxT("Playback"));
-	pti.CaptionVisible(true);
-	manager->AddPane(playbacktoolbar,pti);
-
-	wxArrayString tmp;
-	tmp.Add(wxT("Default"));
-	tmp.Add(wxT("Random"));
-	tmp.Add(wxT("Repeat (playlist)"));
-	tmp.Add(wxT("Repeat (track)"));
-	order = new wxChoice(playbacktoolbar,FBX_frame_order,wxDefaultPosition,wxDefaultSize,tmp);
-	order->SetSelection(config::ConfigFactory::GetConfig().GetInt("order",0));
-	pti.Caption(wxT("Order"));
-	manager->AddPane(order,pti);
-
-	//progresstoolbar = CreateToolBar(wxTB_DOCKABLE);
-	progress = new wxSlider(this,FBX_frame_progress,0,0,1);
-	progress->Enable(false);
-	//topsizer->Add(progress, 0, wxEXPAND|wxALL);
-	pti.Resizable(true);
-	pti.MinSize(128,20);
-	pti.Caption(wxT("Progress"));
-	manager->AddPane(progress,pti);
-	
-	//progresstoolbar->AddControl(progress);
-	//progresstoolbar->Realize();
+	InitToolbars();
 
 	notebook = new wxAuiNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxAUI_NB_DEFAULT_STYLE & ~wxAUI_NB_CLOSE_ON_ACTIVE_TAB );
 	topsizer->Add(notebook, 3, wxEXPAND|wxALL);
@@ -187,7 +143,6 @@ fbx::FBXFrame::FBXFrame():
 	wxIdleEvent::SetMode(wxIDLE_PROCESS_SPECIFIED);
 	timer = new wxTimer(this,FBX_frame_timer);
 	timer->Start(GUIUPDATE);
-	manager->Update();
 }
 
 /**
@@ -208,7 +163,10 @@ void fbx::FBXFrame::OnQuit(wxCommandEvent& event)
 	timer->Stop();
 	if (engine)
 		engine->Stop();
+
+#ifdef AUI_TOOLBAR
 	manager->UnInit();
+#endif
 
 	bool first = true;
 	std::string pls;
@@ -791,4 +749,98 @@ void fbx::FBXFrame::RemoveStar(const unsigned int i)
 		l = l.Left(len-1);
 		notebook->SetPageText(i,l);
 	}
+}
+
+/**
+ * Creates toolbar panels
+ */
+void fbx::FBXFrame::InitToolbars()
+{
+#ifdef AUI_TOOLBAR
+
+	manager = new wxAuiManager(toolbarpanel, wxAUI_MGR_DEFAULT | wxAUI_MGR_TRANSPARENT_DRAG );
+
+	playbacktoolbar = new wxToolBar(toolbarpanel,-1);
+	wxBitmap stopbitmap(stop_xpm);
+	playbacktoolbar->AddTool(FBX_frame_stop, wxT("Stop"), stopbitmap, wxT("Stop"));
+	wxBitmap pausebitmap(pause_xpm);
+	playbacktoolbar->AddTool(FBX_frame_pause, wxT("Pause"), pausebitmap, wxT("Pause"));
+	wxBitmap playbitmap(play_xpm);
+	playbacktoolbar->AddTool(FBX_frame_play, wxT("Play"), playbitmap, wxT("Play"));
+	wxBitmap prevbitmap(prev_xpm);
+	playbacktoolbar->AddTool(FBX_frame_prev, wxT("Previous"), prevbitmap, wxT("Previous"));
+	wxBitmap nextbitmap(next_xpm);
+	playbacktoolbar->AddTool(FBX_frame_next, wxT("Next"), nextbitmap, wxT("Next"));
+	playbacktoolbar->Realize();
+	wxAuiPaneInfo pti;
+	pti.CloseButton(false);
+	pti.Top();
+	pti.Resizable(false);
+	pti.Gripper(true);
+	pti.GripperTop(false);
+	pti.MaxSize(128,20);
+	pti.Caption(wxT("Playback"));
+	pti.CaptionVisible(true);
+	manager->AddPane(playbacktoolbar,pti);
+
+	wxArrayString tmp;
+	tmp.Add(wxT("Default"));
+	tmp.Add(wxT("Random"));
+	tmp.Add(wxT("Repeat (playlist)"));
+	tmp.Add(wxT("Repeat (track)"));
+	order = new wxChoice(playbacktoolbar,FBX_frame_order,wxDefaultPosition,wxDefaultSize,tmp);
+	order->SetSelection(config::ConfigFactory::GetConfig().GetInt("order",0));
+	pti.Caption(wxT("Order"));
+	manager->AddPane(order,pti);
+
+	progress = new wxSlider(this,FBX_frame_progress,0,0,1);
+	progress->Enable(false);
+	pti.Resizable(true);
+	pti.MinSize(128,20);
+	pti.Caption(wxT("Progress"));
+	manager->AddPane(progress,pti);
+	
+	manager->Update();
+
+#else
+
+	wxBoxSizer *toolbarsizer = new wxBoxSizer(wxHORIZONTAL);
+
+	playbacktoolbar = new wxToolBar(toolbarpanel,-1);
+	wxBitmap stopbitmap(stop_xpm);
+	playbacktoolbar->AddTool(FBX_frame_stop, wxT("Stop"), stopbitmap, wxT("Stop"));
+	wxBitmap pausebitmap(pause_xpm);
+	playbacktoolbar->AddTool(FBX_frame_pause, wxT("Pause"), pausebitmap, wxT("Pause"));
+	wxBitmap playbitmap(play_xpm);
+	playbacktoolbar->AddTool(FBX_frame_play, wxT("Play"), playbitmap, wxT("Play"));
+	wxBitmap prevbitmap(prev_xpm);
+	playbacktoolbar->AddTool(FBX_frame_prev, wxT("Previous"), prevbitmap, wxT("Previous"));
+	wxBitmap nextbitmap(next_xpm);
+	playbacktoolbar->AddTool(FBX_frame_next, wxT("Next"), nextbitmap, wxT("Next"));
+	playbacktoolbar->Realize();
+	toolbarsizer->Add(playbacktoolbar,0,wxEXPAND|wxALL);
+
+	toolbarsizer->AddSpacer(10);
+
+	wxStaticText *orderlabel = new wxStaticText(toolbarpanel,-1,wxT("Order"));
+	toolbarsizer->Add(orderlabel,0,wxALIGN_CENTER_VERTICAL);
+
+	wxArrayString tmp;
+	tmp.Add(wxT("Default"));
+	tmp.Add(wxT("Random"));
+	tmp.Add(wxT("Repeat (playlist)"));
+	tmp.Add(wxT("Repeat (track)"));
+	order = new wxChoice(toolbarpanel,FBX_frame_order,wxDefaultPosition,wxDefaultSize,tmp);
+	order->SetSelection(config::ConfigFactory::GetConfig().GetInt("order",0));
+	toolbarsizer->Add(order,0,wxEXPAND|wxALL);
+
+	toolbarsizer->AddSpacer(10);
+
+	progress = new wxSlider(toolbarpanel,FBX_frame_progress,0,0,1);
+	progress->Enable(false);
+	toolbarsizer->Add(progress,1,wxEXPAND|wxALL);
+	
+	toolbarpanel->SetSizer(toolbarsizer);
+
+#endif
 }
