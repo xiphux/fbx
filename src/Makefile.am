@@ -11,3 +11,5 @@ fbx_LDADD = audio/libfbxaudio.la audiofile/libfbxaudiofile.la config/libfbxconfi
 noinst_PROGRAMS = fbxtest
 fbxtest_SOURCES = fbxtest.cpp
 fbxtest_LDADD = audio/libfbxaudio.la audiofile/libfbxaudiofile.la
+
+EXTRA_DIST = icons/next.xpm icons/pause.xpm icons/play.xpm icons/prev.xpm icons/stop.xpm
