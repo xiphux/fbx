@@ -1,0 +1,59 @@
+.TH "FBX" "1" "22 April 2007" "Foobar for Linux" ""
+.SH NAME
+fbx \- Foobar for Linux
+.SH SYNOPSIS
+\fBfbx\fR [ \fB-h\fR ] [ \fB-v\fR ] [ \fB-V\fR ]
+.SH DESCRIPTION
+.PP
+\fBFBX\fR is a cross-platform audio player written in C++.  It uses the \fBwxwidgets\fR GUI toolkit, and has an extensible architecture to allow support for multiple input audio formats.  It uses a simple but intuitive tab-based playlist management system.
+.SS Options
+.TP
+\fB-h\fR
+Display info on commandline options
+.TP
+\fB-V\fR
+Display program version, as well as information on what features are compiled in
+.TP
+\fB-v\fR
+Be a little more verbose about program execution
+.SS Keyboard shortcuts
+.TP
+\fBZ\fR
+Stop
+.TP
+\fBX\fR
+Pause
+.TP
+\fBC\fR
+Play
+.TP
+\fBShift+V\fR
+Previous
+.TP
+\fBV\fR
+Next
+.TP
+\fBDel\fR
+Remove selected song from the playlist
+.TP
+\fBShift+Up\fR
+Move selected song up in the playlist
+.TP
+\fBShift+Down\fR
+Move selected song down in the playlist
+.SS Config options
+.TP
+\fBaudio=\fIdriver\fB\fR
+Force a specific audio driver.  Only use if having problems with the default driver for your platform.
+.TP
+\fBbuffer=\fIsize\fB\fR
+Audio buffer size in bytes.  Lower is more responsive but too low can cause problems with certain cheap sound cards.  Default is 4, but increase in powers of 2 if the default causes problems with your sound card.
+.TP
+\fBorder=\fIindex\fB\fR
+Used to restore the order setting during the previous execution.  0 = Default, 1 = Random, 2 = Repeat (playlist), 3 = Repeat (track).
+.TP
+\fBplaylists=\fIlist of playlists\fB\fR
+Comma-delimited list of playlist files to load at start.  The list of currently open playlists is saved to this key during quit, so the same playlists may be reopened on the next run.
+.SH AUTHORS
+.PP
+Christopher Han <xiphux@gmail.com>
