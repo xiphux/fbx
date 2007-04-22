@@ -10,13 +10,13 @@ AM_CXXFLAGS += @AO_CFLAGS@
 endif
 
 noinst_LTLIBRARIES = libfbxaudio.la
-libfbxaudio_la_SOURCES = AudioFactory.cpp
+libfbxaudio_la_SOURCES = AudioBase.h AudioFactory.h AudioFactory.cpp
 libfbxaudio_la_LIBADD =
 if ALSA
-libfbxaudio_la_SOURCES += AudioAlsa.cpp
+libfbxaudio_la_SOURCES += AudioAlsa.h AudioAlsa.cpp
 libfbxaudio_la_LIBADD += @ALSA_LIBS@
 endif
 if AO
-libfbxaudio_la_SOURCES += AudioAo.cpp
+libfbxaudio_la_SOURCES += AudioAo.h AudioAo.cpp
 libfbxaudio_la_LIBADD += @AO_LIBS@
 endif
