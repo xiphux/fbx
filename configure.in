@@ -16,7 +16,7 @@ AC_ARG_ENABLE(ao,    	 [  --enable-ao			enables libao], enable_ao=$enableval, en
 AC_ARG_ENABLE(vorbis,	 [  --enable-vorbis		enables Vorbis], enable_vorbis=$enableval, enable_vorbis=yes)
 AC_ARG_ENABLE(flac,  	 [  --enable-flac		enables FLAC], enable_flac=$enableval, enable_flac=no)
 AC_ARG_ENABLE(magic,	 [  --enable-magic		enables magic], enable_magic=$enableval, enable_magic=yes)
-AC_ARG_ENABLE(auitoolbar,[  --enable-auitoolbar		enables wxAUI toolbars], enable_auitoolbar=$enableval, enable_auitoolbar=yes)
+AC_ARG_ENABLE(auitoolbar,[  --enable-auitoolbar		enables wxAUI toolbars], enable_auitoolbar=$enableval, enable_auitoolbar=no)
 if test "x$enable_auitoolbar" = "xyes"; then
 	AC_DEFINE(AUI_TOOLBAR,,[wxAUI toolbar])
 fi
