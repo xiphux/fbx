@@ -33,7 +33,7 @@
 const wxCmdLineEntryDesc cmdLineDesc[] =
 {
 	{ wxCMD_LINE_SWITCH, wxT("h"), wxT("help"), wxT("Display usage info"), wxCMD_LINE_VAL_NONE, wxCMD_LINE_OPTION_HELP },
-	{ wxCMD_LINE_SWITCH, wxT("V"), wxT("version"), wxT("Display version info") },
+	{ wxCMD_LINE_SWITCH, wxT("V"), wxT("version"), wxT("Display version and feature info") },
 	{ wxCMD_LINE_SWITCH, wxT("v"), wxT("verbose"), wxT("Verbose execution") },
 	{ wxCMD_LINE_NONE }
 };
