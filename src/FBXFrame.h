@@ -285,6 +285,14 @@ namespace fbx
 		void OnOrderRepeatTrack(wxCommandEvent& event);
 
 		/**
+		 * @brief Stop after current event handler
+		 * @param event menu event
+		 *
+		 * Called when "Stop after Current" is checked or unchecked
+		 */
+		void OnStopAfterCurrent(wxCommandEvent& event);
+
+		/**
 		 * @brief Update status
 		 *
 		 * Updates status bar information
@@ -437,6 +445,13 @@ namespace fbx
 		wxChoice *order;
 
 		/**
+		 * @brief playmenu
+		 *
+		 * Playback menu
+		 */
+		wxMenu *playmenu;
+
+		/**
 		 * @brief ordermenu
 		 *
 		 * Order submenu
@@ -456,6 +471,13 @@ namespace fbx
 		 * Playback order value
 		 */
 		unsigned int playorder;
+
+		/**
+		 * @brief stopaftercurrent
+		 *
+		 * Whether to stop playback after current track
+		 */
+		bool stopaftercurrent;
 
 #ifdef AUI_TOOLBAR
 		/**
@@ -615,6 +637,11 @@ namespace fbx
 		 * @brief repeat track order event
 		 */
 		FBX_frame_order_repeat_track,
+
+		/**
+		 * @brief stop after current event
+		 */
+		FBX_frame_stop_after_current,
 
 		/**
 		 * @brief playlist event

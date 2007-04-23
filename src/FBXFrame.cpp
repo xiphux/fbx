@@ -103,6 +103,7 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_MENU(FBX_frame_order_random, fbx::FBXFrame::OnOrderRandom)
 	EVT_MENU(FBX_frame_order_repeat_playlist, fbx::FBXFrame::OnOrderRepeatPlaylist)
 	EVT_MENU(FBX_frame_order_repeat_track, fbx::FBXFrame::OnOrderRepeatTrack)
+	EVT_MENU(FBX_frame_stop_after_current, fbx::FBXFrame::OnStopAfterCurrent)
 	EVT_MENU_OPEN(fbx::FBXFrame::OnMenuOpen)
 	EVT_MENU_CLOSE(fbx::FBXFrame::OnMenuClose)
 	EVT_CHOICE(FBX_frame_order, fbx::FBXFrame::OnOrder)
@@ -118,7 +119,8 @@ END_EVENT_TABLE()
 fbx::FBXFrame::FBXFrame():
 	wxFrame((wxFrame*)NULL, -1, wxEmptyString, wxDefaultPosition, wxSize(640,480)),
 	updatestatus(true),
-	firstplay(true)
+	firstplay(true),
+	stopaftercurrent(false)
 {
 	wxString ttl = wxT(PACKAGE_STRING);
 	SetTitle(ttl);
@@ -138,7 +140,7 @@ fbx::FBXFrame::FBXFrame():
 	filemenu->AppendSeparator();
 	filemenu->Append(FBX_frame_quit, wxT("E&xit"), wxT("Exit FBX"));
 	menubar->Append(filemenu, wxT("&File"));
-	wxMenu *playmenu = new wxMenu;
+	playmenu = new wxMenu;
 	playmenu->Append(FBX_frame_stop, wxT("&Stop\tZ"), wxT("Stop"));
 	playmenu->Append(FBX_frame_pause, wxT("P&ause\tX"), wxT("Pause"));
 	playmenu->Append(FBX_frame_play, wxT("P&lay\tC"), wxT("Play"));
@@ -153,6 +155,8 @@ fbx::FBXFrame::FBXFrame():
 	ordermenu->AppendRadioItem(FBX_frame_order_repeat_playlist, wxT("Repeat (playlist)"), wxT("Repeat (playlist) order"));
 	ordermenu->AppendRadioItem(FBX_frame_order_repeat_track, wxT("Repeat (track)"), wxT("Repeat (track) order"));
 	playmenu->AppendSubMenu(ordermenu, wxT("Order"), wxT("Playback order"));
+	
+	playmenu->AppendCheckItem(FBX_frame_stop_after_current, wxT("Stop after Current"), wxT("Stop playback after current track"));
 
 	menubar->Append(playmenu, wxT("&Playback"));
 	wxMenu *helpmenu = new wxMenu;
@@ -467,6 +471,8 @@ void fbx::FBXFrame::OnPlaylistChoice(wxCommandEvent& event)
  */
 bool fbx::FBXFrame::TryAdvance()
 {
+	if (stopaftercurrent)
+		return false;
 	bool ret = true;
 	if (playorder != FBX_ORDER_REPEAT_TRACK)
 		ret = activeplaylist->Next((playorder == FBX_ORDER_RANDOM));
@@ -645,6 +651,8 @@ void fbx::FBXFrame::OnCloseMenu(wxMenuEvent& event)
  */
 bool fbx::FBXFrame::Stop()
 {
+	stopaftercurrent = false;
+	playmenu->Check(FBX_frame_stop_after_current, false);
 	bool ret = engine->Stop();
 	updatestatus = false;
 	ResetSlider();
@@ -960,4 +968,12 @@ void fbx::FBXFrame::OnOrderRepeatTrack(wxCommandEvent& event)
 	playorder = FBX_ORDER_REPEAT_TRACK;
 	config::ConfigFactory::GetConfig().SetInt("order",playorder);
 	order->SetSelection(playorder);
+}
+
+/**
+ * Called when "Stop after Current" is checked or unchecked
+ */
+void fbx::FBXFrame::OnStopAfterCurrent(wxCommandEvent& event)
+{
+	stopaftercurrent = playmenu->IsChecked(FBX_frame_stop_after_current);
 }
