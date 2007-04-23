@@ -1,0 +1,91 @@
+FBX - Foobar for Linux
+
+AUTHOR
+  Christopher Han <xiphux@gmail.com>.  Please send bug reports, suggestions, and patches here.
+
+INTRODUCTION
+  FBX is a cross-platform audio player written in C++.  Its interface has been modeled after Foobar2000, a popular Windows music player.  It has an extensible architecture to allow support for audio file formats to be added very easily.  It uses a simple but intuitive tab-based playlist management system.
+
+DEPEDENCIES
+  In addition to a development environment on your Linux machine that includes gcc 4.0.0 or greater, autoconf, automake. m4, and libtool (the standard development tools included in most linux installs), you will need the following:
+
+  Required dependencies:
+    wxWidgets >= 2.8.0 - <http://www.wxwidgets.org> - cross-platform GUI widget library
+
+  Audio output dependencies:
+    Libao - <http://xiph.org/ao/> - for AudioAo audio output driver
+
+  Audiofile input dependencies:
+    Vorbisfile >= 1.0.0 - <http://xiph.org/vorbis/> - for AudiofileVorbis input driver
+
+  Optional features:
+    Libmagic - <ftp://ftp.astron.com/pub/file/> - for determining a file's type by its binary patterns
+
+  Please note that no single audio output or audiofile input library is required, however, the program will fail to compile without at least one working audio output and one working audio input.
+
+  Although source code exists for other audio drivers (namely the ALSA output driver and the Libmad and LibFLAC input drivers), they are in a buggy and incomplete state and are therefore not listed as supported.
+
+  Installation of these various libraries varies from distribution to distribution and depends heavily on the package manager the distribution is using.  It is beyond the scope of this README to detail every possible distribution; please contact your system administrator.  You will need the library itself and, if your distribution separates out headers, the development package for that library (usually the package name suffixed with "-dev" or "-headers").
+
+COMPILATION/INSTALLATION
+  Compilation is a very straightforward GNU autoconf/automake compile.  Run the following three steps:
+
+  ./configure
+  make
+  make install
+
+  Please note that running "make install" will probably require root privileges if installing into a root-owned filesystem.
+
+  The configure script has a number of commandline options that can be passed to enable or disable certain features:
+
+  (every --enable-feature option has an equivalent --disable-feature option)
+
+    --enable-debug      - enables debugging output
+    --enable-alsa       - enables ALSA output (incomplete)
+    --enable-ao         - enables libao output
+    --enable-vorbis     - enables Ogg Vorbis input
+    --enable-flac       - enables FLAC input (incomplete)
+    --enable-magic      - enables use of libmagic to analyze file type
+    --enable-auitoolbar - enables experimental draggable wxAUI toolbars (incomplete)
+
+  Any audio input/output driver that is not incomplete will autodetect and enable itself if the prerequisite library is detected.  This can be disabled with the "--disable" flag for that particular driver.  Incomplete drivers have to be manually enabled, but are not guaranteed to work or even compile.
+
+  After "make install", the executable should be installed into a binary directory accessible in the user's path, and the program should be executable by just running "fbx".
+
+USAGE
+  Upon first execution, the program starts with an empty playlist.  You may operate on the playlist using the options in the file menu.
+  
+  The five toolbar buttons are Stop, Pause, Play, Previous, and Next, respectively.  There are also equivalent menu options in the Playback menu.
+  Beside those is the order setting.  This specifies what order the playlist will advance in.
+    Default - Plays song after song straight down the list until the end of the file.
+    Random - Plays songs in the playlist in random order infinitely.
+    Repeat (playlist) - Plays all songs through the entire playlist one by one as in Default, but at the end, continues playback from the beginning of the playlist.
+    Repeat (track) - Repeats the same single track over and over.
+  There is also an order submenu which controls the same option.
+
+  Beside the order setting is the seek bar.  It displays the current progress through the track, and is draggable to allow seeking through the song.
+
+  Below that is the playlist tab window.  Playlist tabs can be tragged, and will display an asterisk in their name when the playlist has unsaved changes.  Each song is displayed as a line in the playlist, with a formatted metadata string if the song has metadata embedded in it, or just the filename if it has no readable metadata.  A song can be double-clicked to jump to or start playing that song.
+
+  At the very bottom is the status line.  It displays information about the currently playing song, including information about the format, song progress and total length, the metadata info as displayed in the playlist, and the currently active playlist.
+
+  There are also a number of keyboard accelerators to make certain tasks easier.  These are:
+    Z          - Stop
+    X          - Pause
+    C          - Play
+    Shift+V    - Previous
+    V          - Next
+    Del        - Remove selected track
+    Shift+Up   - Move selected track up
+    Shift+Down - Move selected track down
+
+CONFIGURATION
+  When the program is first run, it creates a configuration file in the user's home directory (~/.fbx/fbxrc).  This contains a number of simple key=value pairs.  Most of these should not be touched by the user, however, they are detailed here for reference.
+
+  audio=[driver] - force a specific audio driver.  This should only be used if the default driver selected for your platform has issues.
+  buffer=[size] - Adjust the audio buffer size.  The default buffer is set to 4.  However, certain cheap sound cards with latency issues have problems playing smooth audio with a buffer size this small.  This option allows the buffer size to be overridden.  Please note that increasing the buffer size decreases the responsiveness of the application.  Therefore, this value should be the smallest possible value large enough to provide smooth audio playback.  Should be set in powers of 2.
+  order=[value] - Used to store the last set order setting, to be restored upon the next program run.  0 = Default, 1 = Random, 2 = Repeat (playlist), 3 = Repeat (track).
+  playlists=[playlist1[,playlist2[,playlist3]]] - comma-delimited list of playlists to load upon startup.  The program saves its active playlists to this key upon shutdown, and reloads these playlists upon the next startup.
+
+DOCUMENTATION
+  A quick reference for the keyboard shortcuts, commandline options, and configuration options is available in the man pages ("man fbx").  API documentation is generated by doxygen and is available in html form in the source tarball, under doc/html.
