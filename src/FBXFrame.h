@@ -128,9 +128,17 @@ namespace fbx
 		 * @brief Seek event handler
 		 * @param event scroll event
 		 *
-		 * Called when seek bar position is moved
+		 * Called when seek bar position is set
 		 */
 		void OnSeek(wxScrollEvent &event);
+
+		/**
+		 * @brief Seek start event handler
+		 * @param event scroll event
+		 *
+		 * Called when seek bar starts dragging
+		 */
+		void OnSeekStart(wxScrollEvent &event);
 
 		/**
 		 * @brief Idle event handler
@@ -508,6 +516,13 @@ namespace fbx
 		 * Whether or not we've played a song before
 		 */
 		bool firstplay;
+
+		/**
+		 * @brief updateslider
+		 *
+		 * Whether or not to update the slider
+		 */
+		bool updateslider;
 
 		/**
 		 * @brief activeplaylist

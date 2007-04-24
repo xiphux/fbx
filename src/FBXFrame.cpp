@@ -108,7 +108,8 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_MENU_CLOSE(fbx::FBXFrame::OnMenuClose)
 	EVT_CHOICE(FBX_frame_order, fbx::FBXFrame::OnOrder)
 	EVT_LISTBOX_DCLICK(FBX_frame_playlist, fbx::FBXFrame::OnPlaylistChoice)
-	EVT_COMMAND_SCROLL(FBX_frame_progress, fbx::FBXFrame::OnSeek)
+	EVT_COMMAND_SCROLL_THUMBTRACK(FBX_frame_progress, fbx::FBXFrame::OnSeekStart)
+	EVT_COMMAND_SCROLL_CHANGED(FBX_frame_progress, fbx::FBXFrame::OnSeek)
 	//EVT_IDLE(fbx::FBXFrame::OnIdle)
 	EVT_TIMER(FBX_frame_timer, fbx::FBXFrame::OnTimer)
 END_EVENT_TABLE()
@@ -120,7 +121,8 @@ fbx::FBXFrame::FBXFrame():
 	wxFrame((wxFrame*)NULL, -1, wxEmptyString, wxDefaultPosition, wxSize(640,480)),
 	updatestatus(true),
 	firstplay(true),
-	stopaftercurrent(false)
+	stopaftercurrent(false),
+	updateslider(true)
 {
 	wxString ttl = wxT(PACKAGE_STRING);
 	SetTitle(ttl);
@@ -444,14 +446,23 @@ bool fbx::FBXFrame::Play(const std::string& file)
 }
 
 /**
- * Called when seek bar position is moved
+ * Called when seek bar position is set
  */
 void fbx::FBXFrame::OnSeek(wxScrollEvent& event)
 {
 	bool ret = engine->Seek((double)event.GetPosition());
+	updateslider = true;
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnSeek(" << event.GetPosition() << "): " << (ret ? "true" : "false") << std::endl;
 #endif
+}
+
+/**
+ * Called when seek bar starts dragging
+ */
+void fbx::FBXFrame::OnSeekStart(wxScrollEvent& event)
+{
+	updateslider = false;
 }
 
 /**
@@ -511,7 +522,8 @@ void fbx::FBXFrame::UpdateStatus()
 	if (pg != wxNOT_FOUND)
 		s += wxT(" | ") + notebook->GetPageText(pg);
 	statusbar->SetStatusText(s);
-	progress->SetValue(engine->Current());
+	if (updateslider)
+		progress->SetValue(engine->Current());
 }
 
 /**
