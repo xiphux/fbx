@@ -141,14 +141,6 @@ namespace fbx
 		void OnSeekStart(wxScrollEvent &event);
 
 		/**
-		 * @brief Idle event handler
-		 * @param event idle event
-		 *
-		 * Called when GUI idles
-		 */
-		void OnIdle(wxIdleEvent &event);
-
-		/**
 		 * @brief Playlist choice event handler
 		 * @param event command event
 		 *

@@ -110,7 +110,6 @@ BEGIN_EVENT_TABLE(fbx::FBXFrame, wxFrame)
 	EVT_LISTBOX_DCLICK(FBX_frame_playlist, fbx::FBXFrame::OnPlaylistChoice)
 	EVT_COMMAND_SCROLL_THUMBTRACK(FBX_frame_progress, fbx::FBXFrame::OnSeekStart)
 	EVT_COMMAND_SCROLL_CHANGED(FBX_frame_progress, fbx::FBXFrame::OnSeek)
-	//EVT_IDLE(fbx::FBXFrame::OnIdle)
 	EVT_TIMER(FBX_frame_timer, fbx::FBXFrame::OnTimer)
 END_EVENT_TABLE()
 
@@ -207,8 +206,6 @@ fbx::FBXFrame::FBXFrame():
 	wxAcceleratorTable accel(8, entries);
 	SetAcceleratorTable(accel);
 
-	SetExtraStyle(wxWS_EX_PROCESS_IDLE);
-	wxIdleEvent::SetMode(wxIDLE_PROCESS_SPECIFIED);
 	timer = new wxTimer(this,FBX_frame_timer);
 	timer->Start(GUIUPDATE);
 }
@@ -401,14 +398,6 @@ void fbx::FBXFrame::OnNext(wxCommandEvent& event)
 }
 
 /**
- * Called when GUI idles
- */
-void fbx::FBXFrame::OnIdle(wxIdleEvent& event)
-{
-	//event.RequestMore();
-}
-
-/**
  * Resets seek bar position and disables it (when stopping playback)
  */
 void fbx::FBXFrame::ResetSlider()
@@ -502,7 +491,6 @@ bool fbx::FBXFrame::TryAdvance()
  */
 void fbx::FBXFrame::OnTimer(wxTimerEvent& event)
 {
-	//wxWakeUpIdle();
 	if (updatestatus)
 		UpdateStatus();
 	if ((engine->Eof()/* || engine->Stopped()*/) && progress->IsEnabled()) {
