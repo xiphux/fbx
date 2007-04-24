@@ -452,7 +452,16 @@ bool fbx::FBXFrame::Play(const std::string& file)
  */
 void fbx::FBXFrame::OnSeek(wxScrollEvent& event)
 {
-	bool ret = engine->Seek((double)event.GetPosition());
+	int pos = event.GetPosition();
+	int max = progress->GetMax();
+	std::string el = FBXUtil::ReadableTime(pos);
+	std::string re = FBXUtil::ReadableTime(max-pos);
+	wxString e(el.c_str(), *wxConvCurrent);
+	wxString r(re.c_str(), *wxConvCurrent);
+	r = wxT("-") + r;
+	timeelapsed->SetLabel(e);
+	timeremaining->SetLabel(r);
+	bool ret = engine->Seek((double)pos);
 	updateslider = true;
 #ifdef DEBUG
 	std::cout << "FBXFrame::OnSeek(" << event.GetPosition() << "): " << (ret ? "true" : "false") << std::endl;
@@ -465,6 +474,15 @@ void fbx::FBXFrame::OnSeek(wxScrollEvent& event)
 void fbx::FBXFrame::OnSeekStart(wxScrollEvent& event)
 {
 	updateslider = false;
+	int pos = event.GetPosition();
+	int max = progress->GetMax();
+	std::string el = FBXUtil::ReadableTime(pos);
+	std::string re = FBXUtil::ReadableTime(max-pos);
+	wxString e(el.c_str(), *wxConvCurrent);
+	wxString r(re.c_str(), *wxConvCurrent);
+	r = wxT("-") + r;
+	timeelapsed->SetLabel(e);
+	timeremaining->SetLabel(r);
 }
 
 /**
