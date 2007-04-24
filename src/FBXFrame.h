@@ -24,6 +24,7 @@ class wxTimer;
 class wxTimerEvent;
 class wxChoice;
 class wxPanel;
+class wxStaticText;
 #ifdef AUI_TOOLBAR
 class wxAuiManager;
 #endif
@@ -522,6 +523,20 @@ namespace fbx
 		 * Pointer to active playlist page
 		 */
 		PlaylistPanel *activeplaylist;
+
+		/**
+		 * @brief timeelapsed
+		 *
+		 * Time elapsed label
+		 */
+		wxStaticText *timeelapsed;
+
+		/**
+		 * @brief timeremaining
+		 *
+		 * Time remaining label
+		 */
+		wxStaticText *timeremaining;
 	};
 
 	/**

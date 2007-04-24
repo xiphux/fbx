@@ -41,6 +41,7 @@
 
 #include <sstream>
 
+#include "FBXUtil.h"
 #include "FBXFrame.h"
 #include "FBXEngine.h"
 #include "playlist/PlaylistFactory.h"
@@ -405,6 +406,10 @@ void fbx::FBXFrame::ResetSlider()
 #ifdef DEBUG
 	std::cout << "FBXFrame::ResetSlider" << std::endl;
 #endif
+	timeelapsed->SetLabel(wxT("0:00"));
+	timeremaining->SetLabel(wxT("-0:00"));
+	timeelapsed->Enable(false);
+	timeremaining->Enable(false);
 	progress->SetValue(0);
 	progress->SetRange(0,1);
 	progress->Enable(false);
@@ -419,10 +424,18 @@ bool fbx::FBXFrame::Play(const std::string& file)
 	bool ret = engine->Play(file);
 	updatestatus = true;
 	firstplay = false;
+	timeelapsed->Enable(true);
+	timeelapsed->SetLabel(wxT("0:00"));
+	timeremaining->Enable(true);
+	unsigned int sz = engine->Size();
+	std::string s = FBXUtil::ReadableTime((int)sz);
+	wxString s2(s.c_str(), *wxConvCurrent);
+	s2 = wxT("-") + s2;
+	timeremaining->SetLabel(s2);
 	progress->Enable(true);
-	progress->SetRange(0,engine->Size());
+	progress->SetRange(0,sz);
 #ifdef DEBUG
-	std::cout << "Range [0:" << engine->Size() << "]" << std::endl;
+	std::cout << "Range [0:" << sz << "]" << std::endl;
 	std::string tmp = engine->Metadata();
 	std::cout << "Now Playing: ";
 	if (tmp.length() > 3)
@@ -510,8 +523,18 @@ void fbx::FBXFrame::UpdateStatus()
 	if (pg != wxNOT_FOUND)
 		s += wxT(" | ") + notebook->GetPageText(pg);
 	statusbar->SetStatusText(s);
-	if (updateslider)
-		progress->SetValue(engine->Current());
+	if (updateslider) {
+		unsigned int total = engine->Size();
+		unsigned int cur = engine->Current();
+		std::string el = FBXUtil::ReadableTime((int)cur);
+		std::string re = FBXUtil::ReadableTime((int)(total-cur));
+		wxString e(el.c_str(), *wxConvCurrent);
+		wxString r(re.c_str(), *wxConvCurrent);
+		r = wxT("-") + r;
+		timeelapsed->SetLabel(e);
+		timeremaining->SetLabel(r);
+		progress->SetValue(cur);
+	}
 }
 
 /**
@@ -921,9 +944,15 @@ void fbx::FBXFrame::InitToolbars()
 
 	toolbarsizer->AddSpacer(10);
 
+	timeelapsed = new wxStaticText(toolbarpanel,-1,wxT("0:00"));
+	timeelapsed->Enable(false);
+	toolbarsizer->Add(timeelapsed,0,wxALIGN_CENTER_VERTICAL);
 	progress = new wxSlider(toolbarpanel,FBX_frame_progress,0,0,1);
 	progress->Enable(false);
 	toolbarsizer->Add(progress,1,wxEXPAND|wxALL);
+	timeremaining = new wxStaticText(toolbarpanel,-1,wxT("-0:00"));
+	timeremaining->Enable(false);
+	toolbarsizer->Add(timeremaining,0,wxALIGN_CENTER_VERTICAL);
 	
 	toolbarpanel->SetSizer(toolbarsizer);
 
