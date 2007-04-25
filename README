@@ -99,7 +99,7 @@ TROUBLESHOOTING
   - Audio is choppy
   Your buffer size is too low for your sound card.  Try increasing the buffer size in powers of 2 with the buffer=<size> config option (see previous section, "CONFIGURATION").
 
-  - There are many messages during playback about ALSA xruns when using libao and ALSA
+  - There are many messages during playback about ALSA underruns when using libao and ALSA
   See previous.
 
   - The GUI is unresponsive for several seconds when trying to perform an action like stopping or skipping to the next track
