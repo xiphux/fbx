@@ -1,0 +1,995 @@
+commit b41fe86a133b2034b70ce24e1fe9d07402405b6b
+Author: Chris Han <xiphux@seele.xiphux.ath.cx>
+Date:   Tue Apr 24 23:35:02 2007 -0400
+
+    Avoid too many open file descriptors
+
+commit 35fe268af3d07fcd676e668f6fee0c96e68ffab3
+Author: Chris Han <xiphux@seele.xiphux.ath.cx>
+Date:   Tue Apr 24 23:08:19 2007 -0400
+
+    Most people don't know what xruns are
+
+commit 3b920ec0c2169346db75e7f4f25fe687f85a13f5
+Author: Chris Han <xiphux@seele.xiphux.ath.cx>
+Date:   Tue Apr 24 23:07:59 2007 -0400
+
+    Make a note about the configure script checking dependencies and their versions
+
+commit 2eb25354ab2cc5d54c11cd839a2c9824d708a6a7
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Apr 24 13:58:12 2007 -0400
+
+    Used time elapsed/remaining to show seek position
+
+commit 0102f6e390d6a5338b66d343b9cc573ca69d9b5e
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Apr 24 13:50:43 2007 -0400
+
+    Add time elapsed/remaining beside slider-
+
+commit 0ca921207e7ede88e83e195192c3b74eabb57692
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Apr 24 13:24:14 2007 -0400
+
+    Get rid of old idle event stuff
+
+commit fc8adfd19b5a2232280d3869bf216ea7a64e4942
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Apr 24 13:09:11 2007 -0400
+
+    Only seek when finished dragging
+
+commit 448461ad01d261acff32f54b433f5f11fa558dd1
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Apr 23 12:25:18 2007 -0400
+
+    Start adding troubleshooting
+
+commit a4616d3c0ab40f8cdeef71e3ae38abf80c5b3034
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Apr 22 21:56:23 2007 -0400
+
+    Add stop after current menu option
+
+commit 40255ab54b1fd9054facbfdd2d977c6203faecf2
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Apr 22 21:20:05 2007 -0400
+
+    Initial writeup of README
+
+commit 4f575713e628dd003c9a15c52cf6aa6eb6f19872
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Apr 22 20:54:06 2007 -0400
+
+    Add a note about user config file in man page
+
+commit 7a23c25d597485a0e707aa59e9b3557ccc184700
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Apr 22 20:26:52 2007 -0400
+
+    Change displayed syntax for playlists config key
+
+commit a382d5d473617b69d4f9e42910d91ab1aff013d0
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Apr 22 19:18:57 2007 -0400
+
+    Include Doxyfile in tarball
+
+commit ff891c7b29bc82f7ca2a80caecc1fd33552f01de
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Apr 22 19:16:30 2007 -0400
+
+    Include headers in sources list so they are included in tarball
+
+commit 007e0420ecaacf0dc0c5cd92cd25b405f27e5935
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Apr 22 19:16:13 2007 -0400
+
+    Include HTML documentation in tarball
+
+commit 49151b9319a154b11c1715e19770688846d76872
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Apr 22 19:04:13 2007 -0400
+
+    Lowercase name in automake
+
+commit 18aed8259f41f147e79a270c53835c4788c3ea9f
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Apr 22 18:58:48 2007 -0400
+
+    Make sure icons are included in tarballs
+
+commit 5bff60e354061329020cf6c3c659a783480fa133
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Apr 22 18:48:42 2007 -0400
+
+    Disable wxAUI toolbars by default
+
+commit d72e72235afc16728eb9765cd3a0c424bfe2590b
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Apr 22 18:34:35 2007 -0400
+
+    Integrate man page into autoconf/automake
+
+commit c33971caa878f957e465ad1ff965a055bf411f42
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Apr 22 18:28:06 2007 -0400
+
+    Start adding man page
+
+commit 0897e2dcc44b42b47ea9cd4959fd7929b33c9dca
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Apr 22 18:06:12 2007 -0400
+
+    Note that version also displays feature info
+
+commit b752fb129e86118977e92d3e13a3e8828cbc54fd
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Apr 22 17:53:34 2007 -0400
+
+    Update AUTHORS file
+
+commit 7c3186c6b890fe4f6220ad84e50d3bd8bcfab41d
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Apr 3 17:41:43 2007 -0400
+
+    Make sure aui toolbar option is explicitly toolbars
+
+commit c6feda6ea83ef209dadf000707b5954e05e483af
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Apr 3 13:47:09 2007 -0400
+
+    Add more accelerators
+
+commit 2d74b5bb3d24470c70f5be617ba01a48f974f422
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Apr 3 13:40:38 2007 -0400
+
+    Select next song when removing song
+
+commit 4e96e167747d761e6e48c2ff9538f509cbad5eb1
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Apr 3 13:34:08 2007 -0400
+
+    Add order submenu
+
+commit 82b5fb35a68ef3f705783305a7b021ea150b7663
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Apr 3 01:26:04 2007 -0400
+
+    Clean up order setting a bit
+
+commit a73ee36c374f9dc46ff0d34b7c79adcbced0634e
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Apr 3 01:07:26 2007 -0400
+
+    Add playback accelerators
+
+commit 027475497e9fd4ccde97aa0012ec629e4ec056e6
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Apr 2 23:24:04 2007 -0400
+
+    Make AUI toolbars a configure option
+
+commit bb9d109b961aaba5f95adcb1d7d041769cc6f5bb
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Apr 2 21:40:55 2007 -0400
+
+    Break out duplicate code
+
+commit c80842307b8d4163babf5ff533dc68cc5ee46bbd
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Apr 2 21:30:58 2007 -0400
+
+    Only adjust listbox when jumping to a random song
+
+commit efe2cc04000e5cfe6b569ccc1d0aa5698811c752
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Apr 2 21:27:19 2007 -0400
+
+    Start adding move up/down code
+
+commit a89e41711abcc2506a54284c71a759c6d9c8d220
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Apr 2 18:07:16 2007 -0400
+
+    Unbreak pausing
+
+commit e3d06282b10628f070c7b005a24eecb8f0a74e99
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Apr 2 18:05:04 2007 -0400
+
+    Redundant semicolon
+
+commit 664087c3f69093c462dda54f9c41f5ca36cb49b4
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Apr 2 17:49:24 2007 -0400
+
+    Redundant semicolon
+
+commit 30d92aa74b851113a0086c91065f3e705639d169
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Apr 2 17:39:49 2007 -0400
+
+    Get rid of redundant locks
+
+commit 5624b081e1f1cdf593a04b2f731bf8dc4552574c
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Apr 2 17:12:11 2007 -0400
+
+    Lock when testing Eof in audiothread
+
+commit 71fc63b8595babc48b212bf381dfd666f41bf26a
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 31 20:32:42 2007 -0400
+
+    Change save playlist as caption a bit
+
+commit f8cad954366158f9a6549e6cf73ff576cb7f778d
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 31 20:06:31 2007 -0400
+
+    Make unsaved quit dialog yes/no
+
+commit 1b097acc37bc16aa6fc778c678708a9ff9605ea1
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 31 20:05:16 2007 -0400
+
+    Prompt when closing unsaved playlist
+
+commit 092e6de6f8553b43552037255e99715764199edf
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 31 19:52:53 2007 -0400
+
+    Add save playlist as code
+
+commit ab9b9b6928e8a5bfb05b16b141081cd1098738ec
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 31 19:12:42 2007 -0400
+
+    Comment this out to prevent false positives
+
+commit 0a6f37f53428b2c9f643332f4fe8351d64b562d2
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 31 19:09:41 2007 -0400
+
+    Start adding save playlist as event handler
+
+commit 99b16cb0b6a640baec18830db42fc3c2f922da32
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 31 19:01:50 2007 -0400
+
+    Move listbox to show playing item on song change
+
+commit 8193dbd4133909b59a0d2e5682e029d76a04651a
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 31 18:52:54 2007 -0400
+
+    Boost audio thread priority
+
+commit 430dbc36de95c6c8c2186de155fd57c5ebf5324f
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 31 18:47:32 2007 -0400
+
+    Use frontmost playlist tab when pressing play while stopped
+
+commit b5885dfd0646a44677496833e58dbc522bd62b8c
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 31 17:31:22 2007 -0400
+
+    Print bufsize during debug
+
+commit 5a88b5ac79a5b19509473579f0ef7fc4c058b2a7
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 31 16:30:42 2007 -0400
+
+    Make buffer size configurable
+
+commit 6ed90af058787b02dae007a40c503705fb69be7d
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 31 16:24:18 2007 -0400
+
+    Responsiveness at the cost of cpu usage
+
+commit 32c498a039d6d1354083492409e68293ee847f43
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 31 16:24:00 2007 -0400
+
+    Proper audio write locking
+
+commit 4a4ef8324c0c5f7e4513d96eedfe6d6b024eca34
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 31 16:10:32 2007 -0400
+
+    Stop when closing active playlist
+
+commit 0ea5df16a4a2dd0f25e87b3dc7c0167a3915096d
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 31 15:54:19 2007 -0400
+
+    Adjust audiothread locking a bit
+
+commit 39afa77c563c90a570a29af2bbef7321b40aaea1
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 30 23:51:20 2007 -0400
+
+    Typo
+
+commit e868372205dfd20c64bfabf08075abb81868b057
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 30 23:50:38 2007 -0400
+
+    Add new playlist menu item
+
+commit 39608011f5abd5bc0f466c007b8b5cdcabdf4cc3
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 30 23:45:16 2007 -0400
+
+    These don't need to be public
+
+commit da84a956f6f7490dd69d563c5d14ce4f1fabf3c1
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 30 23:44:56 2007 -0400
+
+    Split out unique playlist name code into reusable function
+
+commit fa63a0aa1d4430bc54362527debbb00963d6e74e
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 30 23:31:00 2007 -0400
+
+    These variables are now unused
+
+commit 0c83d37e7ab5d7c35221f69216c497ed3a7746f3
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 30 23:28:46 2007 -0400
+
+    Name duplicate playlists differently
+
+commit 9f440106aaeeea3ad4d8c36daaffbc3a6738ea48
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 30 22:44:06 2007 -0400
+
+    Unused idle handler
+
+commit e5d7328cf6869a936f2d22d8ac378ffc69ffaef7
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 30 22:43:52 2007 -0400
+
+    Change playlist title when unsaved
+
+commit 5370236fa990e8b9e62e7f1164cea57bd71e0879
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 30 22:31:21 2007 -0400
+
+    Prompt on quit when playlists aren't saved
+
+commit 9f186719c5cf3c5ba51429b335a3b3655ccb0b7a
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 30 22:09:39 2007 -0400
+
+    Put current playlist in status
+
+commit b8a8f16744bc9813afa3911587731d8ceb6e1957
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 30 22:02:32 2007 -0400
+
+    Store pointers to active playlist
+
+commit de88f91b253247c02587d3c562dd51715aa847a0
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 30 21:44:36 2007 -0400
+
+    Was not saving with no playlists open
+
+commit b19039e42ce8e703e6d85f33db471e47e7c28a5e
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 30 21:43:20 2007 -0400
+
+    Make close playlist a menu option
+
+commit 62fe22c944b7f8dd3fa168e9b0843762b8b5b6ce
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 30 21:37:15 2007 -0400
+
+    Don't rely on playlist array
+
+commit 161e2eefc4fcec544d5f4da2acbce0150f9b9d40
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Mar 25 00:18:42 2007 -0400
+
+    Add features list to version output
+
+commit c957dcecb68316ec95512db984b7f334c18a94c4
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Wed Mar 21 13:17:30 2007 -0400
+
+    Jump to first item after playlist end
+
+commit ec7575fde0d16c672412253189f2b24374df6812
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Mar 20 21:44:48 2007 -0400
+
+    Forgot parameter name
+
+commit c8e7e193b56eefc4fc973cc9da4d01c06e12cf0f
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Mar 20 21:30:53 2007 -0400
+
+    Debug print filename if no metadata
+
+commit d1d009a8186d567bda268bbc530ce0efb5b35d36
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Mar 20 21:28:23 2007 -0400
+
+    Track normal plays in history too
+
+commit a483c5a3a42a4d4964f134ca9603835536c663d3
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Mar 20 21:20:01 2007 -0400
+
+    Add basic intelligent random system
+
+commit 7ea8b1009ce9a209c7752a39e0eda721c1580947
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Mar 20 20:43:51 2007 -0400
+
+    Hack to avoid bad audio output descriptors without locking while writing audio data (which blocks)
+
+commit 65597c37abefd04997e61bf04342ed23a49df3e8
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Mar 20 13:51:35 2007 -0400
+
+    Avoid mutex crash condition
+
+commit eeb8fbc55d3daf159205e6f1eaea99784bd41398
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Mar 20 13:50:11 2007 -0400
+
+    Avoid updating the statusbar when unnecessary
+
+commit b5efe2cf6d46a5dfaabe05257140f9b262d921fa
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Mar 19 21:29:17 2007 -0400
+
+    M3U playlist file was not being closed in the right place (prevented multiple saves)
+
+commit 39f6959c5e3ab5a5139cc3635dbcaa387feb05f9
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Mar 19 21:18:19 2007 -0400
+
+    Jump to a random song when playing the very first song after opening on random mode (instead of always using the first track)
+
+commit bd664e28256b266bc7798261c694b051c71beed3
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Mar 19 21:06:18 2007 -0400
+
+    Add statusbar help text and event handlers for open/close menu (only works on windows)
+
+commit 6c95287d21c9f580943edb406c8456a891ad8dc8
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Mar 19 20:36:10 2007 -0400
+
+    Lock while manipulating data structures when stopping
+
+commit c55a27f437c3ec170a7bdd044fed9f63eedf1809
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Mar 19 19:22:57 2007 -0400
+
+    The pause test was never being hit
+
+commit e53cef6396cf41dc04bddbe01f70922469a016a4
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Mar 19 15:12:13 2007 -0400
+
+    Add linecount script
+
+commit 3c7788b429317c2be1aef9ae3402e60683ccd298
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Mar 18 20:59:44 2007 -0400
+
+    Split out duplicate open playlist code
+
+commit a91d78e51aa099868312e00b6845570180c1ffdf
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Mar 18 04:53:50 2007 -0400
+
+    Start linking flac into AudioFileFactory
+
+commit e2cc6517d419a7a7ac2e33c3acaf47b6a433c589
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Mar 18 04:20:01 2007 -0400
+
+    Start adding callbacks to AudioFileFlac
+
+commit 7986c104ca42d86539c7e9b19ecee3139c03dffe
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Mar 18 03:24:16 2007 -0400
+
+    Start adding autoconf support for FLAC (disabled at the moment)
+
+commit 434fae049004e7be395814ba854eece9587ccedf
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Mar 18 03:12:22 2007 -0400
+
+    Add comments to ALSA driver
+
+commit 000d36fc25c28ce7843e187a01bc9989056b932c
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Mar 18 03:08:42 2007 -0400
+
+    Start adding MP3 driver
+
+commit a02487d84e3ff9fc05ce7ea172563d8b35e01c56
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Mar 18 03:08:18 2007 -0400
+
+    Add comments for flac driver
+
+commit df49c9e7ce5583783530c782c4b91673d9ef07f2
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Mar 18 01:10:03 2007 -0400
+
+    Store open playlists to config on exit and unbreak opening playlists from config
+
+commit b3bcbb08f9c5e087823a70263b0b4c8f36590b02
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Mar 18 00:46:03 2007 -0400
+
+    Add playlistpanel get filename method
+
+commit 97413799acf1cd8840a63a01879e28d4c906f793
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sun Mar 18 00:41:51 2007 -0400
+
+    Start adding open playlist support
+
+commit 4dc279154bac27482a31798ee2810da8c00b96d3
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 17 03:17:59 2007 -0400
+
+    Adjust manager settings a bit
+
+commit 376930a84dd65851c7f0310a59d3e82e3b1e2b70
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 17 03:08:35 2007 -0400
+
+    Progress bar needs to be set resizable to expand to full width.  Also forgot to uninit toolbar manager
+
+commit 495f061a36657c047402f40aa1d6d4e2b0dfb5f0
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 17 02:55:01 2007 -0400
+
+    Not necessary to have this one resizable
+
+commit 6ea8d3b1b65f875fbcd2eee45c42e9105aab3876
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Mar 17 00:15:15 2007 -0400
+
+    Next/Prev shouldn't start playing when engine is stopped
+
+commit 7e828bbc2f1117011d8f990354bfa50e150749db
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 16 23:45:51 2007 -0400
+
+    Add mutex locking while seeking
+
+commit 54e73e9460dec1ea0b143a40e03a934a6187e22c
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 16 23:31:57 2007 -0400
+
+    Comment dockable toolbar related members
+
+commit 73c0b9addd2e4001634c8c74f14a58e7ddcabac4
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 16 23:05:53 2007 -0400
+
+    Move engine classes to their own namespace
+
+commit d334ab9ffe7d9135215c3e8e2469db96dfed1bb9
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 16 22:26:30 2007 -0400
+
+    The Stopped() logic was incorrect
+
+commit 2fa0285baf8fce279f6703e36f9e0d01901f976b
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 16 22:20:30 2007 -0400
+
+    This is causing problems at the moment
+
+commit 09aa6f7fccf50b82ef64008742caf0778092d8ec
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 16 22:19:10 2007 -0400
+
+    Divide subdirectories into sub-namespaces
+
+commit b5a5ead25f1437226c267edd068fceb3aa04fa9c
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 16 21:40:38 2007 -0400
+
+    Try using wxAUI dockable toolbars again
+
+commit 84cc9dd9d7b7167f4bcaf5f7f8e010e52b240b00
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 16 20:32:42 2007 -0400
+
+    Adjust play button behavior (avoid redundant plays and have playback resume if paused)
+
+commit 03b0272fe4015549af73c705c428d94bca1712c3
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 16 20:23:14 2007 -0400
+
+    Ifdef DEBUG unnecessary includes
+
+commit 75d15401b1e42493bc0c8d41b5901c908a772f5b
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 16 20:14:23 2007 -0400
+
+    Make timer a pointer (avoid unnecessary timer.h include in FBX.cpp)
+
+commit b2ea8f75328b7556fcf34d2742df993ac63f9856
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 16 20:08:35 2007 -0400
+
+    Listbox include is unnecessary for frame (only applies to PlaylistPanel)
+
+commit 6bfaa08967915f2f195ad2291b977fb455280934
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 16 20:04:54 2007 -0400
+
+    Forgot playlistpanel header file
+
+commit 64f5804f29eb8b5dce3553db80549c4e349204ce
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 16 19:21:26 2007 -0400
+
+    Add doxygen documentation
+
+commit a01f28ca44ae64276928a1d38f46bde7b2ca647c
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 16 15:09:52 2007 -0400
+
+    Remove file support
+
+commit 911b3098e08f1754510f362cf4dca31b5f4830ab
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Mar 16 15:09:37 2007 -0400
+
+    Add missing autoconf checks
+
+commit d28fd9a6252f000719b32a8f71ff17c6d47fd5c6
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 23:43:26 2007 -0400
+
+    Let M3U playlist write relative paths if possible
+
+commit 1f63c6070c9129dc63786169b8a990485903fa1c
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 23:36:41 2007 -0400
+
+    Make note about song name being temporary
+
+commit 33e15bd6234d16d694e48511abd5bbe4ba33b6fa
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 23:35:50 2007 -0400
+
+    Put song in statusbar
+
+commit ace28f3477bde1a7ff4cee1943d16b7ebb603fa0
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 23:27:18 2007 -0400
+
+    Add save playlist menu option
+
+commit b899f08fb72bf97f82618eddf887ce1e5de095b7
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 21:36:38 2007 -0400
+
+    Support adding files to playlist
+
+commit d0c464ae7acec073aa8aa932ca12a92682da38e0
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 20:42:54 2007 -0400
+
+    Try and evade some of the audiothread locking problems
+
+commit 0c9fc4811987a435c519de0ec1ca590ffef44cb9
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 19:51:49 2007 -0400
+
+    Implement save/load of order setting and playlist repeat mechanics
+
+commit a97f232eedba5bd244d00d73d48a813e64a886a8
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 19:32:15 2007 -0400
+
+    Add track repeat mechanics
+
+commit c360f4357943c899b296653e40bf00163d606add
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 19:12:00 2007 -0400
+
+    Start on FLAC decoder
+
+commit 7f6e0dc6b89378cad5609725c1d6b937498dcf39
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 19:11:49 2007 -0400
+
+    Make a bit more readable
+
+commit b21579f7a74011cc27cba6a9487171152704e0dd
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 17:48:57 2007 -0400
+
+    Add support for random order
+
+commit fa0a80c6a2ceea416594a77de6fe6f3408169b79
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 16:57:43 2007 -0400
+
+    Ifdef more debug messages and turn off debug by default
+
+commit d83711f30be7ab18570f26b7bc907c032e0076b8
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 16:50:21 2007 -0400
+
+    Put song lengths in playlist
+
+commit e0a5d9904a92dcbf818b8b804b3d297791a19c01
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 16:37:10 2007 -0400
+
+    Consolidate time formatter into separate toolbox class
+
+commit a431a09c78e65a9ee001da4db233fb70b33602a2
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 16:30:31 2007 -0400
+
+    Consolidate duplicate metadata string code
+
+commit bd5cffb7fd444626ee7d40cfe5c3797601898930
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 15:51:20 2007 -0400
+
+    Switch to timer for gui updates
+
+commit a7f41ad061eba0196a3b7058ccca01d0ee7561ae
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 15:25:20 2007 -0400
+
+    Have listbox show currently playing song selected
+
+commit 986e34a20372ddd20f02d1fe137467f1936eb946
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 06:11:17 2007 -0400
+
+    Start implementing (still buggy) playlist advancing/control
+
+commit 54daf7847755b26a48b736174bae93914ee21bd8
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 04:31:01 2007 -0400
+
+    Read file metadata on playlist load
+
+commit 6a7d06321ab38d21ee6a1b5d037ea80c71bda850
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 04:10:32 2007 -0400
+
+    Start working on PlaylistPanel and make sure playlists only overwrite on demand
+
+commit 719be74c1eaacd340d4316a869860e99449b417d
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 03:06:23 2007 -0400
+
+    Ifdef out debug messages and add vorbis comment handling
+
+commit 9b7eb87df33d45d80d7dbfb6fbcaca1b82652f95
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 02:13:20 2007 -0400
+
+    Add seek support
+
+commit 8d6f3502a7f6d82c63bcaa9fb4ee5ff553a3c0f4
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 01:51:21 2007 -0400
+
+    Start adding progress slider
+
+commit 974e27fc0a8ad72d5f8b0b85460ae92ecf9648d6
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 00:58:37 2007 -0400
+
+    Add stopped status message
+
+commit 8e013d6b2f7e355508bd9b41dbb9e92c510a4880
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 00:54:59 2007 -0400
+
+    Add file information to status string
+
+commit dc78723599f79ab436b45bde0dc5eb107aecef34
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 00:43:45 2007 -0400
+
+    Show time in status bar
+
+commit d177bb2250ac8cb1991771a3800a857581266423
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Mar 15 00:01:34 2007 -0400
+
+    Allow audiofile to report current position
+
+commit d1cb9f3dfbfedf4aec59740160568ea458d20582
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Tue Feb 20 23:08:32 2007 -0500
+
+    Start working on audio engine
+
+commit bd413737e1930c6e9077afdbacd228140b8a326b
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Feb 17 19:31:05 2007 -0500
+
+    Boost the default size a little
+
+commit 096ef49c0739bb1f802d8e5931da0d7617ff7131
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Feb 17 18:54:18 2007 -0500
+
+    Start implementing playlists
+
+commit 98cb20bab2dd2fb699f5500a076a31b102681916
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Feb 17 02:48:50 2007 -0500
+
+    Forgot call to realize toolbar
+
+commit cca194483065667a5e78acb204a2ced75a850f20
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Sat Feb 17 00:46:47 2007 -0500
+
+    Do toolbars without AUI
+
+commit e99b07d5246fe4b66ad5e11e4d9d0b30bc182900
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Feb 16 22:09:50 2007 -0500
+
+    Start adding playback event handlers
+
+commit fef8083b9324af8d16141611aed578c40e0b2cd2
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Feb 16 21:32:28 2007 -0500
+
+    Fix wxString conversion bug
+
+commit e951327238aa54aca6553ffd5aba2ae3b9f39a89
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Feb 16 21:32:12 2007 -0500
+
+    Call OpenPlaylists
+
+commit 6f0fccb271ffa66823b9cdeff67c1d75673d8ce2
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Feb 16 21:03:42 2007 -0500
+
+    Start working on playlist support
+
+commit b36d7982ef186674b92aba6e6d983be6b702089f
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Feb 16 19:49:57 2007 -0500
+
+    Add commandline parsing
+
+commit ae87324fcafd881407ab3b58f4abaf113591d208
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Feb 16 19:31:58 2007 -0500
+
+    Implement abstracted config handler
+
+commit 2a4ddb3b1405363b4ac8b911d58b9cf4633fe366
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Feb 16 19:04:12 2007 -0500
+
+    Start adding AUI manager and status bar
+
+commit 8adcd233322223a43643bf5031eb15e5bca1a6db
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Feb 16 16:09:57 2007 -0500
+
+    Start implementing GUI frame
+
+commit 936f119fe72e71dd5bf370fa8f3c3a47cd826352
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Feb 16 15:56:32 2007 -0500
+
+    AC_PROG_RANLIB is obsolete
+
+commit ce32e00459ecf58749fb27a92c0cfcbcee7bc993
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Feb 16 02:26:29 2007 -0500
+
+    Add autoconf.sh to autoreconf from rcs
+
+commit f95f454e077bdbfcd147e9db0dc0177ba207859e
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Fri Feb 16 02:14:54 2007 -0500
+
+    Add magic support
+
+commit d180b41822b7f906aa36a21801e79e21914d8cda
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Feb 15 23:56:31 2007 -0500
+
+    Fix bug with vorbis position going past end of file
+
+commit 4948dfb37093a5fd69e21b1e7d58751817a3bfd4
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Feb 15 23:41:07 2007 -0500
+
+    Add support for default audio output
+
+commit fb08795dea799f9b1ee44f7e32e011d1f0bf6ae1
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Feb 15 23:24:08 2007 -0500
+
+    Add test program
+
+commit 6104a41cc1c5786c8893b2de0c3e8982aa5d157c
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Feb 15 23:23:55 2007 -0500
+
+    Make plugins conditionally enabled and disabled by autoconf/automake
+
+commit 64f194b5014dd958aa04a48694f40cb148deb737
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Feb 15 22:47:51 2007 -0500
+
+    Avoid double free
+
+commit 71d0702ab76dc9e1a2c4098c9faaa827c5d96d09
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Feb 15 21:39:07 2007 -0500
+
+    Add libao audio driver
+
+commit 078ce4e55bc4d62709232334cc7bf505c37ba936
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Feb 15 20:14:33 2007 -0500
+
+    Start on audiofactory and audioalsa
+
+commit faca5dd1dec8b4247b90fd5188fe73d247ed910b
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Feb 15 19:32:46 2007 -0500
+
+    Finish linking to vorbisfile
+
+commit e512010b89c69f76eb69ba5eccdae132c5a81cd4
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Feb 15 19:11:09 2007 -0500
+
+    Start working on audiofile factory
+
+commit 5508d14b9fd38126a367fa92f40a9b87fcdb83c7
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Thu Feb 15 19:10:31 2007 -0500
+
+    Start working on audiofile factory
+
+commit 3d21c54863a76513644ee40f159cdd47f281aa0e
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Feb 12 18:48:31 2007 -0500
+
+    Add missing wx ldadd
+
+commit 6592803e34b9fcac4312724904b0b95cb7a8147c
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Feb 12 18:47:16 2007 -0500
+
+    Add automake required files
+
+commit 6c12819631f7208ea71f7ddce593358cd3c5aee0
+Author: xiphux <xiphux@terminaldogma.(none)>
+Date:   Mon Feb 12 18:46:31 2007 -0500
+
+    Initial commit of FBX
