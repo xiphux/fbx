@@ -34,6 +34,8 @@ COMPILATION/INSTALLATION
   make
   make install
 
+  The configure script will check your system to ensure that all dependencies are present and intact, and that all libraries are greater than or equal to the required versions
+
   Please note that running "make install" will probably require root privileges if installing into a root-owned filesystem.
 
   The configure script has a number of commandline options that can be passed to enable or disable certain features:
