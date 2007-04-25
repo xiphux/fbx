@@ -138,6 +138,8 @@ unsigned int fbx::PlaylistPanel::Size()
  */
 bool fbx::PlaylistPanel::Add(const std::string& file, bool newitem)
 {
+	if (file.length() < 1)
+		return false;
 	std::string meta;
 	audiofile::AudioFileBase *tmp = audiofile::AudioFileFactory::OpenAudioFile(file);
 	if (tmp)
