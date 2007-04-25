@@ -151,7 +151,7 @@ bool fbx::PlaylistPanel::Add(const std::string& file, bool newitem)
 			meta += ")";
 		}
 		wxString m(meta.c_str(), *wxConvCurrent);
-		listbox->Append(m,(void*)(file.c_str()));
+		listbox->Append(m);
 	} else {
 		std::string fname = file;
 		if (tmp) {
@@ -160,7 +160,7 @@ bool fbx::PlaylistPanel::Add(const std::string& file, bool newitem)
 			fname += ")";
 		}
 		wxString i(fname.c_str(), *wxConvCurrent);
-		listbox->Append(i,(void*)(file.c_str()));
+		listbox->Append(i);
 	}
 	if (newitem)
 		playlist->Append(file);

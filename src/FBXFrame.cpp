@@ -491,7 +491,6 @@ void fbx::FBXFrame::OnSeekStart(wxScrollEvent& event)
 void fbx::FBXFrame::OnPlaylistChoice(wxCommandEvent& event)
 {
 	int idx = event.GetSelection();
-	//char *str = (char*)event.GetClientData();
 	activeplaylist = (PlaylistPanel*)notebook->GetPage(notebook->GetSelection());
 	activeplaylist->SetActive(idx, false);
 	Play(activeplaylist->Current());
