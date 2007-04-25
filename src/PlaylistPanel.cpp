@@ -162,6 +162,8 @@ bool fbx::PlaylistPanel::Add(const std::string& file, bool newitem)
 	}
 	if (newitem)
 		playlist->Append(file);
+	if (tmp)
+		delete tmp;
 	return true;
 }
 
