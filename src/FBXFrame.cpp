@@ -56,11 +56,6 @@
 #include "icons/next.xpm"
 
 /**
- * @brief GUI status bar update frequency
- */
-#define GUIUPDATE 500
-
-/**
  * @brief Default playback order
  */
 #define FBX_ORDER_DEFAULT 0
@@ -206,9 +201,6 @@ fbx::FBXFrame::FBXFrame():
 	entries[7].Set(wxACCEL_SHIFT, WXK_DOWN, FBX_frame_movedown);
 	wxAcceleratorTable accel(8, entries);
 	SetAcceleratorTable(accel);
-
-	timer = new wxTimer(this,FBX_frame_timer);
-	timer->Start(GUIUPDATE);
 }
 
 /**
@@ -226,7 +218,6 @@ void fbx::FBXFrame::OnQuit(wxCommandEvent& event)
 				return;
 		}
 	}
-	timer->Stop();
 	if (engine)
 		engine->Stop();
 

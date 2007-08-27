@@ -17,6 +17,7 @@
 #include <wx/app.h>
 #include <wx/frame.h>
 #include <wx/cmdline.h>
+#include <wx/timer.h>
 #endif
 
 #include <iostream>
@@ -28,6 +29,11 @@
 #include "config/ConfigFactory.h"
 
 /**
+ * @brief UI update frequency
+ */
+#define UIUPDATE 500
+
+/**
  * Definition of commandline options
  */
 const wxCmdLineEntryDesc cmdLineDesc[] =
@@ -35,8 +41,16 @@ const wxCmdLineEntryDesc cmdLineDesc[] =
 	{ wxCMD_LINE_SWITCH, wxT("h"), wxT("help"), wxT("Display usage info"), wxCMD_LINE_VAL_NONE, wxCMD_LINE_OPTION_HELP },
 	{ wxCMD_LINE_SWITCH, wxT("V"), wxT("version"), wxT("Display version and feature info") },
 	{ wxCMD_LINE_SWITCH, wxT("v"), wxT("verbose"), wxT("Verbose execution") },
+	{ wxCMD_LINE_OPTION, wxT("c"), wxT("console"), wxT("Console play one song (no GUI)") },
 	{ wxCMD_LINE_NONE }
 };
+
+/**
+ * Event handler table
+ */
+BEGIN_EVENT_TABLE(fbx::FBX, wxApp)
+	EVT_TIMER(FBX_app_timer, fbx::FBX::OnTimer)
+END_EVENT_TABLE()
 
 IMPLEMENT_APP(fbx::FBX)
 
@@ -49,12 +63,30 @@ bool fbx::FBX::OnInit()
 		return false;
 	FBXUtil::SeedRand();
 	engine = new engine::FBXEngine();
-	frame = new FBXFrame();
-	frame->engine = engine;
-	frame->Show(true);
-	frame->OpenSavedPlaylists(config::ConfigFactory::GetConfig().GetString("playlists",""));
-	SetTopWindow(frame);
-	SetExitOnFrameDelete(true);
+	if (console) {
+		std::string cs(consolesong.mb_str());
+		engine->Play(cs);
+		timer = new wxTimer(this,FBX_app_timer);
+		timer->Start(UIUPDATE);
+		char i;
+		while (engine) {
+//			i == std::cin.get();
+//			i = toupper(i);
+//			if (i == 'Q')
+//				return false;
+			std::cout << engine->StatusString() << std::endl;
+			usleep(UIUPDATE * 1000);
+		}
+	} else {
+		frame = new FBXFrame();
+		timer = new wxTimer(frame,FBX_frame_timer);
+		timer->Start(UIUPDATE);
+		frame->engine = engine;
+		frame->Show(true);
+		frame->OpenSavedPlaylists(config::ConfigFactory::GetConfig().GetString("playlists",""));
+		SetTopWindow(frame);
+		SetExitOnFrameDelete(true);
+	}
 	return true;
 }
 
@@ -63,6 +95,8 @@ bool fbx::FBX::OnInit()
  */
 int fbx::FBX::OnExit()
 {
+	if (timer)
+		timer->Stop();
 	if (engine) {
 		engine->Stop();
 		delete engine;
@@ -82,36 +116,9 @@ bool fbx::FBX::ParseCmdLine()
 		return false;
 	if (cmd.Found(wxT("V"))) {
 		std::cout << PACKAGE_STRING << std::endl;
-		std::cout << std::endl;
-
-		std::cout << "Enabled features:" << std::endl;
-
-		std::cout << "     Audio output: ";
-#ifdef HAVE_AO
-		std::cout << "libao ";
-#endif
-#ifdef HAVE_ALSA
-		std::cout << "ALSA ";
-#endif
-		std::cout << std::endl;
-
-		std::cout << "  Audiofile input: ";
-#ifdef HAVE_VORBIS
-		std::cout << "Vorbis";
-#endif
-#ifdef HAVE_FLAC
-		std::cout << "FLAC ";
-#endif
-		std::cout << std::endl;
-
-		std::cout << "         Features: ";
-#ifdef HAVE_MAGIC
-		std::cout << "magic ";
-#endif
-		std::cout << std::endl;
-
 		return false;
 	}
+	console = cmd.Found(wxT("c"),&consolesong);
 	verbose = cmd.Found(wxT("v"));
 	return true;
 }
@@ -122,4 +129,18 @@ bool fbx::FBX::ParseCmdLine()
 bool fbx::FBX::GetVerbose() const
 {
 	return verbose;
+}
+
+/**
+ * Called when update timer fires
+ */
+void fbx::FBX::OnTimer(wxTimerEvent &event)
+{
+	std::cout << "FBX::OnTimer" << std::endl;
+	if (engine) {
+		if (!engine->Eof())
+			std::cout << engine->StatusString() << std::endl;
+		else
+			ExitMainLoop();
+	}
 }

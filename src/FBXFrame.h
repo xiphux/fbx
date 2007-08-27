@@ -20,7 +20,6 @@ class wxAuiNotebook;
 class wxStatusBar;
 class wxToolBar;
 class wxSlider;
-class wxTimer;
 class wxTimerEvent;
 class wxChoice;
 class wxPanel;
@@ -458,13 +457,6 @@ namespace fbx
 		 * Order submenu
 		 */
 		wxMenu *ordermenu;
-
-		/**
-		 * @brief timer
-		 *
-		 * Update timer
-		 */
-		wxTimer *timer;
 
 		/**
 		 * @brief playorder

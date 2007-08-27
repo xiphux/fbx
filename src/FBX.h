@@ -11,6 +11,8 @@
 #define FBX_FBX_H
 
 class wxApp;
+class wxTimer;
+class wxTimerEvent;
 
 namespace fbx
 {
@@ -56,6 +58,14 @@ namespace fbx
 
 	protected:
 		/**
+		 * @brief Timer event handler
+		 * @param event timer event
+		 *
+		 * Called when update timer fires
+		 */
+		void OnTimer(wxTimerEvent &event);
+
+		/**
 		 * @brief Parse Command Line
 		 * @return whether parsing was successful
 		 *
@@ -83,6 +93,39 @@ namespace fbx
 		 * Pointer to FBX audio engine instance
 		 */
 		engine::FBXEngine *engine;
+
+		/**
+		 * @brief console
+		 *
+		 * Whether to play in console mode
+		 */
+		bool console;
+
+		/**
+		 * @brief consolesong
+		 *
+		 * Filename to play on console
+		 */
+		wxString consolesong;
+
+		/**
+		 * @brief timer
+		 *
+		 * Update timer
+		 */
+		wxTimer *timer;
+
+	private:
+		DECLARE_EVENT_TABLE()
+	};
+
+	/**
+	 * @brief app events
+	 *
+	 * Enum of possible events in the app
+	 */
+	enum {
+		FBX_app_timer = 1,
 	};
 
 }
