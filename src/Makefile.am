@@ -8,7 +8,7 @@ bin_PROGRAMS = fbx
 fbx_SOURCES = FBXUtil.h FBXUtil.cpp FBXEngine.h FBXEngine.cpp FBXAudioThread.h FBXAudioThread.cpp PlaylistPanel.h PlaylistPanel.cpp FBXFrame.h FBXFrame.cpp FBX.h FBX.cpp
 fbx_LDADD = audio/libfbxaudio.la audiofile/libfbxaudiofile.la config/libfbxconfig.la playlist/libfbxplaylist.la @WX_LIBS@
 
-noinst_PROGRAMS = fbxtest
+check_PROGRAMS = fbxtest
 fbxtest_SOURCES = fbxtest.cpp
 fbxtest_LDADD = audio/libfbxaudio.la audiofile/libfbxaudiofile.la
 
