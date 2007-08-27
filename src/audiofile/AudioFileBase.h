@@ -95,12 +95,17 @@ namespace fbx
 			 * @brief Constructor
 			 * @param fname filename to open
 			 */
-			AudioFileBase(const std::string& fname);
+			AudioFileBase(const std::string& fname)
+			{
+				filename = fname;
+			}
 
 			/**
 			 * @brief Destructor
 			 */
-			virtual ~AudioFileBase();
+			virtual ~AudioFileBase()
+			{
+			}
 
 			/**
 			 * @brief Opened
@@ -108,7 +113,10 @@ namespace fbx
 			 *
 			 * Tests whether audiofile is successfully opened
 			 */
-			virtual bool Opened() const;
+			virtual bool Opened() const
+			{
+				return opened;
+			}
 
 			/**
 			 * @brief Seek
@@ -184,7 +192,33 @@ namespace fbx
 			 *
 			 * Returns a formatted string of a number of common metadata fields
 			 */
-			virtual std::string MetadataString();
+			virtual std::string MetadataString()
+			{
+				std::string tmp;
+				tmp += Metadata(FBX_METADATA_ARTIST);
+				tmp += " - ";
+
+				std::string tmp2;
+				tmp2 += "[";
+				std::string album = Metadata(FBX_METADATA_ALBUM);
+				std::string trackno = Metadata(FBX_METADATA_TRACK);
+				if (album.length() > 0) {
+					tmp2 += album;
+					if (trackno.length() > 0)
+						tmp2 += " ";
+				}
+				if (trackno.length() > 0) {
+					tmp2 += "#";
+					tmp2 += trackno;
+				}
+				tmp2 += "]";
+				if (tmp2.length() > 2) {
+					tmp += tmp2;
+					tmp += " ";
+				}
+				tmp += Metadata(FBX_METADATA_TITLE);
+				return tmp;
+			}
 
 			/**
 			 * @brief Filename
@@ -192,7 +226,10 @@ namespace fbx
 			 *
 			 * Returns the currently open filename
 			 */
-			std::string Filename() const;
+			std::string Filename() const
+			{
+				return filename;
+			}
 
 		protected:
 			/**
