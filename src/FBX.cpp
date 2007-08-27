@@ -17,7 +17,6 @@
 #include <wx/app.h>
 #include <wx/frame.h>
 #include <wx/cmdline.h>
-#include <wx/timer.h>
 #endif
 
 #include <iostream>
@@ -45,13 +44,6 @@ const wxCmdLineEntryDesc cmdLineDesc[] =
 	{ wxCMD_LINE_NONE }
 };
 
-/**
- * Event handler table
- */
-BEGIN_EVENT_TABLE(fbx::FBX, wxApp)
-	EVT_TIMER(FBX_app_timer, fbx::FBX::OnTimer)
-END_EVENT_TABLE()
-
 IMPLEMENT_APP(fbx::FBX)
 
 /**
@@ -66,21 +58,15 @@ bool fbx::FBX::OnInit()
 	if (console) {
 		std::string cs(consolesong.mb_str());
 		engine->Play(cs);
-		timer = new wxTimer(this,FBX_app_timer);
-		timer->Start(UIUPDATE);
-		char i;
-		while (engine) {
-//			i == std::cin.get();
-//			i = toupper(i);
-//			if (i == 'Q')
-//				return false;
-			std::cout << engine->StatusString() << std::endl;
-			usleep(UIUPDATE * 1000);
+		std::cout << std::endl;
+		while (engine && !engine->Eof()) {
+			printf("%c[1A",27);
+			std::cout << engine->StatusString() << "    " << std::endl;
+			wxMilliSleep(UIUPDATE);
 		}
+		return false;
 	} else {
 		frame = new FBXFrame();
-		timer = new wxTimer(frame,FBX_frame_timer);
-		timer->Start(UIUPDATE);
 		frame->engine = engine;
 		frame->Show(true);
 		frame->OpenSavedPlaylists(config::ConfigFactory::GetConfig().GetString("playlists",""));
@@ -95,8 +81,6 @@ bool fbx::FBX::OnInit()
  */
 int fbx::FBX::OnExit()
 {
-	if (timer)
-		timer->Stop();
 	if (engine) {
 		engine->Stop();
 		delete engine;
@@ -129,18 +113,4 @@ bool fbx::FBX::ParseCmdLine()
 bool fbx::FBX::GetVerbose() const
 {
 	return verbose;
-}
-
-/**
- * Called when update timer fires
- */
-void fbx::FBX::OnTimer(wxTimerEvent &event)
-{
-	std::cout << "FBX::OnTimer" << std::endl;
-	if (engine) {
-		if (!engine->Eof())
-			std::cout << engine->StatusString() << std::endl;
-		else
-			ExitMainLoop();
-	}
 }
