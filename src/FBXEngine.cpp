@@ -19,9 +19,25 @@
 #include <sstream>
 
 #include "FBXUtil.h"
+#include "RingBuffer.h"
 #include "audiofile/AudioFileFactory.h"
 #include "audio/AudioFactory.h"
+#include "config/ConfigFactory.h"
 #include "FBXAudioThread.h"
+
+/**
+ * @brief BUFSIZE
+ *
+ * Defines the default internal audio buffer size
+ */
+#define BUFSIZE 4
+
+/**
+ * @brief BUFFERFACTOR
+ *
+ * Bitshift multiplier factor for ring buffer vs audio buffer
+ */
+#define BUFFERFACTOR 4
 
 /**
  * Constructor
@@ -31,6 +47,9 @@ fbx::engine::FBXEngine::FBXEngine()
 	audio = 0;
 	audiofile = 0;
 	thread = 0;
+	audiobufsize = config::ConfigFactory::GetConfig().GetInt("buffer",BUFSIZE);
+	buffer = new RingBuffer(audiobufsize << BUFFERFACTOR);
+	std::cout << "[FBXEngine] Audiobufsize " << audiobufsize << ", ringbuffer size " << buffer->Size() << std::endl;
 }
 
 /**
@@ -39,6 +58,7 @@ fbx::engine::FBXEngine::FBXEngine()
 fbx::engine::FBXEngine::~FBXEngine()
 {
 	Stop();
+	delete buffer;
 }
 
 /**
@@ -98,6 +118,7 @@ bool fbx::engine::FBXEngine::Stop()
 //	if (thread)
 //		thread->Delete();
 	mutex.Lock();	
+	buffer->Clear();
 	if (audiofile) {
 		delete audiofile;
 		audiofile = 0;
@@ -176,6 +197,7 @@ bool fbx::engine::FBXEngine::Seek(double t)
 		return false;
 	int ret;
 	mutex.Lock();
+	buffer->Clear();
 	ret = audiofile->Seek(t);
 	mutex.Unlock();
 	return (ret == 0);
@@ -200,7 +222,7 @@ bool fbx::engine::FBXEngine::Eof()
 {
 	if (!audiofile)
 		return true;
-	return audiofile->Eof();
+	return audiofile->Eof() && buffer->Empty();
 }
 
 /**

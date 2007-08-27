@@ -15,6 +15,8 @@
 namespace fbx
 {
 
+	class RingBuffer;
+
 	namespace audio
 	{
 		class AudioBase;
@@ -168,6 +170,10 @@ namespace fbx
 			friend class FBXAudioThread;
 
 			wxMutex mutex;
+
+			RingBuffer *buffer;
+
+			unsigned int audiobufsize;
 		};
 
 	}

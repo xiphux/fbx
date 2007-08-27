@@ -5,7 +5,7 @@ AM_CPPFLAGS = @WX_CPPFLAGS@
 AM_CXXFLAGS = @WX_CXXFLAGS_ONLY@
 
 bin_PROGRAMS = fbx
-fbx_SOURCES = FBXUtil.h FBXUtil.cpp FBXEngine.h FBXEngine.cpp FBXAudioThread.h FBXAudioThread.cpp PlaylistPanel.h PlaylistPanel.cpp FBXFrame.h FBXFrame.cpp FBX.h FBX.cpp
+fbx_SOURCES = FBXUtil.h FBXUtil.cpp RingBuffer.h RingBuffer.cpp FBXEngine.h FBXEngine.cpp FBXAudioThread.h FBXAudioThread.cpp PlaylistPanel.h PlaylistPanel.cpp FBXFrame.h FBXFrame.cpp FBX.h FBX.cpp
 fbx_LDADD = audio/libfbxaudio.la audiofile/libfbxaudiofile.la config/libfbxconfig.la playlist/libfbxplaylist.la @WX_LIBS@
 
 check_PROGRAMS = fbxtest
